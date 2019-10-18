@@ -40,17 +40,17 @@ public class Manager
         return L(Collections.singletonList(vertexList.get(0)));
     }
 
-    private static int[] generateCombinations(int[] arr, int starCount, int vertexCount)
+    public static int[] generateCombinations(int[] arr, int starCount, int vertexCount)
     {
         if (arr == null)
         {
             arr = new int[starCount];
             for (int i = 0; i < starCount; i++)
-                arr[i] = i + 1;
+                arr[i] = i;
             return arr;
         }
         for (int i = starCount - 1; i >= 0; i--)
-            if (arr[i] < vertexCount - starCount + i + 1)
+            if (arr[i] < vertexCount - starCount + i)
             {
                 arr[i]++;
                 for (int j = i; j < starCount - 1; j++)
