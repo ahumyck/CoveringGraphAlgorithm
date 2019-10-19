@@ -3,7 +3,7 @@ package com.company;
 import java.util.ArrayList;
 
 //todo: rename naxui
-//todo: rename?
+//todo: fix case when starCount == 1
 public class SatellitePermutationGeneratorUsingStars
 {
     private ArrayList<Integer> mass;
