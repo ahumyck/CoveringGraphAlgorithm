@@ -38,4 +38,13 @@ public class Vertex {
     public void setEdges(List<Edge> edges) {
         this.edges = edges;
     }
+
+
+    //todo: sdelat norm toString
+    @Override
+    public String toString() {
+        return "Vertex{" +
+                "edges=" + edges +
+                '}';
+    }
 }

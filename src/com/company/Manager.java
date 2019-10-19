@@ -1,6 +1,5 @@
 package com.company;
 
-import java.math.BigInteger;
 import java.util.Collections;
 import java.util.List;
 
@@ -12,10 +11,8 @@ public class Manager
         int[] arr = null;
         while ((arr = generateCombinations(arr, starsCount, vertexList.size())) != null)
         {
-
+            //todo: fill something
         }
-
-
     }
 
 

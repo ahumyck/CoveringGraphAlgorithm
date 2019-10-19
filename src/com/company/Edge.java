@@ -34,4 +34,10 @@ public class Edge {
     public void setSuccessorId(int successorId) {
         this.successorId = successorId;
     }
+
+    //todo: sdelat norm toString
+    @Override
+    public String toString() {
+        return "From " + predecessorId + " To " + successorId + " = " + weight;
+    }
 }

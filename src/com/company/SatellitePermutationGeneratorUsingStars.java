@@ -3,29 +3,28 @@ package com.company;
 import java.util.ArrayList;
 
 //todo: rename naxui
-public class Matrix
+//todo: rename?
+public class SatellitePermutationGeneratorUsingStars
 {
     private ArrayList<Integer> mass;
-    private int satelliteCount;
     private int starCount;//mod
 
-    public Matrix(int satelliteCount, int starCount)
+    public SatellitePermutationGeneratorUsingStars(int satelliteCount, int starCount)
     {
         this.mass = new ArrayList<>(satelliteCount);
         for (int i = 0; i < satelliteCount; i++)
         {
             mass.add(0);
         }
-        this.satelliteCount = satelliteCount;
         this.starCount = starCount;
     }
 
-    public ArrayList<Integer> next() throws Exception
+    public ArrayList<Integer> next()
     {
         do
         {
             shiftRow(0);
-            if(isLastSolution())return null;
+            if(isLastSolution()) return null;
 
         }
         while (!isValidSolution());
@@ -33,7 +32,7 @@ public class Matrix
         return mass;
     }
 
-    private void shiftRow(int currentRow) throws Exception
+    private void shiftRow(int currentRow)
     {
         if (currentRow == mass.size())
         {
@@ -59,16 +58,15 @@ public class Matrix
 
     private boolean isLastSolution(){
         int count = 0;
-        for (int i = 0; i < mass.size(); i++)
-        {
-            count += mass.get(i);
+        for (Integer number:
+             mass) {
+            count  += number;
         }
         return count == 0;
     }
 
-    public void print()
-    {
-        System.out.println(mass);
-        System.out.println();
+    @Override
+    public String toString() {
+        return mass.toString();
     }
 }

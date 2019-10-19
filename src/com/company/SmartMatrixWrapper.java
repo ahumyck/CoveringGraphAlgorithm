@@ -8,44 +8,48 @@ public class SmartMatrixWrapper {
     private List<Integer> starList;
     private List<Integer> satelliteList;
     private List<Vertex> graph;
-    private Matrix matrix;
+    private SatellitePermutationGeneratorUsingStars generator;
 
 
     public SmartMatrixWrapper(List<Integer> starList, List<Vertex> graph) {
         this.starList = starList;
-        this.satelliteList = new ArrayList<Integer>();
+        this.satelliteList = new ArrayList<>();
 
         satelliteList = graph.stream()
                 .filter(vertex -> !starList.contains(vertex.getId()))
                 .map(Vertex::getId).collect(Collectors.toList());
 
-        matrix = new Matrix(satelliteList.size(),starList.size());
+        generator = new SatellitePermutationGeneratorUsingStars(satelliteList.size(),starList.size());
         this.graph = graph;
     }
 
     //todo: dostat star i poschitat vrychnyu
-    public void getL() throws Exception{
-        ArrayList<Integer> validSolution = matrix.next(); // [2,1,0,0,0];
-
+    //todo: renamen nahui
+    public void calculateMinimizationFunction() {
+        ArrayList<Integer> validSolution = generator.next(); // [2,1,0,0,0];
         int count = 0;
 
-        for (int i = 0; i < satelliteList.size() ; i++) {
+//        System.out.println("Star list: " + starList);
+//        System.out.println("Satellite list: " + satelliteList);
+        for (int i = 0; i < satelliteList.size() ; i++)
+        {
             Vertex satellite = graph.get(satelliteList.get(i));
             int starIndex = starList.get(validSolution.get(i));
-            System.out.println("Satellite: " + satellite.getId());
-            System.out.println("Star index: " + starIndex);
-            for (Edge edge:
-                 satellite.getEdges()) {
-                System.out.println("Edge{" + edge.getSuccessorId() + "}{" + edge.getPredecessorId() + "} = "  + edge.getWeight());
+            for (Edge edge: satellite.getEdges())
+            {
                 if(edge.getSuccessorId() == starIndex){
-                    System.out.println("complete");
-                    count += edge.getWeight(); //todo: multiply by star weight
+                    int starWeight = graph.get(starIndex).getWeight();
+                    int edgeWeight = edge.getWeight();
+//                    todo: ne ydalay etot debug block information, potom nyzhen bydet
+//                    System.out.println("Star weight: " + starWeight + ", StarIndex" + starIndex);
+//                    System.out.println("Edge weight: " + edgeWeight + ", Edge: " + edge.getPredecessorId() + ',' + edge.getSuccessorId());
+//                    System.out.println("Total weight: " + starWeight * edgeWeight);
+//                    System.out.println();
+                    count += starWeight * edgeWeight; // count == 225
+//                    todo: elsi bydyt voprosi pochemy 225 to y menya est kartinka so vsey herney, na sleduyshem mitinge obsudim
                 }
             }
-            System.out.println();
         }
-
-
-        System.out.println("counter: " + count);
+        System.out.println("count: " + count);
     }
 }
