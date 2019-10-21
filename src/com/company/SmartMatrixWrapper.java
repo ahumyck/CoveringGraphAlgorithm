@@ -1,9 +1,13 @@
 package com.company;
 
+import com.company.generators.SatellitePermutationGeneratorUsingStars;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+//todo: refactor this shit
 public class SmartMatrixWrapper {
     private List<Integer> starList;
     private List<Integer> satelliteList;

@@ -6,7 +6,7 @@ import java.util.List;
 
 public class Main {
 
-    public static void main(String[] args) throws Exception
+    public static void main(String[] args)
     {
         List<Vertex> graph = getGraph();
         weightSetter(graph,getWeights());
@@ -21,7 +21,7 @@ public class Main {
             arr[i] = i;
         }
 
-        List<Integer> stars = new ArrayList<Integer>();
+        List<Integer> stars = new ArrayList<>();
         for (int i : arr)
         {
             stars.add(i);
@@ -136,7 +136,7 @@ public class Main {
     }
 
     private static int[][] getWeights(){
-        int weights[][] = new int[8][8];
+        int[][] weights = new int[8][8];
 
         weights[0][1] = 1;
         weights[0][2] = 1;
