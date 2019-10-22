@@ -11,18 +11,31 @@ public class EdgeMatrix
         incidenceMatrix = new int[size][size];
     }
 
-    public void setCell(int i, int j, int value){
+    public void setCell(int i, int j, int value)
+    {
         incidenceMatrix[i][j] = value;
     }
-    public int getCell(int i, int j){
+
+    public int getCell(int i, int j)
+    {
         return incidenceMatrix[i][j];
     }
 
     @Override
     public String toString()
     {
-        return "EdgeMatrix{" +
-                "incidenceMatrix=" + Arrays.toString(incidenceMatrix) +
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < incidenceMatrix.length; i++)
+        {
+            for (int j = 0; j < incidenceMatrix.length; j++)
+            {
+                stringBuilder.append("\t");
+                stringBuilder.append(this.getCell(i, j));
+            }
+            stringBuilder.append("\n");
+        }
+        return "EdgeMatrix{"
+                + stringBuilder.toString() +
                 '}';
     }
 }
