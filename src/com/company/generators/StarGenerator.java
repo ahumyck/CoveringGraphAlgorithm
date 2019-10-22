@@ -20,7 +20,7 @@ public class StarGenerator implements Generator {
         {
             arr = new ArrayList<>(starCount);
             for (int i = 0; i < starCount; i++)
-                arr.set(i,i);
+                arr.add(i);
             return arr;
         }
         for (int i = starCount - 1; i >= 0; i--)

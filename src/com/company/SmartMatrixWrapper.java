@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.generators.SatellitePermutationGeneratorUsingStars;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -27,33 +26,38 @@ public class SmartMatrixWrapper {
         this.graph = graph;
     }
 
-    //todo: dostat star i poschitat vrychnyu
-    //todo: renamen nahui
-    public void calculateMinimizationFunction() {
-        ArrayList<Integer> validSolution = generator.next(); // [2,1,0,0,0];
-        int count = 0;
+    public StarPlan calculateMinimizationFunction() {
+        ArrayList<Integer> validSolution = generator.next();
+        StarPlan basePlan = calculateCurrentPermutation(validSolution);
+        while((validSolution = generator.next()) != null){
+            StarPlan currentSolution = calculateCurrentPermutation(validSolution);
+            if(currentSolution.getCost() < basePlan.getCost())
+                basePlan = currentSolution;
+        }
+        return basePlan;
+    }
 
-//        System.out.println("Star list: " + starList);
-//        System.out.println("Satellite list: " + satelliteList);
+    //refactor
+    private StarPlan calculateCurrentPermutation(ArrayList<Integer> solution){
+        int count = 0;
+        StringBuilder builder = new StringBuilder("Star Plan{\n");
         for (int i = 0; i < satelliteList.size() ; i++)
         {
             Vertex satellite = graph.get(satelliteList.get(i));
-            int starIndex = starList.get(validSolution.get(i));
+            int starIndex = starList.get(solution.get(i));
             for (Edge edge: satellite.getEdges())
             {
-                if(edge.getSuccessorId() == starIndex){
+                if(edge.getSuccessorId() == starIndex) {
                     int starWeight = graph.get(starIndex).getWeight();
                     int edgeWeight = edge.getWeight();
-//                    todo: ne ydalay etot debug block information, potom nyzhen bydet
-//                    System.out.println("Star weight: " + starWeight + ", StarIndex" + starIndex);
-//                    System.out.println("Edge weight: " + edgeWeight + ", Edge: " + edge.getPredecessorId() + ',' + edge.getSuccessorId());
-//                    System.out.println("Total weight: " + starWeight * edgeWeight);
-//                    System.out.println();
-                    count += starWeight * edgeWeight; // count == 225
-//                    todo: elsi bydyt voprosi pochemy 225 to y menya est kartinka so vsey herney, na sleduyshem mitinge obsudim
+                    builder.append("Star ").append(starIndex)
+                            .append(" is connected to satellite ").append(satellite.getId())
+                            .append(" with weight ").append(edgeWeight).append('\n');
+                    count += starWeight * edgeWeight;
                 }
             }
         }
-        System.out.println("count: " + count);
+        builder.append('}').insert(9,"has cost " + count);
+        return new StarPlan(builder.toString(),count);
     }
 }

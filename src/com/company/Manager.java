@@ -2,9 +2,7 @@ package com.company;
 
 import com.company.generators.StarGenerator;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.util.*;
 
 public class Manager
 {
@@ -13,12 +11,14 @@ public class Manager
     {
         StarGenerator generator = new StarGenerator(starsCount,vertexList.size());
         List<Integer> starsCombination; //todo: base plan?
+        ArrayList<List<Integer>> allGenerations = new ArrayList<>(); //todo: calculate aprox size
 
         while((starsCombination = generator.next()) != null){
-            //todo: calculate something here and compare to base plan
-            //todo: either collect results to List<Integer> and use ParallelStream?
-            System.out.println(starsCombination);
+            allGenerations.add(starsCombination);
         }
+
+        StarPlan bestPlan = allGenerations.parallelStream().map(x -> new SmartMatrixWrapper(x, vertexList).calculateMinimizationFunction())
+                .min(Comparator.comparing(StarPlan::getCost)).get();
     }
 
 
