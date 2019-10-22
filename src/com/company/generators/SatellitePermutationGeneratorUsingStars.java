@@ -1,10 +1,10 @@
-package com.company;
+package com.company.generators;
 
 import java.util.ArrayList;
 
 //todo: rename naxui
-//todo: rename?
-public class SatellitePermutationGeneratorUsingStars
+//todo: fix case when starCount == 1
+public class SatellitePermutationGeneratorUsingStars implements Generator
 {
     private ArrayList<Integer> mass;
     private int starCount;//mod
