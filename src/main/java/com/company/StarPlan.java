@@ -1,4 +1,4 @@
-package com.company.demo;
+package com.company;
 
 public class StarPlan {
     private String starPlan;

@@ -1,6 +1,7 @@
-package com.company.demo;
+package com.company;
 
 import com.company.generators.SatellitePermutationGeneratorUsingStars;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;

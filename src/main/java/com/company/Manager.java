@@ -1,4 +1,5 @@
-package com.company.demo;
+package com.company;
+
 
 import com.company.generators.StarGenerator;
 

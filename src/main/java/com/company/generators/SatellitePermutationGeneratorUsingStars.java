@@ -1,4 +1,4 @@
-package com.company.demo.generators;
+package com.company.generators;
 
 import java.util.ArrayList;
 
