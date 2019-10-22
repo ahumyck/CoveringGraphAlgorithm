@@ -39,12 +39,8 @@ public class Vertex {
         this.edges = edges;
     }
 
-
-    //todo: sdelat norm toString
     @Override
     public String toString() {
-        return "Vertex{" +
-                "edges=" + edges +
-                '}';
+        return "Vertex id: " + this.id + " , weight: " + this.weight;
     }
 }
