@@ -9,12 +9,12 @@ public class Main {
     public static void main(String[] args)
     {
         List<Vertex> graph = getGraph();
-        weightSetter(graph,getWeights());
 
-//        for (Vertex v:
-//             graph) {
-//            System.out.println(v);
-//        }
+        for (Vertex v:
+             graph) {
+            System.out.println(v);
+        }
+        System.out.println();
 
         int[] arr = new int[3];
         for (int i = 0; i < 3; i++) {
@@ -26,14 +26,10 @@ public class Main {
         {
             stars.add(i);
         }
-        SmartMatrixWrapper smartMatrixWrapper = new SmartMatrixWrapper(stars,graph);
-        smartMatrixWrapper.calculateMinimizationFunction();
+
+        System.out.println(Manager.bruteForce(graph,3));
     }
 
-
-
-    // generator polnogo grafa na 8 vershinah
-    // y kazhodoy vertex dolzhno bit N - 1 edge tak mi ne ychitivaem edge sam v sebya
     private static List<Vertex> getGraph(){
 
         Edge[] edges1 = new Edge[7];
@@ -124,64 +120,5 @@ public class Main {
 
 
         return Arrays.asList(a1,a2,a3,a4,a5,a6,a7,a8);
-    }
-
-    private static void weightSetter(List<Vertex> initializedGraph, int[][] weights){
-        for (int i = 0; i < initializedGraph.size(); i++) {
-            List<Edge> edges = initializedGraph.get(i).getEdges();
-            for (int j = 0; j < edges.size(); j++) {
-                edges.get(j).setWeight(weights[i][j]);
-            }
-        }
-    }
-
-    private static int[][] getWeights(){
-        int[][] weights = new int[8][8];
-
-        weights[0][1] = 1;
-        weights[0][2] = 1;
-        weights[0][3] = 1;
-        weights[0][4] = 1;
-        weights[0][5] = 5;
-        weights[0][6] = 5;
-        weights[0][7] = 5;
-
-        weights[1][2] = 2;
-        weights[1][3] = 2;
-        weights[1][4] = 4;
-        weights[1][5] = 2;
-        weights[1][6] = 2;
-        weights[1][7] = 2;
-
-
-        weights[2][3] = 3;
-        weights[2][4] = 4;
-        weights[2][5] = 3;
-        weights[2][6] = 3;
-        weights[2][7] = 3;
-
-        weights[3][4] = 4;
-        weights[3][5] = 4;
-        weights[3][6] = 4;
-        weights[3][7] = 4;
-
-        weights[4][5] = 5;
-        weights[4][6] = 5;
-        weights[4][7] = 5;
-
-        weights[5][6] = 6;
-        weights[5][7] = 6;
-
-        weights[6][7] = 7;
-
-        for (int i = 0; i < 8 ; i++) {
-            weights[i][i] = 0;
-            for (int j = i + 1; j < 8; j++) {
-                weights[j][i] = weights[i][j];
-            }
-        }
-
-
-        return weights;
     }
 }
