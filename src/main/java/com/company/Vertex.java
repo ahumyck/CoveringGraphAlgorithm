@@ -7,12 +7,9 @@ public class Vertex {
     private int id;
     private int weight;
 
-    private List<Edge> edges;
-
-    public Vertex(int id, int weight, List<Edge> edges) {
+    public Vertex(int id, int weight) {
         this.id = id;
         this.weight = weight;
-        this.edges = edges;
     }
 
     public int getId() {
@@ -31,16 +28,17 @@ public class Vertex {
         this.weight = weight;
     }
 
-    public List<Edge> getEdges() {
-        return edges;
-    }
-
-    public void setEdges(List<Edge> edges) {
-        this.edges = edges;
-    }
+//    @Override
+//    public String toString() {
+//        return "Vertex id: " + this.id + " , weight: " + this.weight;
+//    }
 
     @Override
-    public String toString() {
-        return "Vertex id: " + this.id + " , weight: " + this.weight;
+    public String toString()
+    {
+        return "Vertex{" +
+                "id=" + id +
+                ", weight=" + weight +
+                '}';
     }
 }
