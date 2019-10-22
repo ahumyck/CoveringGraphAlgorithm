@@ -19,8 +19,11 @@ public class DemoApplication {
         Graph graph = Parser.parseGraph(vertexFile,matrixFile);
         System.out.println(graph);
 
+        long start = System.currentTimeMillis();
         StarPlan starPlan = Manager.bruteForce(graph, 3);
+        long end = System.currentTimeMillis();
         System.out.println(starPlan);
+        System.out.println("Time: " + (end - start));
 
         //SpringApplication.run(DemoApplication.class, args);
     }
