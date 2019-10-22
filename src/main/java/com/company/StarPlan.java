@@ -1,28 +1,19 @@
 package com.company;
 
+import java.util.List;
+import java.util.Map;
+
 public class StarPlan {
-    private String starPlan;
+    private Map<Vertex , List<Vertex>> starSatelliteMap;
     private int cost;
 
-    public StarPlan(String starPlan, int cost) {
-        this.starPlan = starPlan;
+    public StarPlan(Map<Vertex , List<Vertex>> starSatelliteMap, int cost) {
+        this.starSatelliteMap = starSatelliteMap;
         this.cost = cost;
-    }
-
-    public void setStarPlan(String starPlan) {
-        this.starPlan = starPlan;
     }
 
     public int getCost() {
         return cost;
     }
 
-    public void setCost(int cost) {
-        this.cost = cost;
-    }
-
-    @Override
-    public String toString() {
-        return starPlan;
-    }
 }

@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.List;
+import java.util.Objects;
 
 
 public class Vertex {
@@ -40,5 +41,21 @@ public class Vertex {
                 "id=" + id +
                 ", weight=" + weight +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this == o) return true;
+        if (!(o instanceof Vertex)) return false;
+        Vertex vertex = (Vertex) o;
+        return getId() == vertex.getId() &&
+                getWeight() == vertex.getWeight();
+    }
+
+    @Override
+    public int hashCode()
+    {
+        return Objects.hash(getId(), getWeight());
     }
 }

@@ -3,7 +3,9 @@ package com.company;
 import com.company.generators.SatellitePermutationGeneratorUsingStars;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 
@@ -11,15 +13,16 @@ import java.util.stream.Collectors;
 public class SmartMatrixWrapper {
     private List<Integer> starList;
     private List<Integer> satelliteList;
-    private List<Vertex> graph;
+    private Graph graph;
     private SatellitePermutationGeneratorUsingStars generator;
 
 
-    public SmartMatrixWrapper(List<Integer> starList, List<Vertex> graph) {
+    public SmartMatrixWrapper(List<Integer> starList, Graph graph) {
         this.starList = starList;
         this.satelliteList = new ArrayList<>();
 
-        satelliteList = graph.stream()
+        satelliteList = graph.getVertices().stream()
+                .sequential()
                 .filter(vertex -> !starList.contains(vertex.getId()))
                 .map(Vertex::getId).collect(Collectors.toList());
 
@@ -41,26 +44,36 @@ public class SmartMatrixWrapper {
     //todo: refactor naming
     private StarPlan calculateCurrentPermutation(ArrayList<Integer> solution){
         int count = 0;
-        StringBuilder builder = new StringBuilder("Star Plan{\n");
+        Map<Vertex, List<Vertex>> map = new HashMap<>();
         for (int i = 0; i < satelliteList.size() ; i++)
         {
-            Vertex satellite = graph.get(satelliteList.get(i));
-            int starIndex = starList.get(solution.get(i));
-
-
-            for (Edge edge: satellite.getEdges())
-            {
-                if(edge.getSuccessorId() == starIndex) {
-                    int starWeight = graph.get(starIndex).getWeight();
-                    int edgeWeight = edge.getWeight();
-                    builder.append("Star ").append(starIndex)
-                            .append(" is connected to satellite ").append(satellite.getId())
-                            .append(" with weight ").append(edgeWeight).append('\n');
-                    count += starWeight * edgeWeight;
-                }
+            Vertex satellite = graph.getVertices().get(satelliteList.get(i));
+            Vertex star = graph.getVertices().get(starList.get(solution.get(i)));
+            count += graph.getVertices().get(star.getId()).getWeight() * graph.getEdgeMatrix().getCell(satellite.getId(), star.getId());
+            if(map.get(star) == null){
+                List<Vertex> list = new ArrayList<>();
+                list.add(satellite);
+                map.put(star, list);
+            }
+            else {
+                map.get(star).add(satellite);
             }
         }
-        builder.append('}').insert(9,"has cost " + count);
-        return new StarPlan(builder.toString(),count);
+        return new StarPlan(map,count);
+//            for (Edge edge: satellite.getEdges())
+//            {
+//                if(edge.getSuccessorId() == starIndex) {
+//                    int starWeight = graph.get(starIndex).getWeight();
+//                    int edgeWeight = edge.getWeight();
+//                    builder.append("Star ").append(starIndex)
+//                            .append(" is connected to satellite ").append(satellite.getId())
+//                            .append(" with weight ").append(edgeWeight).append('\n');
+//                    count += starWeight * edgeWeight;
+//                }
+//            }
+//        }
+//        builder.append('}').insert(9,"has cost " + count);
+
     }
+
 }

@@ -8,9 +8,9 @@ import java.util.*;
 public class Manager
 {
 
-    public static StarPlan bruteForce(List<Vertex> vertexList, int starsCount)
+    public static StarPlan bruteForce(Graph graph, int starsCount)
     {
-        StarGenerator generator = new StarGenerator(starsCount,vertexList.size());
+        StarGenerator generator = new StarGenerator(starsCount,graph.getVertices().size());
         List<Integer> starsCombination; //todo: base plan?
         ArrayList<List<Integer>> allGenerations = new ArrayList<>(); //todo: calculate aprox size
 
@@ -21,7 +21,7 @@ public class Manager
 //        allGenerations.forEach(System.out::println);
 
         return allGenerations.parallelStream()
-                .map(x -> new SmartMatrixWrapper(x, vertexList).calculateMinimizationFunction())
+                .map(x -> new SmartMatrixWrapper(x, graph).calculateMinimizationFunction())
                 .min(Comparator.comparing(StarPlan::getCost))
                 .get();
     }

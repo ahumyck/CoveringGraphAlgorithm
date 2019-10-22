@@ -13,4 +13,14 @@ public class Graph
         this.vertices = vertices;
         this.edgeMatrix = edgeMatrix;
     }
+
+    public List<Vertex> getVertices()
+    {
+        return vertices;
+    }
+
+    public EdgeMatrix getEdgeMatrix()
+    {
+        return edgeMatrix;
+    }
 }
