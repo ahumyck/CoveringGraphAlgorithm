@@ -1,6 +1,4 @@
-package com.company;
-
-import java.util.Arrays;
+package com.company.entities;
 
 public class EdgeMatrix
 {
@@ -34,7 +32,7 @@ public class EdgeMatrix
             }
             stringBuilder.append("\n");
         }
-        return "EdgeMatrix{"
+        return "EdgeMatrix{\n"
                 + stringBuilder.toString() +
                 '}';
     }

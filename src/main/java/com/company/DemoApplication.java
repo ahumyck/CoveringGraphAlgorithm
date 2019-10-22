@@ -1,17 +1,21 @@
 package com.company;
 
-import org.springframework.boot.SpringApplication;
+import com.company.entities.Graph;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.util.Arrays;
-import java.util.List;
 
 @SpringBootApplication
-public class DemoApplication
-{
+public class DemoApplication {
 
-    public static void main(String[] args)
-    {
-        SpringApplication.run(DemoApplication.class, args);
+    private static final String matrixFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\matrix.txt";
+    private static final String vertexFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\vertexWeight.txt";
+
+
+    public static void main(String[] args) throws Exception {
+
+        Graph graph = Parser.parseGraph(vertexFile,matrixFile);
+        System.out.println(graph);
+
+        //SpringApplication.run(DemoApplication.class, args);
     }
 }

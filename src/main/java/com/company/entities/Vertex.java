@@ -1,8 +1,6 @@
-package com.company;
+package com.company.entities;
 
-import java.util.List;
 import java.util.Objects;
-
 
 public class Vertex {
     private int id;

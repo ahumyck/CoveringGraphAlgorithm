@@ -1,10 +1,12 @@
 package com.company;
 
+import com.company.entities.Vertex;
+
 import java.util.List;
 import java.util.Map;
 
 public class StarPlan {
-    private Map<Vertex , List<Vertex>> starSatelliteMap;
+    private Map<Vertex, List<Vertex>> starSatelliteMap;
     private int cost;
 
     public StarPlan(Map<Vertex , List<Vertex>> starSatelliteMap, int cost) {
