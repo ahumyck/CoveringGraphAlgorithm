@@ -7,7 +7,7 @@ import java.util.*;
 public class Manager
 {
 
-    public static void bruteForce(List<Vertex> vertexList, int starsCount)
+    public static StarPlan bruteForce(List<Vertex> vertexList, int starsCount)
     {
         StarGenerator generator = new StarGenerator(starsCount,vertexList.size());
         List<Integer> starsCombination; //todo: base plan?
@@ -17,7 +17,9 @@ public class Manager
             allGenerations.add(starsCombination);
         }
 
-        StarPlan bestPlan = allGenerations.parallelStream().map(x -> new SmartMatrixWrapper(x, vertexList).calculateMinimizationFunction())
+        allGenerations.forEach(System.out::println);
+
+        return allGenerations.parallelStream().map(x -> new SmartMatrixWrapper(x, vertexList).calculateMinimizationFunction())
                 .min(Comparator.comparing(StarPlan::getCost)).get();
     }
 

@@ -29,7 +29,7 @@ public class StarGenerator implements Generator {
                 arr.set(i,arr.get(i) + 1);
                 for (int j = i; j < starCount - 1; j++)
                     arr.set(j + 1, arr.get(j) + 1);
-                return arr;
+                return (List<Integer>) arr.clone();
             }
         return null;
     }
