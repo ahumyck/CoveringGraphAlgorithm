@@ -1,5 +1,7 @@
 package com.company;
 
+import java.util.Arrays;
+
 public class EdgeMatrix
 {
     private int[][] incidenceMatrix;
@@ -16,4 +18,11 @@ public class EdgeMatrix
         return incidenceMatrix[i][j];
     }
 
+    @Override
+    public String toString()
+    {
+        return "EdgeMatrix{" +
+                "incidenceMatrix=" + Arrays.toString(incidenceMatrix) +
+                '}';
+    }
 }
