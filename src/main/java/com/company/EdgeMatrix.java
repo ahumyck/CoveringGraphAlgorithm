@@ -4,7 +4,7 @@ public class EdgeMatrix
 {
     private int[][] incidenceMatrix;
 
-    public EdgeMatrix(int n, int m)
+    public EdgeMatrix(int size)
     {
 
     }
