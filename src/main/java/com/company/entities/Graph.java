@@ -23,4 +23,12 @@ public class Graph
     {
         return edgeMatrix;
     }
+
+    @Override
+    public String toString() {
+        return "Graph{" +
+                "vertices=" + vertices +
+                ", edgeMatrix=" + edgeMatrix +
+                '}';
+    }
 }

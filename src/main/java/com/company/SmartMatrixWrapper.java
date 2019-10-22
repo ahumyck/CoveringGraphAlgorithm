@@ -36,8 +36,9 @@ public class SmartMatrixWrapper {
         StarPlan basePlan = calculateCurrentPermutation(validSolution);
         while ((validSolution = generator.next()) != null) {
             StarPlan currentSolution = calculateCurrentPermutation(validSolution);
-            if (currentSolution.getCost() < basePlan.getCost())
+            if (currentSolution.getCost() < basePlan.getCost()) {
                 basePlan = currentSolution;
+            }
         }
         return basePlan;
     }

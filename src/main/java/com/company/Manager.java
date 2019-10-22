@@ -1,6 +1,7 @@
 package com.company;
 
 
+import com.company.entities.Graph;
 import com.company.generators.StarGenerator;
 
 import java.util.*;
@@ -17,8 +18,6 @@ public class Manager
         while((starsCombination = generator.next()) != null){
             allGenerations.add(starsCombination);
         }
-
-//        allGenerations.forEach(System.out::println);
 
         return allGenerations.parallelStream()
                 .map(x -> new SmartMatrixWrapper(x, graph).calculateMinimizationFunction())

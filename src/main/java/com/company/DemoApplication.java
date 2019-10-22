@@ -3,6 +3,9 @@ package com.company;
 import com.company.entities.Graph;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
+import java.util.ArrayList;
+import java.util.List;
+
 
 @SpringBootApplication
 public class DemoApplication {
@@ -15,6 +18,9 @@ public class DemoApplication {
 
         Graph graph = Parser.parseGraph(vertexFile,matrixFile);
         System.out.println(graph);
+
+        StarPlan starPlan = Manager.bruteForce(graph, 3);
+        System.out.println(starPlan);
 
         //SpringApplication.run(DemoApplication.class, args);
     }

@@ -18,4 +18,11 @@ public class StarPlan {
         return cost;
     }
 
+    @Override
+    public String toString() {
+        return "StarPlan{\n" +
+                "starSatelliteMap=" + starSatelliteMap +
+                ", \ncost=" + cost +
+                '}';
+    }
 }
