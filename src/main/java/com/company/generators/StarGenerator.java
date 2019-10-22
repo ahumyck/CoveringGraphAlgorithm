@@ -3,6 +3,7 @@ package com.company.generators;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class StarGenerator implements Generator {
 
     private int starCount;

@@ -38,7 +38,7 @@ public class SmartMatrixWrapper {
         return basePlan;
     }
 
-    //refactor
+    //todo: refactor naming
     private StarPlan calculateCurrentPermutation(ArrayList<Integer> solution){
         int count = 0;
         StringBuilder builder = new StringBuilder("Star Plan{\n");
@@ -46,6 +46,8 @@ public class SmartMatrixWrapper {
         {
             Vertex satellite = graph.get(satelliteList.get(i));
             int starIndex = starList.get(solution.get(i));
+
+
             for (Edge edge: satellite.getEdges())
             {
                 if(edge.getSuccessorId() == starIndex) {
