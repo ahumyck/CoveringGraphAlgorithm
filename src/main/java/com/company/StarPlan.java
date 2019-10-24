@@ -6,6 +6,11 @@ import java.util.List;
 import java.util.Map;
 
 public class StarPlan {
+    public Map<Vertex, List<Vertex>> getStarSatelliteMap()
+    {
+        return starSatelliteMap;
+    }
+
     private Map<Vertex, List<Vertex>> starSatelliteMap;
     private int cost;
 

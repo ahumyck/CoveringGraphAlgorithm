@@ -19,6 +19,10 @@ public class EdgeMatrix
         return incidenceMatrix[i][j];
     }
 
+    public int getSize(){
+        return incidenceMatrix.length;
+    }
+
     @Override
     public String toString()
     {

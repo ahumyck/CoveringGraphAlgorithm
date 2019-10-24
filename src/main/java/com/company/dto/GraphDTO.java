@@ -13,6 +13,6 @@ import java.util.List;
 @JsonInclude(JsonInclude.Include.NON_EMPTY)
 public class GraphDTO
 {
-    private List<EdgeDTO> edges;
     private List<NodeDTO> nodes;
+    private List<EdgeDTO> edges;
 }
