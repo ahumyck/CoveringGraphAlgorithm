@@ -1,0 +1,92 @@
+openapi: 3.0.0
+info:
+  version: 0.0.1
+  title: API
+paths:
+  /brute-force/execute:
+    post:
+      summary: stat algorithm executing
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                starsCount: 
+                  type: number
+      responses:
+        '200':
+          description: maybe wait amount of time 
+  /brute-force/initial-graph:
+    get:
+      summary: get initial graph
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+          description: successful operation
+  /brute-force/solution/{number}:
+    get:
+      summary: get solution with certain number
+      parameters:
+        - in: path
+          name: number
+          required: true
+          schema:
+            type: number
+      responses:
+        '200':
+          description: return graphical representation of solution with certain number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+        '404':
+          description: process not found
+  /brute-force/solution/end:
+    get:
+      summary: get end solution
+      responses:
+        '200':
+          description: return graphical representation of solution with certain number
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Graph'
+        '404':
+          description: did not find
+components:
+  schemas:
+    Graph:
+      type: object
+      properties:
+        nodes: 
+          type: array
+          items: 
+            type: object
+            properties:
+              id: 
+                type: number
+              label:
+                type: string
+          example:
+            - id: 0
+              label: "A"
+            - id: 1
+              label: "B"
+        edges:
+          type: array
+          items:
+            type: object
+            properties:
+              id:
+                type: string
+                example: "a"
+              sourse:
+                type: number
+                example: "1"
+              target:
+                type: number
+                example: "0"
