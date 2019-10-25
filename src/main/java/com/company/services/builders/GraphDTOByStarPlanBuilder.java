@@ -14,8 +14,8 @@ import java.util.List;
 @Component
 public class GraphDTOByStarPlanBuilder implements GraphDTOBuilder<StarPlan>
 {
-    private String STAR_LABEL ="";
-    private String SATELLITE_LABEL = "";
+    private String STAR_LABEL ="STAR";
+    private String SATELLITE_LABEL = "SATELLITE";
     public GraphDTO build(StarPlan starPlan)
     {
         return new GraphDTO(buildNodeDTOList(starPlan),

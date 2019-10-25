@@ -13,8 +13,8 @@ public class GraphService
 {
     private Graph initialGraph;
     private StarPlan endSolutionStarPlan;
-    private static final String matrixFile = "C:\\Users\\ILYA\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\matrix.txt";
-    private static final String vertexFile = "C:\\Users\\ILYA\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\vertexWeight.txt";
+    private static final String matrixFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\matrix.txt";
+    private static final String vertexFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\vertexWeight.txt";
 
     public void putInitialGraph(Graph initialGraph){
         this.initialGraph = initialGraph;
