@@ -1,10 +1,7 @@
 package com.company.services.builders;
 
 import com.company.StarPlan;
-import com.company.dto.DataDTO;
-import com.company.dto.EdgeDTO;
-import com.company.dto.GraphDTO;
-import com.company.dto.NodeDTO;
+import com.company.dto.*;
 import com.company.entities.Vertex;
 import org.springframework.stereotype.Component;
 
@@ -29,7 +26,8 @@ public class GraphDTOByStarPlanBuilder implements GraphDTOBuilder<StarPlan>
         {
             for (Vertex satellite : starPlan.getStarSatelliteMap().get(star))
             {
-                edgeDTOList.add(new EdgeDTO("a", star.getId(), satellite.getId()));
+                if(star.getId() != satellite.getId())
+                    edgeDTOList.add(new EdgeDTO("a", String.valueOf(star.getId() + 1), String.valueOf(satellite.getId() + 1)));
             }
         }
         return edgeDTOList;
@@ -45,10 +43,12 @@ public class GraphDTOByStarPlanBuilder implements GraphDTOBuilder<StarPlan>
         System.out.println("builder:" + starPlan);
         for (Vertex star : starPlan.getStarSatelliteMap().keySet())
         {
-            nodeDTOList.add(new NodeDTO(star.getId(), STAR_LABEL + star.getId(), new DataDTO(starColor)));
+            nodeDTOList.add(new NodeDTO(String.valueOf(star.getId() + 1), STAR_LABEL +(star.getId() + 1),new DataDTO(starColor)));
+//                   , new NodePositionDTO(0,0),
             for (Vertex satellite : starPlan.getStarSatelliteMap().get(star))
             {
-                nodeDTOList.add(new NodeDTO(satellite.getId(), SATELLITE_LABEL + satellite.getId(), new DataDTO(satelliteColor)));
+                nodeDTOList.add(new NodeDTO(String.valueOf(satellite.getId() + 1), SATELLITE_LABEL + (satellite.getId() + 1),new DataDTO(satelliteColor)));
+//                        , new NodePositionDTO(star.getId()*10,star.getId() * 10),
             }
         }
         return nodeDTOList;

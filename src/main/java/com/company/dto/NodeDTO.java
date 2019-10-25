@@ -9,7 +9,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NodeDTO
 {
-    private int id;
+    private String id;
     private String label;
     private DataDTO data;
+//    private NodePositionDTO position;
+//    private DimensionDTO dimension;
 }

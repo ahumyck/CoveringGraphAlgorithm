@@ -1,9 +1,6 @@
 package com.company.services.builders;
 
-import com.company.dto.DataDTO;
-import com.company.dto.EdgeDTO;
-import com.company.dto.GraphDTO;
-import com.company.dto.NodeDTO;
+import com.company.dto.*;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
 import org.springframework.stereotype.Component;
@@ -28,9 +25,10 @@ public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
         List<EdgeDTO> edgeDTOList = new LinkedList<>();
         for (int j = 0; j < graph.getEdgeMatrix().getSize(); j++)
         {
-            for (int i = 0; i < graph.getEdgeMatrix().getSize() - j; i++)
+            for (int i = j + 1; i < graph.getEdgeMatrix().getSize(); i++)
             {
-                edgeDTOList.add(new EdgeDTO("a", i, j));
+                //todo: pridymat chto-to s id
+                edgeDTOList.add(new EdgeDTO("a", String.valueOf(j + 1), String.valueOf(i + 1)));
             }
         }
         return edgeDTOList;
@@ -38,12 +36,13 @@ public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 
     private List<NodeDTO> buildNodeDTOList(Graph graph)
     {
-        final String blackColor = "#000000";
+        final String backgroundColor = "#00BFFF";
         List<NodeDTO> nodeDTOList = new LinkedList<>();
         for (Vertex vertex: graph.getVertices()
              )
         {
-            nodeDTOList.add(new NodeDTO(vertex.getId(), String.valueOf(vertex.getId()), new DataDTO(blackColor)));
+            nodeDTOList.add(new NodeDTO(String.valueOf(vertex.getId() + 1), String.valueOf(vertex.getId() + 1), new DataDTO(backgroundColor)));
+//                    ,new NodePositionDTO(vertex.getId()*10,vertex.getId()*10),
         }
         return nodeDTOList;
     }

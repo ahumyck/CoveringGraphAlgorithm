@@ -10,6 +10,6 @@ import lombok.NoArgsConstructor;
 public class EdgeDTO
 {
     private String id;
-    private int source;
-    private int target;
+    private String source;
+    private String target;
 }
