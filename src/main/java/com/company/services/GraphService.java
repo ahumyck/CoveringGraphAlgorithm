@@ -1,6 +1,6 @@
 package com.company.services;
 
-import com.company.Parser;
+import com.company.parsers.GraphParser;
 import com.company.StarPlan;
 import com.company.entities.Graph;
 import org.springframework.stereotype.Component;
@@ -13,8 +13,7 @@ public class GraphService
 {
     private Graph initialGraph;
     private StarPlan endSolutionStarPlan;
-    private static final String matrixFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\matrix.txt";
-    private static final String vertexFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\vertexWeight.txt";
+    private static final String graphFile = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\graph.txt";
 
     public void putInitialGraph(Graph initialGraph){
         this.initialGraph = initialGraph;
@@ -23,7 +22,7 @@ public class GraphService
     @PostConstruct
     public void init() throws FileNotFoundException
     {
-        initialGraph = Parser.parseGraph(vertexFile,matrixFile);
+        initialGraph = GraphParser.parseFile(graphFile);
     }
     public Graph getInitialGraph(){
         return this.initialGraph;

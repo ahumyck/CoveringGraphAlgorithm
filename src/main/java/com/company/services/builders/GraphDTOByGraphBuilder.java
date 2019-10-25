@@ -1,6 +1,6 @@
 package com.company.services.builders;
 
-import com.company.StarPlan;
+import com.company.dto.DataDTO;
 import com.company.dto.EdgeDTO;
 import com.company.dto.GraphDTO;
 import com.company.dto.NodeDTO;
@@ -14,7 +14,7 @@ import java.util.List;
 @Component
 public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 {
-    private String VERTEX_LABEL ="";
+//    private String VERTEX_LABEL ="";
 
     @Override
     public GraphDTO build(Graph graph)
@@ -38,11 +38,12 @@ public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 
     private List<NodeDTO> buildNodeDTOList(Graph graph)
     {
+        final String blackColor = "#000000";
         List<NodeDTO> nodeDTOList = new LinkedList<>();
         for (Vertex vertex: graph.getVertices()
              )
         {
-            nodeDTOList.add(new NodeDTO(vertex.getId(), VERTEX_LABEL));
+            nodeDTOList.add(new NodeDTO(vertex.getId(), String.valueOf(vertex.getId()), new DataDTO(blackColor)));
         }
         return nodeDTOList;
     }

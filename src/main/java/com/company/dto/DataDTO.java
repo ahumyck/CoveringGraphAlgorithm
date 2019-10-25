@@ -7,9 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class NodeDTO
-{
-    private int id;
-    private String label;
-    private DataDTO data;
+public class DataDTO {
+    //todo: rename and replace this class wherever you want
+    private String backgroundColor;
 }
