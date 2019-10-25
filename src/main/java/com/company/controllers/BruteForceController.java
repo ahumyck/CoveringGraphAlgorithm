@@ -5,6 +5,7 @@ import com.company.dto.request.ExecuteRequestBody;
 import com.company.services.BruteForceService;
 import com.company.utils.ApiPaths;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -20,24 +21,24 @@ public class BruteForceController
     }
 
     @RequestMapping(method = RequestMethod.GET, value = ApiPaths.SOLUTION_PATH + ApiPaths.NUMBER_PATH)
-    public GraphDTO getCertainSolution(@PathVariable Integer number){
+    public @ResponseStatus(HttpStatus.OK) GraphDTO getCertainSolution(@PathVariable Integer number){
         return bruteForceService.getCurrentSolution(number);
     }
 
     @RequestMapping(method = RequestMethod.POST, value = ApiPaths.EXECUTE_PATH)
-    public void executeBruteForce(@RequestBody ExecuteRequestBody executeRequestBody) throws Exception
+    public @ResponseStatus(HttpStatus.OK) void executeBruteForce(@RequestBody ExecuteRequestBody executeRequestBody) throws Exception
     {
         bruteForceService.executeBruteForce(executeRequestBody);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = ApiPaths.SOLUTION_PATH + ApiPaths.END_PATH)
-    public GraphDTO getEndSolution() throws Exception
+    public @ResponseStatus(HttpStatus.OK) GraphDTO getEndSolution() throws Exception
     {
         return bruteForceService.getEndSolution();
     }
 
     @RequestMapping(method = RequestMethod.GET, value = ApiPaths.INITIAL_GRAPH_PATH)
-    public GraphDTO getInitialGraph() {
+    public @ResponseStatus(HttpStatus.OK) GraphDTO getInitialGraph() {
         return bruteForceService.getInitialGraph();
     }
 }
