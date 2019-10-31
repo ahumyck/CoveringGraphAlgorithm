@@ -11,7 +11,6 @@ import java.util.List;
 @Component
 public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 {
-//    private String VERTEX_LABEL ="";
 
     @Override
     public GraphDTO build(Graph graph)
@@ -20,29 +19,27 @@ public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
                 buildEdgeDTOList(graph));
     }
 
-    private List<EdgeDTO> buildEdgeDTOList(Graph graph)
+    private List<EdgeDataDTO> buildEdgeDTOList(Graph graph)
     {
-        List<EdgeDTO> edgeDTOList = new LinkedList<>();
+        final String edgeColor = "#000000";
+        List<EdgeDataDTO> edgeDataDTOList = new LinkedList<>();
         for (int j = 0; j < graph.getEdgeMatrix().getSize(); j++)
         {
             for (int i = j + 1; i < graph.getEdgeMatrix().getSize(); i++)
             {
-                //todo: pridymat chto-to s id
-                edgeDTOList.add(new EdgeDTO("a", String.valueOf(j + 1), String.valueOf(i + 1)));
+                edgeDataDTOList.add(new EdgeDataDTO(new EdgeDTO(String.valueOf(j + 1), String.valueOf(i + 1), edgeColor)));
             }
         }
-        return edgeDTOList;
+        return edgeDataDTOList;
     }
 
-    private List<NodeDTO> buildNodeDTOList(Graph graph)
+    private List<NodeDataDTO> buildNodeDTOList(Graph graph)
     {
         final String backgroundColor = "#00BFFF";
-        List<NodeDTO> nodeDTOList = new LinkedList<>();
-        for (Vertex vertex: graph.getVertices()
-             )
+        List<NodeDataDTO> nodeDTOList = new LinkedList<>();
+        for (Vertex vertex: graph.getVertices())
         {
-            nodeDTOList.add(new NodeDTO(String.valueOf(vertex.getId() + 1), String.valueOf(vertex.getId() + 1), new DataDTO(backgroundColor)));
-//                    ,new NodePositionDTO(vertex.getId()*10,vertex.getId()*10),
+            nodeDTOList.add(new NodeDataDTO(new NodeDTO(String.valueOf(vertex.getId() + 1), String.valueOf(vertex.getId() + 1), backgroundColor)));
         }
         return nodeDTOList;
     }
