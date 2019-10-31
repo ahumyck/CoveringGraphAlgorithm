@@ -19,8 +19,6 @@ public class InitialGraphService {
     }
 
     public GraphDTO getInitialGraph(InitialGraphRequestBody initialGraphRequestBody){
-        //todo: return
-
         graphService.calculateInitialGraph(initialGraphRequestBody.getNodeWeights(),initialGraphRequestBody.getMatrix());
         return graphDTOByGraphBuilder.build(graphService.takeInitialGraph());
     }
