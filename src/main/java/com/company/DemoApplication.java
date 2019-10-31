@@ -1,12 +1,9 @@
 package com.company;
 
-import com.company.entities.Graph;
-import com.company.parsers.GraphParser;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileNotFoundException;
-import java.util.Scanner;
 
 
 @SpringBootApplication
