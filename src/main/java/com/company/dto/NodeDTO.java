@@ -10,8 +10,6 @@ import lombok.NoArgsConstructor;
 public class NodeDTO
 {
     private String id;
-    private String label;
-    private DataDTO data;
-//    private NodePositionDTO position;
-//    private DimensionDTO dimension;
+    private String name;
+    private String color;
 }
