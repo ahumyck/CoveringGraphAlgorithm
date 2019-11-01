@@ -12,14 +12,37 @@ paths:
             schema:
               type: object
               properties:
-                starsCount: 
+                starsCount:
                   type: number
       responses:
         '200':
-          description: maybe wait amount of time 
-  /brute-force/initial-graph:
-    get:
+          description: maybe wait amount of time
+  /initial-graph/post-file:
+    post:
       summary: get initial graph
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                size:
+                  type: number
+                  example: 1
+                nodeWeights:
+                  type: array
+                  items:
+                    type: number
+                    example: 1
+                matrix:
+                  type: array
+                  items:
+                    type: array
+                    items:
+                      type: number
+                  example:
+                    -
+                      - 1
       responses:
         '200':
           content:
@@ -62,31 +85,41 @@ components:
     Graph:
       type: object
       properties:
-        nodes: 
+        nodes:
           type: array
-          items: 
-            type: object
-            properties:
-              id: 
-                type: number
-              label:
-                type: string
-          example:
-            - id: 0
-              label: "A"
-            - id: 1
-              label: "B"
+          items:
+            $ref: '#/components/schemas/node'
         edges:
           type: array
           items:
-            type: object
-            properties:
-              id:
-                type: string
-                example: "a"
-              sourse:
-                type: number
-                example: "1"
-              target:
-                type: number
-                example: "0"
+            $ref: '#/components/schemas/edge'
+    node:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            id:
+              type: number
+              example: 0
+            name:
+              type: string
+              example: "Node name"
+            color:
+              type: string
+              example: "#ff00ff"
+    edge:
+      type: object
+      properties:
+        data:
+          type: object
+          properties:
+            source:
+              type: string
+              example: '0'
+            target:
+              type: string
+              example: '1'
+            color:
+              type: string
+              example: '#ff0ff0'
