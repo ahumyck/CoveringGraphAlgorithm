@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class NodeDTO
 {
-    private int id;
-    private String label;
+    private String id;
+    private String name;
+    private String color;
 }

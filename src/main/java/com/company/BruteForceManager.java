@@ -23,27 +23,15 @@ public class BruteForceManager
     public StarPlan bruteForce(Graph graph, int starsCount)
     {
         StarGenerator generator = new StarGenerator(starsCount,graph.getVertices().size());
-        List<Integer> starsCombination; //todo: base plan?
-        ArrayList<List<Integer>> allGenerations = new ArrayList<>(); //todo: calculate aprox size
+        List<Integer> starsCombination;
 
-        long start = System.currentTimeMillis();
-        while((starsCombination = generator.next()) != null){
-            allGenerations.add(starsCombination);
-        }
-        long end = System.currentTimeMillis();
-        System.out.println("Time stars generator: " + (end - start));
-
-//        StarPlan starPlan = allGenerations.parallelStream().unordered()
-//                .map(x -> new SmartMatrixWrapper(x, graph).calculateMinimizationFunction())
-//                .min(Comparator.comparing(StarPlan::getCost))
-//                .get();
-        StarPlan starPlan = new SmartMatrixWrapper(allGenerations.get(0), graph).calculateMinimizationFunction();
+        StarPlan starPlan = new SmartMatrixWrapper(generator.next(), graph).calculateMinimizationFunction();
         StarPlan newStarPlan;
         int i = 0;
         cacheService.putStarPlan(i, starPlan);
         i++;
-        for (List<Integer> list:  allGenerations){
-            newStarPlan =  new SmartMatrixWrapper(list, graph).calculateMinimizationFunction();
+        while((starsCombination = generator.next()) != null){
+            newStarPlan =  new SmartMatrixWrapper(starsCombination, graph).calculateMinimizationFunction();
             if(newStarPlan.getCost() < starPlan.getCost()){
                 cacheService.putStarPlan(i, newStarPlan);
                 i++;

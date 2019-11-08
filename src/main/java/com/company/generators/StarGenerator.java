@@ -22,7 +22,7 @@ public class StarGenerator implements Generator {
             arr = new ArrayList<>(starCount);
             for (int i = 0; i < starCount; i++)
                 arr.add(i);
-            return (List<Integer>) arr.clone();
+            return arr;
         }
         for (int i = starCount - 1; i >= 0; i--)
             if (arr.get(i) < vertexCount - starCount + i)
@@ -30,7 +30,7 @@ public class StarGenerator implements Generator {
                 arr.set(i,arr.get(i) + 1);
                 for (int j = i; j < starCount - 1; j++)
                     arr.set(j + 1, arr.get(j) + 1);
-                return (List<Integer>) arr.clone();
+                return arr;
             }
         return null;
     }

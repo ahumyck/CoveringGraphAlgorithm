@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EdgeDTO
 {
-    private String id;
-    private int source;
-    private int target;
+    private String source;
+    private String target;
+    private String color;
 }

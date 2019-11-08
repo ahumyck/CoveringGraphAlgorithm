@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 //@RestController
 //@RequestMapping(ApiPaths.ADDITIVE_PATH)
-public class AdditiveAlgorythmController
+public class AdditiveAlgorithmController
 {
 
 }

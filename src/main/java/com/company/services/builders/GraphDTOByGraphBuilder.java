@@ -1,9 +1,6 @@
 package com.company.services.builders;
 
-import com.company.StarPlan;
-import com.company.dto.EdgeDTO;
-import com.company.dto.GraphDTO;
-import com.company.dto.NodeDTO;
+import com.company.dto.*;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
 import org.springframework.stereotype.Component;
@@ -14,7 +11,6 @@ import java.util.List;
 @Component
 public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 {
-    private String VERTEX_LABEL ="";
 
     @Override
     public GraphDTO build(Graph graph)
@@ -23,26 +19,27 @@ public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
                 buildEdgeDTOList(graph));
     }
 
-    private List<EdgeDTO> buildEdgeDTOList(Graph graph)
+    private List<EdgeDataDTO> buildEdgeDTOList(Graph graph)
     {
-        List<EdgeDTO> edgeDTOList = new LinkedList<>();
+        final String edgeColor = "#000000";
+        List<EdgeDataDTO> edgeDataDTOList = new LinkedList<>();
         for (int j = 0; j < graph.getEdgeMatrix().getSize(); j++)
         {
-            for (int i = 0; i < graph.getEdgeMatrix().getSize() - j; i++)
+            for (int i = j + 1; i < graph.getEdgeMatrix().getSize(); i++)
             {
-                edgeDTOList.add(new EdgeDTO("a", i, j));
+                edgeDataDTOList.add(new EdgeDataDTO(new EdgeDTO(String.valueOf(j + 1), String.valueOf(i + 1), edgeColor)));
             }
         }
-        return edgeDTOList;
+        return edgeDataDTOList;
     }
 
-    private List<NodeDTO> buildNodeDTOList(Graph graph)
+    private List<NodeDataDTO> buildNodeDTOList(Graph graph)
     {
-        List<NodeDTO> nodeDTOList = new LinkedList<>();
-        for (Vertex vertex: graph.getVertices()
-             )
+        final String backgroundColor = "#00BFFF";
+        List<NodeDataDTO> nodeDTOList = new LinkedList<>();
+        for (Vertex vertex: graph.getVertices())
         {
-            nodeDTOList.add(new NodeDTO(vertex.getId(), VERTEX_LABEL));
+            nodeDTOList.add(new NodeDataDTO(new NodeDTO(String.valueOf(vertex.getId() + 1), String.valueOf(vertex.getId() + 1), backgroundColor)));
         }
         return nodeDTOList;
     }
