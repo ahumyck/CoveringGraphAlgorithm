@@ -4,6 +4,10 @@ public class EdgeMatrix
 {
     private int[][] incidenceMatrix;
 
+    public EdgeMatrix(int[][] incidenceMatrix) {
+        this.incidenceMatrix = incidenceMatrix;
+    }
+
     public EdgeMatrix(int size)
     {
         incidenceMatrix = new int[size][size];

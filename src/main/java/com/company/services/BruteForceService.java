@@ -28,10 +28,6 @@ public class BruteForceService
         this.graphService = graphService;
     }
 
-    public GraphDTO getInitialGraph(){
-        return graphDTOByGraphBuilder.build(graphService.getInitialGraph());
-    }
-
     public GraphDTO getCurrentSolution(Integer solutionNumber){
         return graphDTOByStarPlanBuilder.build(cacheService.getStarPlan(solutionNumber));
     }
@@ -41,7 +37,7 @@ public class BruteForceService
         if(executing) throw new Exception("already executing");
         graphService.setEndSolutionStarPlan(null);
         executing = true;
-        graphService.setEndSolutionStarPlan(bruteForceManager.bruteForce(graphService.getInitialGraph(), executeRequestBody.getStarsCount()));
+        graphService.setEndSolutionStarPlan(bruteForceManager.bruteForce(graphService.takeInitialGraph(), executeRequestBody.getStarsCount()));
         executing = false;
     }
 

@@ -9,7 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping(ApiPaths.BRUTE_FORSE_PATH)
+@RequestMapping(ApiPaths.BRUTE_FORCE_PATH)
 public class BruteForceController
 {
     private BruteForceService bruteForceService;
@@ -35,10 +35,5 @@ public class BruteForceController
     public @ResponseStatus(HttpStatus.OK) GraphDTO getEndSolution() throws Exception
     {
         return bruteForceService.getEndSolution();
-    }
-
-    @RequestMapping(method = RequestMethod.GET, value = ApiPaths.INITIAL_GRAPH_PATH)
-    public @ResponseStatus(HttpStatus.OK) GraphDTO getInitialGraph() {
-        return bruteForceService.getInitialGraph();
     }
 }
