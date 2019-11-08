@@ -6,7 +6,7 @@ import com.company.entities.Vertex;
 
 import java.util.ArrayList;
 
-public class GraphBuilderByInitialGraph implements GraphBuilder<int[], int[][]> {
+public class GraphBuilderByInitialGraphRequest implements GraphBuilder<int[], int[][]> {
     @Override
     public Graph build(int[] nodeInterpretation, int[][] edgeInterpretation) {
         EdgeMatrix edgeMatrix = new EdgeMatrix(edgeInterpretation);
