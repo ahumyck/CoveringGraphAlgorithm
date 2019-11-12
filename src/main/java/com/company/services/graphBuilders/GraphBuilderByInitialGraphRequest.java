@@ -1,4 +1,4 @@
-package com.company.services.builders;
+package com.company.services.graphBuilders;
 
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;

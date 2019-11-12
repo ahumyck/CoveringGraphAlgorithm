@@ -3,8 +3,8 @@ package com.company.services;
 import com.company.BruteForceManager;
 import com.company.dto.GraphDTO;
 import com.company.dto.request.ExecuteRequestBody;
-import com.company.services.builders.GraphDTOByGraphBuilder;
-import com.company.services.builders.GraphDTOByStarPlanBuilder;
+import com.company.services.graphBuilders.GraphDTOByGraphBuilder;
+import com.company.services.graphBuilders.GraphDTOByStarPlanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
