@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 //todo: rename naxui
 //todo: fix case when starCount == 1
-public class SatellitePermutationGeneratorUsingStars implements Generator
+public class SatellitePermutationGeneratorUsingStars
 {
     private ArrayList<Integer> mass;
     private int starCount;//mod

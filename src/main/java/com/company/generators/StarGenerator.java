@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-public class StarGenerator implements Generator {
+public class StarGenerator {
 
     private int starCount;
     private int vertexCount;
@@ -15,7 +15,6 @@ public class StarGenerator implements Generator {
         this.vertexCount = vertexCount;
     }
 
-    @Override
     public List<Integer> next() {
         if (arr == null)
         {
