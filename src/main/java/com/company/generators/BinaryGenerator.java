@@ -1,7 +1,6 @@
 package com.company.generators;
 
 
-//todo: add big integer
 public class BinaryGenerator {
     private int previousCombination;
     private int currentCombination;
@@ -10,7 +9,7 @@ public class BinaryGenerator {
         previousCombination = calculateFirstCombination(n,k);
         currentCombination = previousCombination;
     }
-    
+
     public int next() {
         previousCombination = currentCombination;
         currentCombination = next(currentCombination);
@@ -26,8 +25,9 @@ public class BinaryGenerator {
         if ((combination & (combination+1)) == 0)
             return 0;
 
-        if ((combination & 1) != 0)
-            return addNonZeroBitAfterLastNonZeroBit( next(combination >> 1) << 1 );
+        if ((combination & 1) != 0) {
+            return addNonZeroBitAfterLastNonZeroBit(next(combination >> 1) << 1);
+        }
         else
             return shiftLastNonZeroBit(combination);
     }
