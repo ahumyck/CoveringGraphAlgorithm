@@ -1,47 +1,64 @@
 package com.company.generators;
+import java.math.BigInteger;
 
-
-//todo: add big integer
 public class BinaryGenerator {
-    private int previousCombination;
-    private int currentCombination;
+    private BigInteger previousCombination;
+    private BigInteger currentCombination;
 
-    public BinaryGenerator(int n, int k){
-        previousCombination = calculateFirstCombination(n,k);
+    public BinaryGenerator(int totalSize, int numberOfNonZeroBits){
+        previousCombination = calculateFirstCombination(BigInteger.valueOf(totalSize),BigInteger.valueOf(numberOfNonZeroBits));
         currentCombination = previousCombination;
     }
     
-    public int next() {
+    public BigInteger next() {
         previousCombination = currentCombination;
         currentCombination = next(currentCombination);
         return previousCombination;
     }
 
     public boolean hasNext() {
-        return !(currentCombination == 0);
+        return currentCombination.compareTo(BigInteger.ZERO) != 0;
     }
 
-    private int next(int combination)
+    private BigInteger next(BigInteger combination)
     {
-        if ((combination & (combination+1)) == 0)
-            return 0;
+        if(combination.and(combination.add(BigInteger.ONE)).compareTo(BigInteger.ZERO) == 0){
+            System.out.println("oy may " + currentCombination);
+            return BigInteger.ZERO;
+        }
 
-        if ((combination & 1) != 0)
-            return addNonZeroBitAfterLastNonZeroBit( next(combination >> 1) << 1 );
-        else
-            return shiftLastNonZeroBit(combination);
+        if(combination.and(BigInteger.ONE).compareTo(BigInteger.ZERO) != 0){
+            System.out.println("if " + currentCombination);
+            return addNonZeroBitAfterLastNonZeroBit(next(combination.shiftLeft(1)).shiftRight(1));
+        }
+        else {
+            System.out.println("else " + currentCombination);
+            BigInteger integer = shiftLastNonZeroBit(combination);
+            System.out.println("after else " + integer);
+            return integer;
+        }
+
+//        if ((combination & (combination+1)) == 0)
+//            return 0;
+
+//        if ((combination & 1) != 0)
+//            return addNonZeroBitAfterLastNonZeroBit( next(combination >> 1) << 1 );
+//        else
+//            return shiftLastNonZeroBit(combination);
     }
 
-    private int shiftLastNonZeroBit(int combination){
-        return ((combination-1) ^ ((combination^(combination-1)) >> 2));
+    private BigInteger shiftLastNonZeroBit(BigInteger combination){
+        BigInteger firstStep = combination.subtract(BigInteger.ONE);
+//        return ((combination-1) ^ ((combination^(combination-1)) >> 2));
+    }
+//
+    private BigInteger addNonZeroBitAfterLastNonZeroBit(BigInteger combination) {
+        return combination.or(combination.xor(combination.subtract(BigInteger.ONE)).add(BigInteger.ONE).shiftLeft(2));
+//        return ( combination | ( ((combination^(combination-1)) + 1) >> 2 ) );
     }
 
-    private int addNonZeroBitAfterLastNonZeroBit(int combination) {
-        return ( combination | ( ((combination^(combination-1)) + 1) >> 2 ) );
-    }
-
-    private int calculateFirstCombination(int n, int k) {
-        return (((1 << k) - 1) << (n - k));
+    private BigInteger calculateFirstCombination(BigInteger n, BigInteger k) {
+        return BigInteger.ONE.shiftLeft(k.intValue()).subtract(BigInteger.ONE).shiftLeft(n.subtract(k).intValue());
     }
 
 }
