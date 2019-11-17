@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Coefficient {
-    int i,j;
+    int star, satellite;
     int weight;
 
     @Override
@@ -17,6 +17,6 @@ public class Coefficient {
     }
 
     public String fullInfo(){
-        return "from: " + i + " ,to: " + j + ",weight: " + weight;
+        return "from: " + star + " ,to: " + satellite + ",weight: " + weight;
     }
 }

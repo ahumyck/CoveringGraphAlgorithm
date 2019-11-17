@@ -9,9 +9,12 @@ import java.util.Comparator;
 import java.util.List;
 
 public class LinearCoefficientsBuilder {
-    private ArrayList<Coefficient> coefficients;
+    private ArrayList<Coefficient> coefficients = null;
 
-    public  LinearCoefficientsBuilder(Graph graph){
+    public  LinearCoefficientsBuilder(){
+    }
+
+    public LinearCoefficientsBuilder build(Graph graph){
         List<Vertex> vertices = graph.getVertices();
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
 
@@ -27,6 +30,7 @@ public class LinearCoefficientsBuilder {
                 }
             }
         }
+        return this;
     }
 
     public ArrayList<Coefficient> getCoefficients() {
