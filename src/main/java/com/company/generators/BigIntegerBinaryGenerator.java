@@ -1,6 +1,8 @@
 package com.company.generators;
 import java.math.BigInteger;
 
+
+@Deprecated
 public class BigIntegerBinaryGenerator {
     private BigInteger previousCombination;
     private BigInteger currentCombination;
