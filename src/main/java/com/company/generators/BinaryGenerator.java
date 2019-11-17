@@ -4,16 +4,29 @@ package com.company.generators;
 public class BinaryGenerator {
     private int previousCombination;
     private int currentCombination;
+    private int totalSize, nonZeroBits;
 
-    public BinaryGenerator(int n, int k){
-        previousCombination = calculateFirstCombination(n,k);
+    public BinaryGenerator(int totalSize, int nonZeroBits){
+        previousCombination = calculateFirstCombination(totalSize,nonZeroBits);
         currentCombination = previousCombination;
+        this.totalSize = totalSize;
+        this.nonZeroBits = nonZeroBits;
     }
 
-    public int next() {
+    public int[] next() {
         previousCombination = currentCombination;
         currentCombination = next(currentCombination);
-        return previousCombination;
+        return translateToArrayOfBits(previousCombination);
+    }
+
+    private int[] translateToArrayOfBits(int number){
+        int[] bits = new int[totalSize];
+        int lowerBit = 1;
+        for (int i = totalSize - 1; i >= 0; i--) {
+            bits[i] = number & lowerBit;
+            number = number >> 1;
+        }
+        return bits;
     }
 
     public boolean hasNext() {
