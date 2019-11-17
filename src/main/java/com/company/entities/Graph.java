@@ -31,4 +31,8 @@ public class Graph
                 ", edgeMatrix=" + edgeMatrix +
                 '}';
     }
+
+    public int size() {
+        return vertices.size();
+    }
 }
