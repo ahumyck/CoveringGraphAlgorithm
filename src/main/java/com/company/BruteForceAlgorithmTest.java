@@ -4,6 +4,7 @@ package com.company;
 import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;
+import com.company.entities.Vertex;
 import com.company.generators.BinaryGenerator;
 import com.company.generators.CombinationBinaryGeneratorLong;
 
@@ -29,12 +30,13 @@ public class BruteForceAlgorithmTest extends GreedyAlgorithmTest {
 
     public static Integer calculate(Map<Integer,ArrayList<Integer>> map, Graph graph){
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
+        List<Vertex> vertices = graph.getVertices();
         int counter = 0;
         for (Integer key :
                 map.keySet()) {
             for (Integer value:
                  map.get(key)) {
-                counter += edgeMatrix.getCell(key,value);
+                counter += vertices.get(key).getWeight() * edgeMatrix.getCell(key,value);
             }
         }
         return counter;
