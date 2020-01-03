@@ -6,6 +6,8 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
+//todo: clone Galaxy
 public class Galaxy {
     private List<StarSystem> systems;
     private int weight;
@@ -34,25 +36,29 @@ public class Galaxy {
         this.systems = systems;
     }
 
-    public void addWeight(int weight){
+    public Galaxy addWeight(int weight){
         this.weight += weight;
+        return this;
     }
 
-    public void removeWeight(int weight){
+    public Galaxy removeWeight(int weight){
         this.weight -= weight;
+        return this;
     }
 
-    public void calculateWeight(Graph graph){
+    public Galaxy calculateWeight(Graph graph){
         this.weight = 0;
         for (StarSystem system:
              systems) {
             system.calculateWeight(graph);
             this.weight += system.getWeight();
         }
+        return this;
     }
 
-    public void orderByWeight(){
+    public Galaxy orderByWeight(){
         this.systems.sort(Comparator.comparingInt(StarSystem::getWeight));
+        return this;
     }
 
     @Override

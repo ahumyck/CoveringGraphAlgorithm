@@ -5,6 +5,7 @@ import com.company.entities.Graph;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByMap;
 import com.company.universe.Galaxy;
+import com.company.universe.galaxyMutator.FromPlanetToStarMutator;
 import com.company.universe.galaxyMutator.OptimalPlanetDistributorMutator;
 import com.company.utils.GraphGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -32,9 +33,13 @@ public class DemoApplication
         System.out.println(BruteForceAlgorithmTest.calculate(solve,graph));
         Galaxy galaxy = new GalaxyDTOBuilderByMap().build(solve, graph);
         System.out.println(galaxy);
-        new OptimalPlanetDistributorMutator().mutate(galaxy,graph);
+        new FromPlanetToStarMutator().mutate(galaxy,graph);
         galaxy.orderByWeight();
         System.out.println(galaxy);
+        new FromPlanetToStarMutator().mutate(galaxy,graph);
+        galaxy.orderByWeight();
+        System.out.println(galaxy);
+
 
 
 //        List<Galaxy> bestGalaxies = new ArrayList<>();
