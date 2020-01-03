@@ -2,15 +2,12 @@ package com.company;
 
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
-import com.company.generators.BinaryGenerator;
-import com.company.generators.CombinationBinaryGeneratorLong;
 import com.company.parsers.GraphParser;
 import com.company.services.coefficientsBuilder.LinearCoefficientsBuilder;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Map;
 
 
@@ -28,7 +25,7 @@ public class DemoApplication
 //        BruteForceAlgorithmTest.solve(graphSized8, coefficients, 2, n);
         System.out.println(System.currentTimeMillis() - l);
         Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, n);
-        Map<Coefficient, ArrayList<Coefficient>> mySolve = GreedyTest.solve(coefficients, 4, n);
+        Map<Coefficient, ArrayList<Coefficient>> mySolve = GreedyTest.solve(coefficients, 3, n);
         System.out.println("my");
         mySolve.forEach((key, value) ->
         {
@@ -40,6 +37,6 @@ public class DemoApplication
         System.out.println("result: " + GreedyTest.calculate(mySolve));
         System.out.println("my");
         System.out.println(solve);
-        System.out.println(BruteForceAlgorithmTest.calculate(solve, graphSized8));
+//        System.out.println(BruteForceAlgorithmTest.calculate(solve, graphSized8));
     }
 }

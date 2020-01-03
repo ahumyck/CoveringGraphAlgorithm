@@ -1,8 +1,6 @@
 package com.company.services;
 
-import com.company.BruteForceManager;
 import com.company.dto.GraphDTO;
-import com.company.dto.request.ExecuteRequestBody;
 import com.company.services.graphBuilders.GraphDTOByGraphBuilder;
 import com.company.services.graphBuilders.GraphDTOByStarPlanBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class BruteForceService
 {
-    private BruteForceManager bruteForceManager;
+
     private GraphDTOByStarPlanBuilder graphDTOByStarPlanBuilder;
     private GraphDTOByGraphBuilder graphDTOByGraphBuilder;
     private CacheService cacheService;
@@ -19,9 +17,9 @@ public class BruteForceService
     private static volatile boolean executing = false;
 
     @Autowired
-    public BruteForceService(BruteForceManager bruteForceManager, GraphDTOByStarPlanBuilder graphDTOByStarPlanBuilder, GraphDTOByGraphBuilder graphDTOByGraphBuilder, CacheService cacheService, GraphService graphService)
+    public BruteForceService( GraphDTOByStarPlanBuilder graphDTOByStarPlanBuilder, GraphDTOByGraphBuilder graphDTOByGraphBuilder, CacheService cacheService, GraphService graphService)
     {
-        this.bruteForceManager = bruteForceManager;
+
         this.graphDTOByStarPlanBuilder = graphDTOByStarPlanBuilder;
         this.graphDTOByGraphBuilder = graphDTOByGraphBuilder;
         this.cacheService = cacheService;
@@ -32,14 +30,7 @@ public class BruteForceService
         return graphDTOByStarPlanBuilder.build(cacheService.getStarPlan(solutionNumber));
     }
 
-    public void executeBruteForce(ExecuteRequestBody executeRequestBody) throws Exception
-    {
-        if(executing) throw new Exception("already executing");
-        graphService.setEndSolutionStarPlan(null);
-        executing = true;
-        graphService.setEndSolutionStarPlan(bruteForceManager.bruteForce(graphService.takeInitialGraph(), executeRequestBody.getStarsCount()));
-        executing = false;
-    }
+
 
     public GraphDTO getEndSolution() throws Exception
     {
