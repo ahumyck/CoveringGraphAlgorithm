@@ -11,7 +11,7 @@ import com.company.generators.CombinationBinaryGeneratorLong;
 import java.util.*;
 
 public class BruteForceAlgorithmTest extends GreedyAlgorithmTest {
-    public static void solve(final Graph graph, List<Coefficient> coefficients, int starCounter, int n) {
+    public static Map<Integer, ArrayList<Integer>> solve(final Graph graph, List<Coefficient> coefficients, int starCounter, int n) throws Exception {
         if (starCounter > 1) {
             ArrayList<Map<Integer,ArrayList<Integer>>> solutions = new ArrayList<>();
             BinaryGenerator generator = new CombinationBinaryGeneratorLong(coefficients.size(), n - starCounter);
@@ -22,10 +22,10 @@ public class BruteForceAlgorithmTest extends GreedyAlgorithmTest {
 
             Optional<Map<Integer, ArrayList<Integer>>> min = solutions.stream().min(Comparator.comparing(o -> calculate(o, graph)));
             if(min.isPresent()){
-                System.out.println(min.get());
-                System.out.println(calculate(min.get(),graph));
+                return min.get();
             }
         }
+        throw new Exception("star counter <= 1");
     }
 
     public static Integer calculate(Map<Integer,ArrayList<Integer>> map, Graph graph){
@@ -58,7 +58,6 @@ public class BruteForceAlgorithmTest extends GreedyAlgorithmTest {
             );
         }
         if(stopRule(hashMap,starCounter,n)) {
-//            nonZeroCoefficients.forEach(x-> System.out.println(x.fullInfo()));
             return Optional.of(hashMap);
         }
         else return Optional.empty();
@@ -74,4 +73,3 @@ public class BruteForceAlgorithmTest extends GreedyAlgorithmTest {
     }
 
 }
-

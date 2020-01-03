@@ -2,44 +2,53 @@ package com.company;
 
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
-import com.company.generators.BinaryGenerator;
-import com.company.generators.CombinationBinaryGeneratorLong;
 import com.company.parsers.GraphParser;
+import com.company.perm_generic_algorithm.RandomPermutationGenerator;
+import com.company.perm_generic_algorithm.StarSatelliteDescriptionState;
+import com.company.perm_generic_algorithm.StarSatellitePool;
+import com.company.perm_generic_algorithm.StarSatellitePoolGenerator;
 import com.company.services.coefficientsBuilder.LinearCoefficientsBuilder;
+import com.company.services.graphBuilders.GraphDTOByDescriptionStateBuilder;
+import com.company.utils.GraphGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Map;
+import java.util.*;
 
 
 @SpringBootApplication
 public class DemoApplication
 {
-    public static void main(String[] args) throws FileNotFoundException
+    public static void main(String[] args) throws Exception
     {
 //        SpringApplication.run(DemoApplication.class, args);
-        Graph graphSized8 = GraphParser
-                .parseFile("C:\\Users\\ILYA\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
-        int n = graphSized8.size(); // 8*7
-        ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graphSized8).orderByWeight().getCoefficients();
-        long l = System.currentTimeMillis();
-//        BruteForceAlgorithmTest.solve(graphSized8, coefficients, 2, n);
-        System.out.println(System.currentTimeMillis() - l);
+//        Graph graph = GraphParser
+//                .parseFile("C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
+//        int n = graph.size();
+        Graph graph = GraphGenerator.generate(128,100,100);
+        int n = graph.size();
+        ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
+
+
+        List<StarSatelliteDescriptionState> states = new ArrayList<>();
+        int poolSize = 1000;
+        int howManyStates = 666;
+        StarSatellitePool pool = new StarSatellitePool(graph,poolSize);
+        pool.calculateWeights().orderByWeight();
+        for(int i = 0 ; i < 1000; i++){
+            System.out.println(i);
+            StarSatellitePool newPool = new StarSatellitePool(graph,pool.getFirstStates(howManyStates),poolSize).calculateWeights().orderByWeight();
+            states.add(newPool.getBestState());
+            pool = newPool;
+        }
+        StarSatelliteDescriptionState state = states.stream().min(Comparator.comparingInt(StarSatelliteDescriptionState::getWeight)).get();
+        Map<Integer, ArrayList<Integer>> gen = new GraphDTOByDescriptionStateBuilder().build(state);
+
         Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, n);
-        Map<Coefficient, ArrayList<Coefficient>> mySolve = GreedyTest.solve(coefficients, 4, n);
-        System.out.println("my");
-        mySolve.forEach((key, value) ->
-        {
-            System.out.print(key.getStar() + "=[");
-            value.forEach(x -> System.out.print(x.getSatellite() + ","));
-            System.out.print("]");
-            System.out.println();
-        });
-        System.out.println("result: " + GreedyTest.calculate(mySolve));
-        System.out.println("my");
-        System.out.println(solve);
-        System.out.println(BruteForceAlgorithmTest.calculate(solve, graphSized8));
+        System.out.println("greedy: " + solve);
+        System.out.println(BruteForceAlgorithmTest.calculate(solve,graph));
+        System.out.println("genetic: " + gen);
+        System.out.println(BruteForceAlgorithmTest.calculate(gen,graph));
+
+
     }
 }

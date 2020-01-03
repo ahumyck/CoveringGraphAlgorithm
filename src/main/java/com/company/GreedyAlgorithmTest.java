@@ -9,14 +9,10 @@ public class GreedyAlgorithmTest {
         Map<Integer, ArrayList<Integer>> hashMap = initializeHashMap(coefficients);
 
         for (int i = 1; i < coefficients.size(); i++) {
-
             Coefficient coefficient = coefficients.get(i);
-            int potentialStar = coefficient.getStar();
-            int potentialSatellite = coefficient.getSatellite();
-
             if(stopRule(hashMap,n)) break;
             addPotentialSatelliteToExistingStarOrCreateNewStarWithNewSatelliteOrDoNothingDependsOnPotentialStarAndPotentialSatellite(
-                    hashMap,potentialStar,potentialSatellite);
+                    hashMap,coefficient.getStar(),coefficient.getSatellite());
         }
         return hashMap;
     }
