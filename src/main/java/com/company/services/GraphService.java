@@ -2,7 +2,7 @@ package com.company.services;
 
 import com.company.StarPlan;
 import com.company.entities.Graph;
-import com.company.services.graphBuilders.GraphBuilderByInitialGraphRequest;
+import com.company.services.builders.graphBuilders.GraphBuilderByInitialGraphRequest;
 import org.springframework.stereotype.Component;
 
 @Component

@@ -1,4 +1,4 @@
-package com.company.services.graphBuilders;
+package com.company.services.builders.graphBuilders;
 
 import com.company.dto.*;
 import com.company.entities.Graph;

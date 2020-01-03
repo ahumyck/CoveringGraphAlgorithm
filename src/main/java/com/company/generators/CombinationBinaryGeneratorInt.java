@@ -1,7 +1,7 @@
 package com.company.generators;
 
 
-import com.company.generators.utils.Translator;
+import com.company.utils.Translator;
 
 public class CombinationBinaryGeneratorInt implements BinaryGenerator {
     private int previousCombination;

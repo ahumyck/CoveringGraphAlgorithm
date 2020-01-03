@@ -3,7 +3,7 @@ package com.company.services;
 
 import com.company.dto.GraphDTO;
 import com.company.dto.request.InitialGraphRequestBody;
-import com.company.services.graphBuilders.GraphDTOByGraphBuilder;
+import com.company.services.builders.graphBuilders.GraphDTOByGraphBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package com.company.generators.utils;
+package com.company.utils;
 
 public class Translator {
     public static long[] translateToArrayOfBits(long number,int totalSize){

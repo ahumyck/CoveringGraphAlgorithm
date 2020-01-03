@@ -1,4 +1,4 @@
-package com.company.perm_generic_algorithm;
+package com.company.generators;
 
 import java.util.Random;
 

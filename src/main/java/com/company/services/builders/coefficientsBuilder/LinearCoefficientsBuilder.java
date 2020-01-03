@@ -1,4 +1,4 @@
-package com.company.services.coefficientsBuilder;
+package com.company.services.builders.coefficientsBuilder;
 
 import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;

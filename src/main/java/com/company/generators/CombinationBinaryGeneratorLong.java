@@ -1,6 +1,6 @@
 package com.company.generators;
 
-import com.company.generators.utils.Translator;
+import com.company.utils.Translator;
 
 public class CombinationBinaryGeneratorLong implements BinaryGenerator {
     private long previousCombination;
