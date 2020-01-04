@@ -2,7 +2,7 @@ package com.company.universe.galaxyMutator;
 
 import com.company.entities.Graph;
 import com.company.universe.Galaxy;
-import com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeaveConnection.FromPlanetToStarMutatorHeavyConnection;
+import com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection.FromPlanetToStarMutatorHeavyConnection;
 import com.company.universe.galaxyMutator.FromPlanetToStarMutators.LightPlanet.FromPlanetToStarMutatorLightPlanet;
 import com.company.universe.galaxyMutator.OptipalPlanetDistributor.OptimalPlanetDistributorMutator;
 

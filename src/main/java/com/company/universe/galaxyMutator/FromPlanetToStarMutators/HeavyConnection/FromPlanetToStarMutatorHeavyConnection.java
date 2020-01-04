@@ -1,4 +1,4 @@
-package com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeaveConnection;
+package com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection;
 
 import com.company.entities.Graph;
 import com.company.universe.Galaxy;
