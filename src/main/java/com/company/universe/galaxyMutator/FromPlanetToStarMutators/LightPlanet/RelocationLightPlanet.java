@@ -15,8 +15,8 @@ import java.util.Optional;
 
 public class RelocationLightPlanet implements Relocation {
     @Override
-    public int criterion(StarSystem system, Graph graph) {
-        List<Integer> planets = system.getPlanets();
+    public int criterion(Galaxy galaxy, Graph graph) {
+        List<Integer> planets = galaxy.orderByWeight().getSystems().get(galaxy.getSystems().size() - 1).getPlanets(); // getting planets of heaviest system
         List<Vertex> vertices = graph.getVertices();
         return vertices.stream()
                 .filter(x -> planets.contains(x.getId()))

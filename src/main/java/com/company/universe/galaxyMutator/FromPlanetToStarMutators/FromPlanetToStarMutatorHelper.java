@@ -16,7 +16,7 @@ public class FromPlanetToStarMutatorHelper {
         int size = galaxy.getSystems().size();
         StarSystem system = galaxy.orderByWeight().getSystems().get(size - 1);
         if(system.getPlanets().size() >= size / 2){
-            int index = relocation.criterion(system,graph);
+            int index = relocation.criterion(galaxy,graph);
             if(index != - 1) {
                 Galaxy g = galaxy.clone();
                 StarSystem newSystem = new StarSystem(index,new ArrayList<>(), 0);
