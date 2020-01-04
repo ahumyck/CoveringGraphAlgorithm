@@ -2,12 +2,12 @@ package com.company.universe;
 
 import com.company.entities.Graph;
 import com.company.utils.Algorithms;
+import com.google.gson.Gson;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class StarSystem {
+public class StarSystem implements Cloneable{
     private int star;
     private List<Integer> planets;
     private int weight;
@@ -66,6 +66,12 @@ public class StarSystem {
         for(int planet : planets){
             this.weight += k * graph.getEdgeMatrix().getCell(star,planet);
         }
+    }
+
+    @Override
+    public StarSystem clone(){
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(this),StarSystem.class);
     }
 
     @Override

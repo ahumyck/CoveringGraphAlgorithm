@@ -24,7 +24,10 @@ public class GraphGenerator
         EdgeMatrix matrix = new EdgeMatrix(vertexCount);
         for (int i = 0; i < vertexCount ; i++) {
             for (int j = 0; j < vertexCount; j++) {
-                matrix.setCell(i,j, EDGE_WEIGHT_RANDOM.nextInt(maxEdgeWeight) + 1);
+                    matrix.setCell(i,j, EDGE_WEIGHT_RANDOM.nextInt(maxEdgeWeight) + 1);
+                    if(i == j){
+                        matrix.setCell(i,j,0);
+                    }
             }
         }
         return new Graph(vertices, matrix);

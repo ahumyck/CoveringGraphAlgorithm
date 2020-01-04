@@ -1,4 +1,4 @@
-package com.company.universe.galaxyMutator;
+package com.company.universe.galaxyMutator.OptipalPlanetDistributor;
 
 import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
@@ -6,6 +6,7 @@ import com.company.entities.Graph;
 import com.company.entities.Vertex;
 import com.company.universe.Galaxy;
 import com.company.universe.StarSystem;
+import com.company.universe.galaxyMutator.Mutator;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -14,12 +15,11 @@ import java.util.stream.Collectors;
 
 public class OptimalPlanetDistributorMutator implements Mutator {
     @Override
-    public void mutate(Galaxy galaxy, Graph graph) {
-        List<StarSystem> badSystems = galaxy.getSystems().stream().filter(x -> x.getWeight() > galaxy.getSystems().get(0).getWeight()).collect(Collectors.toList());
-//todo:   Need to find a reason why are they "bad"?
-//        Maybe weight of vertex is really big
-//        or planet is far away from star
-        //do the smart things later, right now im gonna mini brute force
+    public Galaxy mutate(Galaxy galaxy, Graph graph) {
+        List<StarSystem> badSystems = galaxy.getSystems()
+                .stream()
+                .filter(x -> x.getWeight() > galaxy.getSystems().get(0).getWeight())
+                .collect(Collectors.toList());
 
         for(int i = 0 ; i < badSystems.size(); i++) {
             StarSystem badSystem = badSystems.get(i);
@@ -27,7 +27,7 @@ public class OptimalPlanetDistributorMutator implements Mutator {
             galaxy.removeWeight(badSystem.getWeight());
 
             for(int j = 0; j < badSystem.getPlanets().size(); j++) {
-                findBetterHomeForSatellite(badSystem,
+                findBetterHomeForPlanet(badSystem,
                         badSystem.getPlanets().get(j),
                         galaxy,
                         graph);
@@ -39,26 +39,27 @@ public class OptimalPlanetDistributorMutator implements Mutator {
                 galaxy.addWeight(badSystem.getWeight());
             }
         }
-
+        return galaxy;
     }
 
-    private void findBetterHomeForSatellite(StarSystem system, int planet, Galaxy galaxy,Graph graph){
+
+    private void findBetterHomeForPlanet(StarSystem system, int planet, Galaxy galaxy, Graph graph){
         int oldCost = calculateWeight(graph, system.getStar(), planet);
         List<Coefficient> bestSolutions = getBestSolutions(planet, galaxy, graph);
 
-        Coefficient satellite = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight)).get(); // Best Weight
-        if(oldCost > satellite.getWeight()) {
+        Coefficient home = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight)).get(); // Best Weight
+        if(oldCost > home.getWeight()) {
             system.remove(planet, oldCost);
-            galaxy.getSystems().get(bestSolutions.indexOf(satellite)).add(planet, satellite.getWeight()); // Add weight and satellite to system
-            galaxy.addWeight(satellite.getWeight()); // Add weight to galaxy
+            galaxy.getSystems().get(bestSolutions.indexOf(home)).add(planet, home.getWeight()); // Add weight and home to system
+            galaxy.addWeight(home.getWeight()); // Add weight to galaxy
         }
     }
 
     private void findBetterHomeForStar(int name, Galaxy galaxy, Graph graph){
         List<Coefficient> bestSolutions = getBestSolutions(name, galaxy, graph);
-        Coefficient satellite = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight)).get(); // Best Weight
-        galaxy.getSystems().get(bestSolutions.indexOf(satellite)).add(name, satellite.getWeight()); // Add weight and satellite to system
-        galaxy.addWeight(satellite.getWeight()); // Add weight to galaxy
+        Coefficient home = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight)).get(); // Best Weight
+        galaxy.getSystems().get(bestSolutions.indexOf(home)).add(name, home.getWeight()); // Add weight and home to system
+        galaxy.addWeight(home.getWeight()); // Add weight to galaxy
     }
 
 

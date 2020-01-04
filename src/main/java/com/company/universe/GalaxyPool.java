@@ -21,6 +21,8 @@ public class GalaxyPool {
         this.galaxies.addAll(GalaxyPoolGenerator.getGalaxies(graph, howMany));
     }
 
+    public void addGalaxy(Galaxy galaxy) { this.galaxies.add(galaxy); orderByWeight(); }
+
     public GalaxyPool orderByWeight(){
         galaxies.sort(Comparator.comparingInt(Galaxy::getWeight));
         return this;
@@ -36,10 +38,9 @@ public class GalaxyPool {
 
     public void mutate(Mutator mutator){
 
-        for (Galaxy galaxy:
-             galaxies) {
-            galaxy.orderByWeight();
-            mutator.mutate(galaxy,graph);
+        for(int i = 0 ; i < galaxies.size(); i++){
+            orderByWeight();
+            galaxies.set(i, mutator.mutate(galaxies.get(i), graph));
         }
         orderByWeight();
     }

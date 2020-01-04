@@ -1,14 +1,14 @@
 package com.company.universe;
 
 import com.company.entities.Graph;
+import com.google.gson.Gson;
 
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
 
-//todo: clone Galaxy
-public class Galaxy {
+public class Galaxy implements Cloneable{
     private List<StarSystem> systems;
     private int weight;
 
@@ -59,6 +59,12 @@ public class Galaxy {
     public Galaxy orderByWeight(){
         this.systems.sort(Comparator.comparingInt(StarSystem::getWeight));
         return this;
+    }
+
+    @Override
+    public Galaxy clone() {
+        Gson gson = new Gson();
+        return gson.fromJson(gson.toJson(this),Galaxy.class);
     }
 
     @Override
