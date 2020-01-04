@@ -26,9 +26,17 @@ public class RelocationLightPlanet implements Relocation {
     }
 
     @Override
-    public Galaxy rebase(Galaxy galaxy, Graph graph, int win) {
+    public Galaxy rebase(Galaxy galaxy, Graph graph,int index, int win) {
+        int size = galaxy.getSystems().size();
+        StarSystem heavySystem = galaxy.orderByWeight().getSystems().get(size - 1);
+        StarSystem newSystem = new StarSystem(index,new ArrayList<>(), 0);
+        galaxy.getSystems().add(newSystem);
+        heavySystem.remove(index,
+                graph.getVertices().get(heavySystem.getStar()).getWeight()
+                        * graph.getEdgeMatrix().getCell(heavySystem.getStar(),index));
+        galaxy.orderByWeight().calculateWeight(graph);
+
         StarSystem emptySystem = galaxy.getSystems().get(0);
-        StarSystem heavySystem = galaxy.getSystems().get(galaxy.getSystems().size() - 1);
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
 
         int weight = graph.getVertices().get(emptySystem.getStar()).getWeight();

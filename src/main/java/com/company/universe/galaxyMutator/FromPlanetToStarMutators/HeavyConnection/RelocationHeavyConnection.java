@@ -36,7 +36,7 @@ public class RelocationHeavyConnection implements Relocation {
     }
 
     @Override
-    public Galaxy rebase(Galaxy galaxy, Graph graph, int win) {
-        return new RelocationLightPlanet().rebase(galaxy, graph, win);
+    public Galaxy rebase(Galaxy galaxy, Graph graph, int index, int win) {
+        return new RelocationLightPlanet().rebase(galaxy, graph, index, win);
     }
 }
