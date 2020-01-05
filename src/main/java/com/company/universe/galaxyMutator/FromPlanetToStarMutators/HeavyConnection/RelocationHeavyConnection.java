@@ -19,7 +19,7 @@ public class RelocationHeavyConnection implements Relocation {
     private Coefficient heaviest;
 
     @Override
-    public int criterion(@NotNull Galaxy galaxy, @NotNull Graph graph) {
+    public int criterion(Galaxy galaxy, Graph graph) {
         List<Coefficient> heaviestList = new ArrayList<>();
         for (StarSystem system:
              galaxy.getSystems()) {
@@ -35,13 +35,14 @@ public class RelocationHeavyConnection implements Relocation {
             }
         }
         heaviestList.stream()
-                .max(Comparator.comparingInt(Coefficient::getWeight))
+                .max(Comparator.comparingLong(Coefficient::getWeight))
                 .ifPresent(it -> heaviest = it);
         return heaviest.getSatellite();
     }
 
     @Override
-    public Galaxy rebase(@NotNull Galaxy galaxy, @NotNull Graph graph, int reserve) {
+    public Galaxy rebase(Galaxy originalGalaxy, Graph graph) {
+        Galaxy cloneGalaxy = originalGalaxy.clone();
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
         List<Vertex> vertices = graph.getVertices();
 
@@ -51,7 +52,7 @@ public class RelocationHeavyConnection implements Relocation {
         List<Coefficient> possibleStarList = new ArrayList<>();
         List<Coefficient> possiblePlanetList = new ArrayList<>();
         for (StarSystem system:
-                galaxy.getSystems()) {
+                cloneGalaxy.getSystems()) {
             for (int planet:
                     system.getPlanets()) {
                 if(planet == possibleStar) continue;
@@ -71,37 +72,55 @@ public class RelocationHeavyConnection implements Relocation {
         Coefficient planet = min(possiblePlanetList).get();
 
         if(star.getWeight() < planet.getWeight()){
-            makeChange(galaxy,star,possibleStar,star.getSatellite(),reserve);
+            return makeChange(originalGalaxy, cloneGalaxy, star, possibleStar, star.getSatellite(), graph);
         }
         else{
-            makeChange(galaxy,planet,planet.getSatellite(),possibleStar,reserve);
+            return makeChange(originalGalaxy, cloneGalaxy, planet, planet.getSatellite(), possibleStar,graph);
         }
-
-        return galaxy.calculateWeight(graph);
     }
     
     @NotNull
-    private Optional<Coefficient> min(@NotNull List<Coefficient> coefficients){
-        return coefficients.stream().min(Comparator.comparingInt(Coefficient::getWeight));
+    private Optional<Coefficient> min(List<Coefficient> coefficients){
+        return coefficients.stream().min(Comparator.comparingLong(Coefficient::getWeight));
     }
 
-    private void makeChange(Galaxy galaxy,Coefficient information, int possibleStar,int possiblePlanet, int reserve){
-        StarSystem oldSystem = galaxy.getSystems()
-                .stream()
-                .filter(system -> system.getStar() == information.getStar())
-                .findFirst()
-                .get();
-//        System.out.println("oldSystem: " + oldSystem);
-        if(oldSystem.getPlanets().size() > 1){
-//            System.out.println("newSystem weight: " + information.getWeight() + " vs " + reserve);
-            if(information.getWeight() < reserve) {
-                StarSystem starSystem = new StarSystem(possibleStar, Lists.newArrayList(possiblePlanet), information.getWeight());
-                galaxy.getSystems().add(starSystem);
-                galaxy.addWeight(starSystem.getWeight());
+    private Galaxy makeChange(Galaxy originalGalaxy, Galaxy cloneGalaxy,Coefficient information, int possibleStar,int possiblePlanet,Graph graph){
+        StarSystem possibleStarSystem = findSystemByPlanet(cloneGalaxy,possibleStar).get();
+        StarSystem possiblePlanetSystem = findSystemByPlanet(cloneGalaxy,possiblePlanet).get();
+        if(possibleStarSystem.getPlanets().size() > 1 || possiblePlanetSystem.getPlanets().size() > 1){
+//            System.out.println(information.getWeight() + " vs " + heaviest.getWeight());
+            if(information.getWeight() < heaviest.getWeight()) {
+//                System.out.println("possible star: " + possibleStar);
+//                System.out.println("possible planet: " + possiblePlanet);
+//                System.out.println("weight: " + information.getWeight());
+//
+//                System.out.println("possibleStarSystem: " + possibleStarSystem);
+//                System.out.println("possiblePlanetSystem: " + possiblePlanetSystem);
+//                System.out.println("bad connection: " + heaviest.getStar() + " " + heaviest.getSatellite() + " has weight " + heaviest.getWeight());
+//                System.out.println("that's a win");
+//                System.out.println();
 
-                oldSystem.remove(information.getSatellite(),information.getWeight());
+                possiblePlanetSystem.remove(possiblePlanet,0);
+                possibleStarSystem.remove(possibleStar,0);
+                cloneGalaxy.getSystems().add(new StarSystem(possibleStar,Lists.newArrayList(possiblePlanet),information.getWeight()));
+                return cloneGalaxy.orderByWeight().calculateWeight(graph);
             }
         }
+        return originalGalaxy;
+    }
+
+    private Optional<StarSystem> findSystemByStar(Galaxy galaxy, int star){
+        return galaxy.getSystems()
+                .stream()
+                .filter(system -> system.getStar() == star)
+                .findFirst();
+    }
+
+    private Optional<StarSystem> findSystemByPlanet(Galaxy galaxy, int planet){
+        return galaxy.getSystems()
+                .stream()
+                .filter(system -> system.getPlanets().contains(planet))
+                .findFirst();
     }
 
 }

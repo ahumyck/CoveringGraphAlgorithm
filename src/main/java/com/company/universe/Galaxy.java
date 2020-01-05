@@ -10,17 +10,17 @@ import java.util.stream.Collectors;
 
 public class Galaxy implements Cloneable{
     private List<StarSystem> systems;
-    private int weight;
+    private long weight;
 
     public Galaxy(List<StarSystem> systems) {
-        this.systems = systems.stream().sorted(Comparator.comparingInt(StarSystem::getWeight)).collect(Collectors.toList());
+        this.systems = systems.stream().sorted(Comparator.comparingLong(StarSystem::getWeight)).collect(Collectors.toList());
         for (StarSystem system :
                 systems) {
             weight += system.getWeight();
         }
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 
@@ -36,12 +36,12 @@ public class Galaxy implements Cloneable{
         this.systems = systems;
     }
 
-    public Galaxy addWeight(int weight){
+    public Galaxy addWeight(long weight){
         this.weight += weight;
         return this;
     }
 
-    public Galaxy removeWeight(int weight){
+    public Galaxy removeWeight(long weight){
         this.weight -= weight;
         return this;
     }
@@ -57,7 +57,7 @@ public class Galaxy implements Cloneable{
     }
 
     public Galaxy orderByWeight(){
-        this.systems.sort(Comparator.comparingInt(StarSystem::getWeight));
+        this.systems.sort(Comparator.comparingLong(StarSystem::getWeight));
         return this;
     }
 

@@ -47,7 +47,7 @@ public class OptimalPlanetDistributorMutator implements Mutator {
         int oldCost = calculateWeight(graph, system.getStar(), planet);
         List<Coefficient> bestSolutions = getBestSolutions(planet, galaxy, graph);
 
-        Coefficient home = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight)).get(); // Best Weight
+        Coefficient home = bestSolutions.stream().min(Comparator.comparingLong(Coefficient::getWeight)).get(); // Best Weight
         if(oldCost > home.getWeight()) {
             system.remove(planet, oldCost);
             galaxy.getSystems().get(bestSolutions.indexOf(home)).add(planet, home.getWeight()); // Add weight and home to system
@@ -57,7 +57,7 @@ public class OptimalPlanetDistributorMutator implements Mutator {
 
     private void findBetterHomeForStar(int name, Galaxy galaxy, Graph graph){
         List<Coefficient> bestSolutions = getBestSolutions(name, galaxy, graph);
-        Coefficient home = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight)).get(); // Best Weight
+        Coefficient home = bestSolutions.stream().min(Comparator.comparingLong(Coefficient::getWeight)).get(); // Best Weight
         galaxy.getSystems().get(bestSolutions.indexOf(home)).add(name, home.getWeight()); // Add weight and home to system
         galaxy.addWeight(home.getWeight()); // Add weight to galaxy
     }

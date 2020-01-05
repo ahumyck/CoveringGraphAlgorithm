@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 public class StarSystem implements Cloneable{
     private int star;
     private List<Integer> planets;
-    private int weight;
+    private long weight;
 
-    public StarSystem(int star, List<Integer> planets, int weight) {
+    public StarSystem(int star, List<Integer> planets, long weight) {
         this.star = star;
         this.planets = planets.stream().sorted().collect(Collectors.toList());
         this.weight = weight;
@@ -25,7 +25,7 @@ public class StarSystem implements Cloneable{
                 || (Algorithms.intercept(planets,system.getPlanets()));
     }
 
-    public void add(int planet, int additionalWeight){
+    public void add(int planet, long additionalWeight){
         planets.add(planet);
         planets.sort(Integer::compareTo);
         weight += additionalWeight;
@@ -52,11 +52,11 @@ public class StarSystem implements Cloneable{
         this.planets = planets;
     }
 
-    public int getWeight() {
+    public long getWeight() {
         return weight;
     }
 
-    public void setWeight(int weight) {
+    public void setWeight(long weight) {
         this.weight = weight;
     }
 

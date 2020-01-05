@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Coefficient {
     int star, satellite;
-    int weight;
+    long weight;
 
     @Override
     public String toString(){

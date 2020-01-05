@@ -9,6 +9,7 @@ import com.company.universe.GalaxyPool;
 import com.company.universe.galaxyMutator.CombinationMutator;
 import com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection.FromPlanetToStarMutatorHeavyConnection;
 import com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection.RelocationHeavyConnection;
+import com.company.universe.galaxyMutator.FromPlanetToStarMutators.LightPlanet.FromPlanetToStarMutatorLightPlanet;
 import com.company.universe.galaxyMutator.Mutator;
 import com.company.utils.GraphGenerator;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -28,7 +29,7 @@ public class DemoApplication
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
 //        int n = graph.size();
-        Graph graph = GraphGenerator.generate(50,10000,50);
+        Graph graph = GraphGenerator.generate(16,10000,10000);
         System.out.println(graph);
 
         int n = graph.size();
@@ -39,27 +40,24 @@ public class DemoApplication
         System.out.println(build);
 
         List<Galaxy> bestGalaxies = new ArrayList<>();
-        GalaxyPool pool = new GalaxyPool(graph,999);
+        GalaxyPool pool = new GalaxyPool(graph,9);
         pool.addGalaxy(build);
-        Mutator mutator = new FromPlanetToStarMutatorHeavyConnection();
+        Mutator mutator = new FromPlanetToStarMutatorLightPlanet();
         bestGalaxies.add(pool.getBestGalaxy());
-        for(int i = 0 ; i < 10; i++){
-//            System.out.print(i + " ");
+        for(int i = 0 ; i < 15; i++){
+            System.out.print(i + " ");
             pool.mutate(mutator);
             bestGalaxies.add(pool.getBestGalaxy());
+            if(i % 25 == 0) System.out.println();
         }
         System.out.println();
-
-        List<Galaxy> collect = bestGalaxies.stream()
-                .sorted(Comparator.comparingInt(Galaxy::getWeight))
-                .limit(10)
-                .collect(Collectors.toList());
-
-        Galaxy galaxy = collect.get(0);
-        System.out.println();
-
-        int diff = build.getWeight() - galaxy.getWeight();
-        System.out.println(galaxy);
+        Galaxy best = bestGalaxies.stream()
+                .min(Comparator.comparingLong(Galaxy::getWeight))
+                .get()
+                .orderByWeight()
+                .calculateWeight(graph);
+        long diff = build.getWeight() - best.getWeight();
+        System.out.println(best);
         if(diff > 0){
             System.out.println("win " + diff);
         }

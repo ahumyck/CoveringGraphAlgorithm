@@ -28,17 +28,20 @@ public class RelocationLightPlanet implements Relocation {
     }
 
     @Override
-    public Galaxy rebase(Galaxy galaxy, Graph graph, int reserve) {
-        int size = galaxy.getSystems().size();
-        StarSystem heavySystem = galaxy.orderByWeight().getSystems().get(size - 1);
+    //todo: fix this
+    public Galaxy rebase(Galaxy galaxy, Graph graph) {
+        Galaxy g = galaxy.clone();
+        int size = g.getSystems().size();
+        StarSystem heavySystem = g.orderByWeight().getSystems().get(size - 1);
         StarSystem newSystem = new StarSystem(index,new ArrayList<>(), 0);
         galaxy.getSystems().add(newSystem);
         heavySystem.remove(index,
                 graph.getVertices().get(heavySystem.getStar()).getWeight()
                         * graph.getEdgeMatrix().getCell(heavySystem.getStar(),index));
-        galaxy.orderByWeight().calculateWeight(graph);
+        g.orderByWeight().calculateWeight(graph);
+        long reserve = galaxy.getWeight() - g.getWeight();
 
-        StarSystem emptySystem = galaxy.getSystems().get(0);
+        StarSystem emptySystem = g.getSystems().get(0);
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
 
         int weight = graph.getVertices().get(emptySystem.getStar()).getWeight();
@@ -49,14 +52,14 @@ public class RelocationLightPlanet implements Relocation {
             int tmpWeight = weight * edgeMatrix.getCell(emptySystem.getStar(),planet);
             if(tmpWeight < reserve) bestSolutions.add(new Coefficient(emptySystem.getStar(),planet,tmpWeight));
         }
-        Optional<Coefficient> optionalBestSolution = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight));
+        Optional<Coefficient> optionalBestSolution = bestSolutions.stream().min(Comparator.comparingLong(Coefficient::getWeight));
         if(optionalBestSolution.isPresent()){
             Coefficient bestSolution = optionalBestSolution.get();
             emptySystem.add(bestSolution.getSatellite(),bestSolution.getWeight());
             heavySystem.remove(bestSolution.getSatellite(),
                     graph.getVertices().get(heavySystem.getStar()).getWeight() *
                             graph.getEdgeMatrix().getCell(heavySystem.getStar(),bestSolution.getSatellite()));
-            galaxy.calculateWeight(graph);
+            return g.orderByWeight();
         }
         return galaxy;
     }

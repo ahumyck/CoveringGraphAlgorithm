@@ -11,10 +11,10 @@ public class CombinationMutator implements Mutator {
     public Galaxy mutate(Galaxy galaxy, Graph graph) {
         int size = galaxy.getSystems().size();
         Mutator mutator = new OptimalPlanetDistributorMutator();
-        for(int i = 0 ; i < size; i++){
+        for(int i = 0 ; i < size/4; i++){
             galaxy = mutator.mutate(galaxy, graph);
         }
-        galaxy = new FromPlanetToStarMutatorLightPlanet().mutate(galaxy,graph);
-        return new FromPlanetToStarMutatorHeavyConnection().mutate(galaxy,graph);
+        return new FromPlanetToStarMutatorHeavyConnection().mutate(
+                new FromPlanetToStarMutatorLightPlanet().mutate(galaxy,graph),graph);
     }
 }

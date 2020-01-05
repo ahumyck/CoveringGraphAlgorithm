@@ -5,5 +5,5 @@ import com.company.universe.Galaxy;
 
 public interface Relocation {
     int criterion(Galaxy galaxy, Graph graph);
-    Galaxy rebase(Galaxy galaxy, Graph graph, int reserve);
+    Galaxy rebase(Galaxy galaxy, Graph graph);
 }

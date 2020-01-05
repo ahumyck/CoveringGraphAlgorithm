@@ -24,7 +24,7 @@ public class GalaxyPool {
     public void addGalaxy(Galaxy galaxy) { this.galaxies.add(galaxy); orderByWeight(); }
 
     public GalaxyPool orderByWeight(){
-        galaxies.sort(Comparator.comparingInt(Galaxy::getWeight));
+        galaxies.sort(Comparator.comparingLong(Galaxy::getWeight));
         return this;
     }
 

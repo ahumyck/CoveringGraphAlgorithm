@@ -38,7 +38,7 @@ public class LinearCoefficientsBuilder {
     }
 
     public LinearCoefficientsBuilder orderByWeight() {
-        coefficients.sort(Comparator.comparingInt(Coefficient::getWeight));
+        coefficients.sort(Comparator.comparingLong(Coefficient::getWeight));
         return this;
     }
 }
