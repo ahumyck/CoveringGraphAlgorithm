@@ -12,11 +12,7 @@ public class Coefficient {
     int weight;
 
     @Override
-    public String toString() {
-        return "" + weight;
-    }
-
-    public String fullInfo(){
-        return "from: " + star + " ,to: " + satellite + ",weight: " + weight;
+    public String toString(){
+        return "from: " + star + " to: " + satellite + " weight: " + weight;
     }
 }

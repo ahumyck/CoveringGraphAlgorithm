@@ -15,7 +15,7 @@ public class FromPlanetToStarMutatorHelper {
             int index = relocation.criterion(galaxy,graph);
             if(index != - 1) {
                 Galaxy g = galaxy.clone();
-                g = relocation.rebase(g,graph,index,galaxy.getWeight() - g.getWeight());
+                g = relocation.rebase(g,graph,galaxy.getWeight() - g.getWeight());
                 if(g.orderByWeight().getSystems().get(0).getWeight() != 0) return g;
             }
         }

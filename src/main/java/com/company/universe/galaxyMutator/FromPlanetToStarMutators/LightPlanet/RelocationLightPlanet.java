@@ -14,19 +14,21 @@ import java.util.List;
 import java.util.Optional;
 
 public class RelocationLightPlanet implements Relocation {
+    private int index;
     @Override
     public int criterion(Galaxy galaxy, Graph graph) {
         List<Integer> planets = galaxy.orderByWeight().getSystems().get(galaxy.getSystems().size() - 1).getPlanets(); // getting planets of heaviest system
         List<Vertex> vertices = graph.getVertices();
-        return vertices.stream()
+        index = vertices.stream()
                 .filter(x -> planets.contains(x.getId()))
                 .min(Comparator.comparingInt(Vertex::getWeight))
                 .map(Vertex::getId)
                 .orElse(-1);
+        return index;
     }
 
     @Override
-    public Galaxy rebase(Galaxy galaxy, Graph graph,int index, int win) {
+    public Galaxy rebase(Galaxy galaxy, Graph graph, int reserve) {
         int size = galaxy.getSystems().size();
         StarSystem heavySystem = galaxy.orderByWeight().getSystems().get(size - 1);
         StarSystem newSystem = new StarSystem(index,new ArrayList<>(), 0);
@@ -45,7 +47,7 @@ public class RelocationLightPlanet implements Relocation {
         for (int planet:
                 heavySystem.getPlanets()) {
             int tmpWeight = weight * edgeMatrix.getCell(emptySystem.getStar(),planet);
-            if(tmpWeight < win) bestSolutions.add(new Coefficient(emptySystem.getStar(),planet,tmpWeight));
+            if(tmpWeight < reserve) bestSolutions.add(new Coefficient(emptySystem.getStar(),planet,tmpWeight));
         }
         Optional<Coefficient> optionalBestSolution = bestSolutions.stream().min(Comparator.comparingInt(Coefficient::getWeight));
         if(optionalBestSolution.isPresent()){
