@@ -14,17 +14,19 @@ public class GraphGenerator
     private static final Random EDGE_WEIGHT_RANDOM = new Random();
 
 
-    public static Graph generate(int vertexCount, int maxVertexWeight, int maxEdgeWeight)
+    public static Graph generate(int vertexCount,
+                                 int minVertexWeight, int maxVertexWeight,
+                                 int minEdgeWeight, int maxEdgeWeight)
     {
         List<Vertex> vertices = new ArrayList<>();
         for (int i = 0; i < vertexCount; i++)
         {
-            vertices.add(new Vertex(i, VERTEX_WEIGHT_RANDOM.nextInt(maxVertexWeight) + 1));
+            vertices.add(new Vertex(i, VERTEX_WEIGHT_RANDOM.nextInt(maxVertexWeight - minVertexWeight) + minVertexWeight));
         }
         EdgeMatrix matrix = new EdgeMatrix(vertexCount);
         for (int i = 0; i < vertexCount ; i++) {
             for (int j = 0; j < vertexCount; j++) {
-                    matrix.setCell(i,j, EDGE_WEIGHT_RANDOM.nextInt(maxEdgeWeight) + 1);
+                    matrix.setCell(i,j, EDGE_WEIGHT_RANDOM.nextInt(maxEdgeWeight - minEdgeWeight) + minEdgeWeight);
                     if(i == j){
                         matrix.setCell(i,j,0);
                     }
