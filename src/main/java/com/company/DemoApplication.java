@@ -39,12 +39,13 @@ public class DemoApplication
         build.orderByWeight();
         System.out.println(build);
 
+
         List<Galaxy> bestGalaxies = new ArrayList<>();
         GalaxyPool pool = new GalaxyPool(graph,9);
         pool.addGalaxy(build);
-        Mutator mutator = new FromPlanetToStarMutatorLightPlanet();
+        Mutator mutator = new CombinationMutator();
         bestGalaxies.add(pool.getBestGalaxy());
-        for(int i = 0 ; i < 15; i++){
+        for(int i = 0 ; i < 100; i++){
             System.out.print(i + " ");
             pool.mutate(mutator);
             bestGalaxies.add(pool.getBestGalaxy());

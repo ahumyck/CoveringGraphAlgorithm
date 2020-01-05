@@ -28,13 +28,12 @@ public class RelocationLightPlanet implements Relocation {
     }
 
     @Override
-    //todo: fix this
     public Galaxy rebase(Galaxy galaxy, Graph graph) {
         Galaxy g = galaxy.clone();
         int size = g.getSystems().size();
         StarSystem heavySystem = g.orderByWeight().getSystems().get(size - 1);
         StarSystem newSystem = new StarSystem(index,new ArrayList<>(), 0);
-        galaxy.getSystems().add(newSystem);
+        g.getSystems().add(newSystem);
         heavySystem.remove(index,
                 graph.getVertices().get(heavySystem.getStar()).getWeight()
                         * graph.getEdgeMatrix().getCell(heavySystem.getStar(),index));
@@ -43,6 +42,7 @@ public class RelocationLightPlanet implements Relocation {
 
         StarSystem emptySystem = g.getSystems().get(0);
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
+
 
         int weight = graph.getVertices().get(emptySystem.getStar()).getWeight();
         List<Coefficient> bestSolutions = new ArrayList<>();
