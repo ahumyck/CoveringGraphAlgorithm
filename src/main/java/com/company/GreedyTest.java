@@ -21,7 +21,7 @@ public class GreedyTest
         listStars.add(coefficients.get(0));
         listStarsIndex.add(coefficients.get(0).getStar());
         listSatellites.add(coefficients.get(0).getSatellite());
-        for (int i = 1; i < coefficients.size(); i++)
+        for (int i = 0; i < coefficients.size(); i++)
         {
             if (vertexCount <= listSatellites.size() + listStarsIndex.size()) break;
             boolean flag = true;
@@ -41,12 +41,11 @@ public class GreedyTest
             }
             if (flag && starCount > listStars.size() && !listSatellites.contains(coefficients.get(i).getStar()) && !listStarsIndex.contains(coefficients.get(i).getStar()))
             {
-
-                    mapStars.put(coefficients.get(i), new ArrayList<>());
-                    listStars.add(coefficients.get(i));
-                    listStarsIndex.add(coefficients.get(i).getStar());
-                    if (!listSatellites.contains(coefficients.get(i).getSatellite()) && !listStarsIndex.contains(coefficients.get(i).getSatellite()))
-                    {
+                mapStars.put(coefficients.get(i), new ArrayList<>());
+                listStars.add(coefficients.get(i));
+                listStarsIndex.add(coefficients.get(i).getStar());
+                if (!listSatellites.contains(coefficients.get(i).getSatellite()) && !listStarsIndex.contains(coefficients.get(i).getSatellite()))
+                {
                     mapStars.get(coefficients.get(i)).add(coefficients.get(i));
                     listSatellites.add(coefficients.get(i).getSatellite());
                 }

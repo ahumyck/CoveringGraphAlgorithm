@@ -28,7 +28,7 @@ public class BruteForceController
     @RequestMapping(method = RequestMethod.POST, value = ApiPaths.EXECUTE_PATH)
     public @ResponseStatus(HttpStatus.OK) void executeBruteForce(@RequestBody ExecuteRequestBody executeRequestBody) throws Exception
     {
-        bruteForceService.executeBruteForce(executeRequestBody);
+//        bruteForceService.(executeRequestBody);
     }
 
     @RequestMapping(method = RequestMethod.GET, value = ApiPaths.SOLUTION_PATH + ApiPaths.END_PATH)
