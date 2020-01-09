@@ -88,33 +88,23 @@ public class RelocationHeavyConnection implements Relocation {
         StarSystem possibleStarSystem = findSystemByPlanet(cloneGalaxy,possibleStar).get();
         StarSystem possiblePlanetSystem = findSystemByPlanet(cloneGalaxy,possiblePlanet).get();
         if(possibleStarSystem.getPlanets().size() > 1 || possiblePlanetSystem.getPlanets().size() > 1){
-//            System.out.println(information.getWeight() + " vs " + heaviest.getWeight());
-            if(information.getWeight() < heaviest.getWeight()) {
-//                System.out.println("possible star: " + possibleStar);
-//                System.out.println("possible planet: " + possiblePlanet);
-//                System.out.println("weight: " + information.getWeight());
-//
-//                System.out.println("possibleStarSystem: " + possibleStarSystem);
-//                System.out.println("possiblePlanetSystem: " + possiblePlanetSystem);
-//                System.out.println("bad connection: " + heaviest.getStar() + " " + heaviest.getSatellite() + " has weight " + heaviest.getWeight());
-//                System.out.println("that's a win");
-//                System.out.println();
 
+            if(information.getWeight() < heaviest.getWeight()) {
                 possiblePlanetSystem.remove(possiblePlanet,0);
                 possibleStarSystem.remove(possibleStar,0);
                 cloneGalaxy.getSystems().add(new StarSystem(possibleStar,Lists.newArrayList(possiblePlanet),information.getWeight()));
-                return cloneGalaxy.orderByWeight().calculateWeight(graph);
+                return cloneGalaxy.calculateWeight(graph).orderByWeight();
             }
         }
         return originalGalaxy;
     }
 
-    private Optional<StarSystem> findSystemByStar(Galaxy galaxy, int star){
-        return galaxy.getSystems()
-                .stream()
-                .filter(system -> system.getStar() == star)
-                .findFirst();
-    }
+//    private Optional<StarSystem> findSystemByStar(Galaxy galaxy, int star){
+//        return galaxy.getSystems()
+//                .stream()
+//                .filter(system -> system.getStar() == star)
+//                .findFirst();
+//    }
 
     private Optional<StarSystem> findSystemByPlanet(Galaxy galaxy, int planet){
         return galaxy.getSystems()

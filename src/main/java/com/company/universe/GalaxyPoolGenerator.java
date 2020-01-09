@@ -10,8 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class GalaxyPoolGenerator {
-    public static List<Galaxy> getGalaxies(Graph graph, int howMany){
-        List<Galaxy> galaxies = new ArrayList<>();
+    public static List<MutableGalaxy> getGalaxies(Graph graph, int howMany){
+        List<MutableGalaxy> galaxies = new ArrayList<>();
         for(int uselessIndex = 0; uselessIndex < howMany; uselessIndex++){
             int[] nodes = RandomPermutationGenerator.getPermutation(graph.size());
             int[] codes = RandomBinaryCodeGenerator.getCode(graph.size());
@@ -20,7 +20,7 @@ public class GalaxyPoolGenerator {
         return galaxies;
     }
 
-    public static Galaxy getGalaxy(Graph graph, int[] nodes, int[] codes){
+    public static MutableGalaxy getGalaxy(Graph graph, int[] nodes, int[] codes){
         List<Vertex> vertices = graph.getVertices();
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
         int currentStar = nodes[0];
@@ -40,6 +40,6 @@ public class GalaxyPoolGenerator {
             }
         }
         systems.add(new StarSystem(currentStar, planets ,weight));
-        return new Galaxy(systems);
+        return new MutableGalaxy(new Galaxy(systems),true);
     }
 }

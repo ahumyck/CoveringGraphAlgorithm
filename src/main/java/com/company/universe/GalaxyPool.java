@@ -9,7 +9,9 @@ import java.util.stream.Collectors;
 
 
 public class GalaxyPool {
-    private List<Galaxy> galaxies;
+    public static int EMPTY = 0;
+
+    private List<MutableGalaxy> galaxies;
     private Graph graph;
 
     public GalaxyPool(Graph graph, int howMany){
@@ -21,34 +23,40 @@ public class GalaxyPool {
         this.galaxies.addAll(GalaxyPoolGenerator.getGalaxies(graph, howMany));
     }
 
-    public void addGalaxy(Galaxy galaxy) { this.galaxies.add(galaxy); orderByWeight(); }
+    public void addGalaxy(Galaxy galaxy) { this.galaxies.add(new MutableGalaxy(galaxy,true)); orderByWeight(); }
 
     public GalaxyPool orderByWeight(){
-        galaxies.sort(Comparator.comparingLong(Galaxy::getWeight));
+        galaxies.sort(Comparator.comparingLong(MutableGalaxy::getWeight));
         return this;
     }
 
-    public List<Galaxy> getFirstGalaxies(int howMany){
-        return galaxies.stream().limit(howMany).collect(Collectors.toList());
-    }
-
     public Galaxy getBestGalaxy(){
-        return orderByWeight().galaxies.get(0);
+        return orderByWeight().galaxies.get(0).getGalaxy();
     }
 
     public void mutate(Mutator mutator){
 
-        for(int i = 0 ; i < galaxies.size(); i++){
-            orderByWeight();
-            galaxies.set(i, mutator.mutate(galaxies.get(i), graph));
-        }
         orderByWeight();
+        for(int i = 0 ; i < galaxies.size(); i++){
+            MutableGalaxy beforeMutation = galaxies.get(i);
+            if(beforeMutation.isSpaceToGrow()) {
+                Galaxy afterMutation = mutator.mutate(beforeMutation.getGalaxy(), graph);
+                if (beforeMutation.getWeight() - afterMutation.getWeight() == 0) {
+                    beforeMutation.setSpaceToGrow(false);
+                    System.out.println("Galaxy " + i + " is no good");
+                }
+                else{
+                    beforeMutation.setGalaxy(afterMutation);
+                }
+                orderByWeight();
+            }
+        }
     }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder("Galaxy Pool\n");
-        for (Galaxy galaxy:
+        for (MutableGalaxy galaxy:
                 galaxies) {
             builder.append(galaxy.toString()).append('\n');
         }
