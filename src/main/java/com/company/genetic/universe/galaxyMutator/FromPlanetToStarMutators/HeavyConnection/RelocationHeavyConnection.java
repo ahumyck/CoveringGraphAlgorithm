@@ -1,12 +1,12 @@
-package com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection;
+package com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection;
 
 import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
-import com.company.universe.Galaxy;
-import com.company.universe.StarSystem;
-import com.company.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.StarSystem;
+import com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
 import com.google.common.collect.Lists;
 
 import java.util.ArrayList;

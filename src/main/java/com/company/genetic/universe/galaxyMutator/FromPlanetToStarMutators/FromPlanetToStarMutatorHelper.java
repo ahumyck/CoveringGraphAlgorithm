@@ -1,9 +1,9 @@
-package com.company.universe.galaxyMutator.FromPlanetToStarMutators;
+package com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators;
 
 import com.company.entities.Graph;
-import com.company.universe.Galaxy;
-import com.company.universe.StarSystem;
-import com.company.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.StarSystem;
+import com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
 
 
 public class FromPlanetToStarMutatorHelper {

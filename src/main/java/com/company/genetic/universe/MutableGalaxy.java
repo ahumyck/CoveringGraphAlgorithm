@@ -1,4 +1,4 @@
-package com.company.universe;
+package com.company.genetic.universe;
 
 public class MutableGalaxy {
     private Galaxy galaxy;

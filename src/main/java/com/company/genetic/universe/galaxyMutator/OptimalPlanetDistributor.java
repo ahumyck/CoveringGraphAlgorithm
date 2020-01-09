@@ -1,11 +1,11 @@
-package com.company.universe.galaxyMutator;
+package com.company.genetic.universe.galaxyMutator;
 
 import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
-import com.company.universe.Galaxy;
-import com.company.universe.StarSystem;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.StarSystem;
 
 import java.util.Comparator;
 import java.util.List;

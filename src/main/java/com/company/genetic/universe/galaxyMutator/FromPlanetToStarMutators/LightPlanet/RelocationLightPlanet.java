@@ -1,12 +1,12 @@
-package com.company.universe.galaxyMutator.FromPlanetToStarMutators.LightPlanet;
+package com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.LightPlanet;
 
 import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
-import com.company.universe.Galaxy;
-import com.company.universe.StarSystem;
-import com.company.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.StarSystem;
+import com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
 
 import java.util.ArrayList;
 import java.util.Comparator;

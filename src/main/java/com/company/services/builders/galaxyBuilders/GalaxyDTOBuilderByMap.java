@@ -1,8 +1,8 @@
 package com.company.services.builders.galaxyBuilders;
 
 import com.company.entities.Graph;
-import com.company.universe.Galaxy;
-import com.company.universe.StarSystem;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.StarSystem;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,9 +1,9 @@
-package com.company.universe.galaxyMutator;
+package com.company.genetic.universe.galaxyMutator;
 
 import com.company.entities.Graph;
-import com.company.universe.Galaxy;
-import com.company.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection.FromPlanetToStarMutatorHeavyConnection;
-import com.company.universe.galaxyMutator.FromPlanetToStarMutators.LightPlanet.FromPlanetToStarMutatorLightPlanet;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.HeavyConnection.FromPlanetToStarMutatorHeavyConnection;
+import com.company.genetic.universe.galaxyMutator.FromPlanetToStarMutators.LightPlanet.FromPlanetToStarMutatorLightPlanet;
 
 public class CombinationMutator implements Mutator {
     @Override

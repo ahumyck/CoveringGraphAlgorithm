@@ -1,4 +1,4 @@
-package com.company.universe;
+package com.company.genetic.universe;
 
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;

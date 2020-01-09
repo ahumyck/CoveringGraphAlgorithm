@@ -6,11 +6,11 @@ import com.company.entities.Graph;
 import com.company.services.builders.arrayBuilder.ArrayDTOBuilderByGalaxy;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByCustomArray;
-import com.company.universe.Galaxy;
-import com.company.universe.GalaxyPool;
-import com.company.universe.MutableGalaxy;
-import com.company.universe.galaxyMutator.CombinationMutator;
-import com.company.universe.galaxyMutator.Mutator;
+import com.company.genetic.universe.Galaxy;
+import com.company.genetic.universe.GalaxyPool;
+import com.company.genetic.universe.MutableGalaxy;
+import com.company.genetic.universe.galaxyMutator.CombinationMutator;
+import com.company.genetic.universe.galaxyMutator.Mutator;
 
 import java.util.*;
 import java.util.stream.Collectors;

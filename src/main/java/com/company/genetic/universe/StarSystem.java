@@ -1,4 +1,4 @@
-package com.company.universe;
+package com.company.genetic.universe;
 
 import com.company.entities.Graph;
 import com.google.gson.Gson;
