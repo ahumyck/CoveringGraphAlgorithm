@@ -18,12 +18,13 @@ public class GraphGenerator {
     private static String TEMPLATE_FILENAME = "test_graph_{0}.txt";
 
     public static void createTestResourses() {
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 24; i++) {
             String resultFilename = MessageFormat.format(TEMPLATE_FILENAME, i);
             String resultFilepath = TEMPLATE_FILEPATH + resultFilename;
             writeToFile(
                     resultFilepath,
-                    generate(25, 1000, 10000, 10, 50)
+                    gnerate1(50)
+//                    generate(25, 1000, 10000, 10, 50)
             );
             System.out.println("Generate Graph and write to file with name=[" + resultFilename + "].");
 

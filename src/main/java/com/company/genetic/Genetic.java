@@ -30,10 +30,10 @@ public class Genetic {
         Graph = graph;
         long average = Integer.MAX_VALUE;
         ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-//        Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, graph.size());
-//        GREEDY_SOLVE = convertToSolve(solve, graph.size());
+        Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, graph.size());
+        GREEDY_SOLVE = convertToSolve(solve, graph.size());
         List<Array> generation = init(graph);
-//        generation.add(GREEDY_SOLVE);
+        generation.add(GREEDY_SOLVE);
 //        generation = getChildGeneration(generation);
         generation = selection(generation, false, 20);
         while (minSolves.size() < 1) {
@@ -45,19 +45,19 @@ public class Genetic {
 //            startTime = System.currentTimeMillis();
             generation = getChildGeneration(generation);
 //            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
-
 //            startTime = System.currentTimeMillis();
             generation = selection(generation, true, 20);
 //            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
-            //todo: not thread safety
+            long startTime = System.currentTimeMillis();
             mutate(generation, graph);
+            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
         }
-        for (Array solve :
-             minSolves) {
-            System.out.println("Min solve: " + GreedyAlgorithmTest.calculate(convertToAnswer(solve), Graph));
-        }
+//        for (Array solve :
+//             minSolves) {
+//            System.out.println("Min solve: " + GreedyAlgorithmTest.calculate(convertToAnswer(solve), Graph));
+//        }
         return convertToAnswer(getMin(minSolves));
 
     }

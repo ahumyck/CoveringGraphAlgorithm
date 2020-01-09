@@ -9,6 +9,7 @@ import com.company.universe.StarSystem;
 
 import java.util.Comparator;
 import java.util.List;
+import java.util.Optional;
 
 public class OptimalPlanetDistributor implements Mutator {
     @Override
@@ -18,23 +19,42 @@ public class OptimalPlanetDistributor implements Mutator {
 
             boolean putBackBadSystem = true;
             for(int j = 0; j < badSystem.getPlanets().size(); j++){
-                Coefficient worstConnectionInSystem = findWorstConnectionInSystem(badSystem,graph);
-                Coefficient bestPlace = findBestPlaceForWorstConnection(galaxy, worstConnectionInSystem.getSatellite(), graph);
-                if(bestPlace.getWeight() < worstConnectionInSystem.getWeight()){
-                    if (badSystem.getPlanets().size() > 1){
-                        badSystem.remove(worstConnectionInSystem.getSatellite(),worstConnectionInSystem.getWeight());
-                        StarSystem systemByStar = findSystemByStar(galaxy, bestPlace.getStar());
-                        systemByStar.add(bestPlace.getSatellite(),bestPlace.getWeight());
-                    }
-                    else{
-                        Coefficient bestPlaceForWorstConnectionStar = findBestPlaceForWorstConnection(galaxy, badSystem.getStar(), graph);
-                        if(bestPlace.getWeight() + bestPlaceForWorstConnectionStar.getWeight() < worstConnectionInSystem.getWeight()){
-                            putBackBadSystem = false;
-                            StarSystem systemByStar = findSystemByStar(galaxy, bestPlace.getStar());
-                            systemByStar.add(bestPlace.getSatellite(),bestPlace.getWeight());
+                Optional<Coefficient> worstConnectionInSystem = findWorstConnectionInSystem(badSystem,graph);
+                if(worstConnectionInSystem.isPresent()){
+                    Coefficient worst = worstConnectionInSystem.get();
+                    Optional<Coefficient> bestPlaceOptional = findBestPlaceForWorstConnection(galaxy, worst.getSatellite(), graph);
+                    if(bestPlaceOptional.isPresent()){
+                        Coefficient bestPlace = bestPlaceOptional.get();
+                        if(bestPlace.getWeight() < worst.getWeight()){
+                            if (badSystem.getPlanets().size() > 1){
+                                Optional<StarSystem> systemByStarOptional = findSystemByStar(galaxy, bestPlace.getStar());
+                                if(systemByStarOptional.isPresent()){
+                                    StarSystem starSystem = systemByStarOptional.get();
+                                    badSystem.remove(worst.getSatellite(),worst.getWeight());
+                                    starSystem.add(bestPlace.getSatellite(),bestPlace.getWeight());
+                                }
+                            }
+                            else{
+                                Optional<Coefficient> bestPlaceForWorstConnectionOptional
+                                        = findBestPlaceForWorstConnection(galaxy, badSystem.getStar(), graph);
+                                if(bestPlaceForWorstConnectionOptional.isPresent()){
+                                    Coefficient bestPlaceForWorstConnectionStar = bestPlaceForWorstConnectionOptional.get();
 
-                            StarSystem systemForStar = findSystemByStar(galaxy, bestPlaceForWorstConnectionStar.getStar());
-                            systemForStar.add(bestPlaceForWorstConnectionStar.getSatellite(),bestPlaceForWorstConnectionStar.getWeight());
+                                    if(bestPlace.getWeight() + bestPlaceForWorstConnectionStar.getWeight() < worst.getWeight()){
+                                        Optional<StarSystem> systemByStarOptional = findSystemByStar(galaxy, bestPlace.getStar());
+                                        Optional<StarSystem> systemForStarOptional = findSystemByStar(galaxy, bestPlaceForWorstConnectionStar.getStar());
+
+                                        if(systemByStarOptional.isPresent() && systemForStarOptional.isPresent()){
+                                            putBackBadSystem = false;
+                                            StarSystem systemByStar = systemByStarOptional.get();
+                                            StarSystem systemForStar = systemForStarOptional.get();
+                                            systemByStar.add(bestPlace.getSatellite(),bestPlace.getWeight());
+                                            systemForStar.add(bestPlaceForWorstConnectionStar.getSatellite(),bestPlaceForWorstConnectionStar.getWeight());
+                                        }
+
+                                    }
+                                }
+                            }
                         }
                     }
                 }
@@ -48,7 +68,7 @@ public class OptimalPlanetDistributor implements Mutator {
         return galaxy.calculateWeight(graph).orderByWeight();
     }
 
-    private Coefficient findBestPlaceForWorstConnection(Galaxy galaxy, int satellite, Graph graph) {
+    private Optional<Coefficient> findBestPlaceForWorstConnection(Galaxy galaxy, int satellite, Graph graph) {
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
         List<Vertex> vertices = graph.getVertices();
         return galaxy.getSystems().stream().map(starSystem ->
@@ -59,27 +79,24 @@ public class OptimalPlanetDistributor implements Mutator {
                                 edgeMatrix.getCell(starSystem.getStar(),satellite)
 
                 ))
-                .min(Comparator.comparingLong(Coefficient::getWeight))
-                .get();
+                .min(Comparator.comparingLong(Coefficient::getWeight));
     }
 
-    private StarSystem findSystemByPlanet(Galaxy galaxy, int planet){
+    private Optional<StarSystem> findSystemByPlanet(Galaxy galaxy, int planet){
         return galaxy.getSystems()
                 .stream()
                 .filter(system -> system.getPlanets().contains(planet))
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
-    private StarSystem findSystemByStar(Galaxy galaxy, int star){
+    private Optional<StarSystem> findSystemByStar(Galaxy galaxy, int star){
         return galaxy.getSystems()
                 .stream()
                 .filter(system -> system.getStar() == star)
-                .findFirst()
-                .get();
+                .findFirst();
     }
 
-    private Coefficient findWorstConnectionInSystem(StarSystem badSystem, Graph graph) {
+    private Optional<Coefficient> findWorstConnectionInSystem(StarSystem badSystem, Graph graph) {
         int star = badSystem.getStar();
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
         List<Vertex> vertices = graph.getVertices();
@@ -90,7 +107,6 @@ public class OptimalPlanetDistributor implements Mutator {
                         vertices.get(star).getWeight() *
                                 edgeMatrix.getCell(star,planet)
                 ))
-                .max(Comparator.comparingLong(Coefficient::getWeight))
-                .get();
+                .max(Comparator.comparingLong(Coefficient::getWeight));
     }
 }

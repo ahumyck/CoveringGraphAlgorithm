@@ -20,7 +20,7 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 public class DemoApplication {
-    public static void ma1in(String[] args) {
+    public static void main1(String[] args) {
         GraphGenerator.createTestResourses();
     }
     public static void main(String[] args) throws FileNotFoundException {
@@ -41,13 +41,13 @@ public class DemoApplication {
 //        for (int i = 0; i < 8; i++) {
 //            graphs.add(GraphGenerator.generate(200, 5000, 10000, 2, 100));
 //        }
-        for (int i = 0; i < 8; i++) {
-            graphs.add(GraphParser
-                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
-//            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 100));
+        for (int i = 0; i < 1; i++) {
+//            graphs.add(GraphParser
+//                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
+//            graphs.add(GraphGenerator.generate(500, 9550, 10000, 2, 100));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
-//            graphs.add(GraphGenerator.gnerate1(100));
+            graphs.add(GraphGenerator.gnerate1(500));
         }
 //        for (int i = 0; i < 4; i++) {
 //            graphs.add(GraphGenerator.generate(200, 2, 100, 2, 100));
