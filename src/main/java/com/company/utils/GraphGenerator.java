@@ -17,14 +17,14 @@ public class GraphGenerator {
     public static String TEMPLATE_FILEPATH = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\";
     private static String TEMPLATE_FILENAME = "test_graph_{0}.txt";
 
-    public static void createTestResourses() {
+    public static void createTestResources() {
         for (int i = 0; i < 24; i++) {
             String resultFilename = MessageFormat.format(TEMPLATE_FILENAME, i);
             String resultFilepath = TEMPLATE_FILEPATH + resultFilename;
             writeToFile(
                     resultFilepath,
-                    gnerate1(50)
-//                    generate(25, 1000, 10000, 10, 50)
+//                    generateSpecialCaseGraph(50)
+                    generate(25, 1000, 10000, 10, 50)
             );
             System.out.println("Generate Graph and write to file with name=[" + resultFilename + "].");
 
@@ -59,7 +59,7 @@ public class GraphGenerator {
         return new Graph(vertices, matrix);
     }
 
-    public static Graph gnerate1(int vertexCount) {
+    public static Graph generateSpecialCaseGraph(int vertexCount) {
         List<Vertex> vertices = new ArrayList<>();
         for (int i = 0; i < vertexCount; i++) {
             if (i % 5 == 0)

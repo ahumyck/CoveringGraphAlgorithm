@@ -3,7 +3,6 @@ package com.company;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
-import com.company.parsers.GraphParser;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.utils.GraphGenerator;
 import com.google.common.util.concurrent.AtomicDouble;
@@ -15,13 +14,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 
 @SpringBootApplication
 public class DemoApplication {
     public static void main1(String[] args) {
-        GraphGenerator.createTestResourses();
+        GraphGenerator.createTestResources();
     }
     public static void main(String[] args) throws FileNotFoundException {
 //        Graph graph = GraphParser
