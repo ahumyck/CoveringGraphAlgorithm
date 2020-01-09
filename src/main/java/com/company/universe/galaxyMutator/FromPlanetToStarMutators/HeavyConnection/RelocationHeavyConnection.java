@@ -72,14 +72,15 @@ public class RelocationHeavyConnection implements Relocation {
         Coefficient planet = min(possiblePlanetList).get();
 
         if(star.getWeight() < planet.getWeight()){
+            System.out.println("case a");
             return makeChange(originalGalaxy, cloneGalaxy, star, possibleStar, star.getSatellite(), graph);
         }
         else{
+            System.out.println("case b");
             return makeChange(originalGalaxy, cloneGalaxy, planet, planet.getSatellite(), possibleStar,graph);
         }
     }
     
-    @NotNull
     private Optional<Coefficient> min(List<Coefficient> coefficients){
         return coefficients.stream().min(Comparator.comparingLong(Coefficient::getWeight));
     }
@@ -88,8 +89,13 @@ public class RelocationHeavyConnection implements Relocation {
         StarSystem possibleStarSystem = findSystemByPlanet(cloneGalaxy,possibleStar).get();
         StarSystem possiblePlanetSystem = findSystemByPlanet(cloneGalaxy,possiblePlanet).get();
         if(possibleStarSystem.getPlanets().size() > 1 || possiblePlanetSystem.getPlanets().size() > 1){
-
-            if(information.getWeight() < heaviest.getWeight()) {
+            System.out.println("possibleStar " + possibleStar + ", possiblePlanet " + possiblePlanet);
+            long additive = graph.getVertices().get(information.getStar()).getWeight() *
+                    graph.getEdgeMatrix().getCell(information.getStar(),information.getSatellite());
+            System.out.println(information + " vs " + heaviest);
+            System.out.println(information.getWeight() + " vs " + (heaviest.getWeight() + additive));
+            if(information.getWeight() < (heaviest.getWeight() + additive)) {
+                System.out.println("im here");
                 possiblePlanetSystem.remove(possiblePlanet,0);
                 possibleStarSystem.remove(possibleStar,0);
                 cloneGalaxy.getSystems().add(new StarSystem(possibleStar,Lists.newArrayList(possiblePlanet),information.getWeight()));
@@ -98,13 +104,6 @@ public class RelocationHeavyConnection implements Relocation {
         }
         return originalGalaxy;
     }
-
-//    private Optional<StarSystem> findSystemByStar(Galaxy galaxy, int star){
-//        return galaxy.getSystems()
-//                .stream()
-//                .filter(system -> system.getStar() == star)
-//                .findFirst();
-//    }
 
     private Optional<StarSystem> findSystemByPlanet(Galaxy galaxy, int planet){
         return galaxy.getSystems()

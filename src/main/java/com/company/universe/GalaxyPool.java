@@ -43,12 +43,11 @@ public class GalaxyPool {
                 Galaxy afterMutation = mutator.mutate(beforeMutation.getGalaxy(), graph);
                 if (beforeMutation.getWeight() - afterMutation.getWeight() == 0) {
                     beforeMutation.setSpaceToGrow(false);
-                    System.out.println("Galaxy " + i + " is no good");
+//                    System.out.println("Galaxy " + i + " is no good");
                 }
                 else{
                     beforeMutation.setGalaxy(afterMutation);
                 }
-                orderByWeight();
             }
         }
     }

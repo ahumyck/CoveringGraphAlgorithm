@@ -27,11 +27,11 @@ public class StarSystem implements Cloneable{
 
     public void add(int planet, long additionalWeight){
         planets.add(planet);
-        planets.sort(Integer::compareTo);
+        planets.sort(Long::compare);
         weight += additionalWeight;
     }
 
-    public void remove(int planet, int weight){
+    public void remove(int planet, long weight){
         planets.remove((Integer) planet);
         this.weight -= weight;
     }
@@ -46,10 +46,6 @@ public class StarSystem implements Cloneable{
 
     public List<Integer> getPlanets() {
         return planets;
-    }
-
-    public void setPlanets(List<Integer> planets) {
-        this.planets = planets;
     }
 
     public long getWeight() {
