@@ -16,7 +16,6 @@ public class Genetic {
     private long Average = Integer.MAX_VALUE;
     private List<Array> minSolves = new ArrayList<>();
     private int counter = 0;
-    private int reinitCounter = 0;
     private Array GREEDY_SOLVE;
 
     public Map<Integer, ArrayList<Integer>> solve(Graph graph) {
@@ -28,93 +27,26 @@ public class Genetic {
         List<Array> generation = init(graph);
 //        generation.add(GREEDY_SOLVE);
 //        generation = getChildGeneration(generation);
-        int i = 0;
-        generation = selection(generation, false, 10);
+        generation = selection(generation, false, 20);
         while (minSolves.size() < 1) {
-
-//            System.out.println("After stuffing Generation size: " + generation.size());
 //            long startTime = System.currentTimeMillis();
-//            stuffing(generation, 2);
-//            generation = getChildGeneration(generation);
-//            generation = selection(generation, false);
 
+            stuffing(generation, 14);
+//            System.out.println("Stuffing time: " + (System.currentTimeMillis() - startTime));
 
-//            stuffing(generation, 6);
-//            generation = getChildGeneration(generation);
-//            generation = selection(generation, false);
-//            while (!reinitFlag) {
-
-            long startTime = System.currentTimeMillis();
-
-            stuffing(generation, 10);
-//            generation = getChildGeneration(generation);
-//            generation = selection(generation, false);
-//            long startTime = System.currentTimeMillis();
-//            stuffing(generation, graph.size() / 8, 4);
-//            stuffing(generation, graph.size() / 4, 2);
-//            stuffing(generation, graph.size() / 10, 2);
-//            stuffing(generation, graph.size() / 25, 2);
-//            stuffing(generation, graph.size() / 50, 2);
-//            stuffing(generation, graph.size() / 100, 2);
-//            stuffing(generation, 8, 7);
-            System.out.println("Stuffing time: " + (System.currentTimeMillis() - startTime));
-
-            startTime = System.currentTimeMillis();
-            generation = getChildGeneration(generation);
-            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
-            startTime = System.currentTimeMillis();
-//            generation = mutation(generation);
-            generation = selection(generation, true, 20);
-            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
-
-//            }
-
-
-//            stuffing(generation, 200);
-//            generation = getChildGeneration(generation);
-//            generation = selection(generation);
-
-
-//            generation = getChildGeneration(generation);
-//            generation = selection(generation);
-
-
-//            generation = selection(generation);
-//            System.out.println("After selection Generation size: " + generation.size());
-
-//            System.out.println("ChildGeneration time (" + i + "): " + (System.currentTimeMillis() - startTime));
-//            System.out.println("After Child Generation size: " + generation.size());
 //            startTime = System.currentTimeMillis();
-//            System.out.println("Selection time (" + i + "): " + (System.currentTimeMillis() - startTime));
-//            System.out.println("New generation: ");
-//            for (Array g :
-//                    generation) {
-//                System.out.println(g);
-//            }
-//            if (i % 10 == 0) {
-//            System.out.println(i);
-            i++;
-//            System.out.println("Average: " + Average);
-//                if (average * 0.9 <= Average) {
-//                    generation = init(graph);
-//                    System.out.println("Reinitialize");
-//                    average = Integer.MAX_VALUE;
-//                }else average = Average;
-//            }
+            generation = getChildGeneration(generation);
+//            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
+
+//            startTime = System.currentTimeMillis();
+            generation = selection(generation, true, 20);
+//            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
         }
-//        generation = getChildGeneration(minSolves);
-//        selection(generation);
-//        minSolves.add(getMin(generation));
         for (Array solve :
              minSolves) {
             System.out.println("Min solve: " + GreedyAlgorithmTest.calculate(convertToAnswer(solve), Graph));
         }
-//        System.out.println(getMin(minSolves));
         return convertToAnswer(getMin(minSolves));
-//        Map<Integer, ArrayList<Integer>> min =
-
-//        System.out.println(getMin(minSolves));
-//        Map<Integer, ArrayList<Integer>> min = convertToAnswer(getMin(minSolves));
 
     }
 
@@ -140,11 +72,11 @@ public class Genetic {
     }
 
     private Array getMin(List<Array> generation) {
-        try {
-            checkValidGeneration(generation);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+//        try {
+//            checkValidGeneration(generation);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//        }
         int result = calculate(generation.get(0), Graph);
         Array resultSolve = generation.get(0);
         for (Array i :
@@ -158,28 +90,17 @@ public class Genetic {
         return resultSolve;
     }
 
-//    private static Array stuffing(Array solve){
-//        solve
-//    }
-
     private List<Array> stuffing(List<Array> generation, int size) {
-        int num = 50;
         int starCount = 2;
         while (starCount <= Graph.size() / 2) {
             starCount *= 2;
         }
         starCount /= 2;
-
-//        for (int i = 2; i < 10; i++) {
-//            int starCount = i;
-        List<Array> mutation = new ArrayList<>();
         while (starCount >= 2 && size >= 0) {
             generation.addAll(selection(stuffingHelper(starCount), false, 2));
             starCount /= 2;
             size -= 2;
         }
-
-//        }
         return generation;
     }
 
@@ -187,7 +108,6 @@ public class Genetic {
         int num = 100;
         List<Array> mutation = new ArrayList<>();
         for (int i = 0; i < num; i++) {
-//            int starCount = random.nextInt(Graph.size() / 2 - 1) + 1;
             mutation.add(generateSolve(Graph.size(), starCount));
         }
         return mutation;
@@ -197,32 +117,10 @@ public class Genetic {
         List<Array> mutation = new ArrayList<>();
         int num = 100;
         for (int i = 0; i < num; i++) {
-//            int starCount = random.nextInt(Graph.size() / 2 - 1) + 1;
             mutation.add(generateSolve(Graph.size(), param));
-//            mutation.add(generateSolve(Graph.size(), param, false));
         }
         generation.addAll(selection(mutation, false, size));
         return generation;
-    }
-
-    private List<Array> mutation(List<Array> generation) {
-        List<Array> mutation = new ArrayList<>(generation);
-        for (Array i :
-                generation) {
-            mutation.add(mutateSolve(i));
-        }
-        generation.addAll(mutation);
-        return generation;
-    }
-
-    private Array mutateSolve(Array solve) {
-        Array result = new Array(solve.length);
-        for (int i = 0; i < solve.length; i++) {
-            if (solve.getArray()[i] != STAR_VALUE) {
-                result.getArray()[i] = INVALID_VALUE;
-            } else result.getArray()[i] = STAR_VALUE;
-        }
-        return fillSatellite(result);
     }
 
     private List<Array> getChildGeneration(List<Array> generation) {
@@ -232,12 +130,6 @@ public class Genetic {
                 if (i != j) {
                     List<Array> tmp = cross(generation.get(i), generation.get(j));
                     newGeneration.addAll(tmp);
-//                    System.out.println("Start Cross i=" + i + " j=" + j);
-//                    for (int[] t :
-//                            tmp) {
-//                        System.out.println(Arrays.toString(t));
-//                    }
-//                    System.out.println("End Cross");
                 }
             }
         }
@@ -245,11 +137,6 @@ public class Genetic {
     }
 
     private List<Array> selection(List<Array> generation, boolean flag, int selectionSize) {
-//        try {
-//            checkValidGeneration(generation);
-//        } catch (Exception e) {
-//            System.out.println("Error: " + e.getMessage());
-//        }
         List<Array> result = new ArrayList<>();
         if (generation.size() == 0) {
             System.out.println("Empty size of generation: " + generation.size());
@@ -262,11 +149,9 @@ public class Genetic {
         int[] calculatedResults = new int[generation.size()];
         for (int i = 0; i < generation.size(); i++) {
             calculatedResults[i] = calculate(generation.get(i), Graph);
-//            average += calculatedResults[i];
         }
         int[] temp = Arrays.copyOf(calculatedResults, calculatedResults.length);
         Arrays.sort(temp);
-//        System.out.println("Temp: " + Arrays.toString(temp));
         try {
             average = temp[selectionSize];
         } catch (Exception e) {
@@ -276,7 +161,6 @@ public class Genetic {
         }
         for (int i = 0; i < calculatedResults.length; i++) {
             if (calculatedResults[i] <= average) {
-//                System.out.println("Average: " + calculatedResults[i]);
                 result.add(generation.get(i));
             }
         }
@@ -284,24 +168,21 @@ public class Genetic {
         System.out.print(counter);
         System.out.print(" Min: " + temp[0]);
         System.out.println(" Average: " + average);
-
+        average = temp[0];
 
         if (Average > average) {
             counter = 0;
             Average = average;
-//            System.out.println("Average: " + average);
             return result;
         } else {
             counter++;
-//            System.out.println("Reinit counter: " + counter);
             Average = average;
-            if (counter > 200) {
+            if (counter > 100) {
                 Average = Integer.MAX_VALUE;
                 counter = 0;
                 minSolves.add(getMin(result));
                 result = init(Graph);
                 result.addAll(minSolves);
-//            System.out.println("Reinit");
                 return selection(result, false, 20);
             } else return result;
         }
@@ -321,10 +202,13 @@ public class Genetic {
 //        System.out.println("Intersection time: " + (System.currentTimeMillis() - startTime));
         if (toAdd != null) {
             result.add(toAdd);
+//            startTime = System.currentTimeMillis();
             toAdd = outterjoin(child1, child2);
-//            System.out.println("Outterjoin: " + Arrays.toString(toAdd));
+//            System.out.println("Outterjoin time: " + (System.currentTimeMillis() - startTime));
             if (toAdd != null) result.add(toAdd);
         }
+//        System.out.println("Outterjoin: " + Arrays.toString(toAdd));
+//        System.out.println("Cross time: " + (System.currentTimeMillis() - startTime));
         return result;
     }
 
@@ -337,41 +221,41 @@ public class Genetic {
         return result;
     }
 
-    private Array union(Array child1, Array child2) {
-        Array result = new Array(child1.length);
+    private Array union(Array parent1, Array child2) {
+        Array result = new Array(parent1.length);
         int starCount = 0;
         Set<Integer> stars = new HashSet<>();
-        for (int i = 0; i < child1.length; i++) {
-            if (child1.getArray()[i] == STAR_VALUE || child2.getArray()[i] == STAR_VALUE) {
+        for (int i = 0; i < parent1.length; i++) {
+            if (parent1.getArray()[i] == STAR_VALUE || child2.getArray()[i] == STAR_VALUE) {
                 result.getArray()[i] = STAR_VALUE;
                 stars.add(i);
                 starCount++;
-                if (child1.getArray()[i] == STAR_VALUE && child2.getArray()[i] == STAR_VALUE) {
+                if (parent1.getArray()[i] == STAR_VALUE && child2.getArray()[i] == STAR_VALUE) {
                     starCount--;
                 }
             } else
                 result.getArray()[i] = INVALID_VALUE;
         }
         if (starCount == 0) return null;
-        if (stars.size() > child1.length / 2) return null;
-//        System.out.println("Stars count: " + stars.size() + " size: " + child1.length /2);
-        if (stars.size() > child1.length / 2) {
-            System.out.println("If condition(union): child1=" + child1 + " child2=" + child2);
+        if (stars.size() > parent1.length / 2) return null;
+//        System.out.println("Stars count: " + stars.size() + " size: " + parent1.length /2);
+        if (stars.size() > parent1.length / 2) {
+            System.out.println("If condition(union): parent1=" + parent1 + " child2=" + child2);
         }
 //        for (int i = 0; i < result.length; i++) {
 //            if (result.getArray()[i] != STAR_VALUE) {
-//                if (child1[i] == child2[i]) {
-//                    result[i] = child1[i];
+//                if (parent1[i] == child2[i]) {
+//                    result[i] = parent1[i];
 //                    stars.remove(result[i]);
 //                } else {
-//                    if (stars.contains(child1[i])) {
-//                        result[i] = child1[i];
-//                        stars.remove(child1[i]);
+//                    if (stars.contains(parent1[i])) {
+//                        result[i] = parent1[i];
+//                        stars.remove(parent1[i]);
 //                    } else if (stars.contains(child2[i])) {
 //                        result[i] = child2[i];
 //                        stars.remove(child2[i]);
 //                    } else {
-//                        result[i] = random.nextBoolean() ? child1[i] : child2[i]; //добавить выбор наименьшего пути по ребрам
+//                        result[i] = random.nextBoolean() ? parent1[i] : child2[i]; //добавить выбор наименьшего пути по ребрам
 //                    }
 //                }
 //                result.getArray()[i] = INVALID_VALUE;
@@ -410,8 +294,6 @@ public class Genetic {
     }
 
     private Array outterjoin(Array child1, Array child2) {
-//        System.out.println("Child1: " + Arrays.toString(child1));
-//        System.out.println("Child2: " + Arrays.toString(child2));
         Array result = new Array(child1.length);
         Set<Integer> stars = new HashSet<>();
         for (int i = 0; i < child1.length; i++) {
@@ -428,7 +310,6 @@ public class Genetic {
             }
         }
         if (stars.size() > child1.length / 2 || stars.size() == 0) {
-//            System.out.println("Result: ");
             return null;
         }
         if (stars.size() > child1.length / 2) {
@@ -445,8 +326,6 @@ public class Genetic {
 //                }
 //            }
 //        }
-
-//        System.out.println("Result: " + Arrays.toString(result));
         return fillSatellite(result);
     }
 
@@ -454,25 +333,16 @@ public class Genetic {
         List<Array> initial = new ArrayList<>();
         for (int i = 0; i <= graph.size() * 5; i++) {
             int starCount = random.nextInt(graph.size() / 2 - 1) + 1;
-//            int starCount = 2;
             initial.add(generateSolve(graph.size(), starCount));
-//            initial.add(generateSolve(graph.size(), starCount));
         }
-//        initial.add();
-//        System.out.println("Map: " + solve);
-//        System.out.println("Solve: " + solv);
-//        initial.add(GREEDY_SOLVE);
         return initial;
     }
 
     private Array generateSolve(int size, int starCount) {
         Array result = new Array(size);
         Arrays.fill(result.getArray(), INVALID_VALUE);
-//        System.out.println("first step: " + Arrays.toString(result));
         fillStars(result, starCount);
-//        System.out.println("second step: " + Arrays.toString(result));
         fillSatellite(result);
-//        System.out.println("third step: " + Arrays.toString(result));
         return result;
     }
 
@@ -480,9 +350,6 @@ public class Genetic {
         List<Array> result = new ArrayList<>();
         result.add(new Array(source.getArray()));
         result.add(new Array(source.getArray()));
-
-
-//        long startTime = System.currentTimeMillis();
         List<Integer> stars = new ArrayList<>();
         for (int i = 0; i < source.length; i++) {
             if (source.getArray()[i] == STAR_VALUE) stars.add(i);
@@ -494,9 +361,7 @@ public class Genetic {
             if (result.get(0).getArray()[i] != STAR_VALUE && result.get(0).getArray()[i] == INVALID_VALUE) {
                 Integer star;
                 if (satelliteCount <= stars1.size())
-//                    star = stars1.get(random.nextInt(stars1.size()));
                     star = getMinimumStar(i, stars1);
-//                else star = stars.get(random.nextInt(stars.size()));
                 else star = getMinimumStar(i, stars);
                 satelliteCount--;
                 result.get(0).getArray()[i] = star;
@@ -507,17 +372,13 @@ public class Genetic {
             if (result.get(1).getArray()[i] != STAR_VALUE && result.get(1).getArray()[i] == INVALID_VALUE) {
                 Integer star;
                 if (satelliteCount <= stars1.size())
-//                    star = stars1.get(random.nextInt(stars1.size()));
                     star = getMinimumStar(i, stars1);
-//                else star = stars.get(random.nextInt(stars.size()));
                 else star = getMinimumStar(i, stars);
                 satelliteCount--;
                 result.get(1).getArray()[i] = star;
                 stars1.remove(star);
             }
         }
-
-//        System.out.println("Fill sattelite time: " + ( System.currentTimeMillis() - startTime) + " stars count: " + stars.size());
         return getMin(result);
     }
 
@@ -540,7 +401,6 @@ public class Genetic {
                 generation) {
             if (!isValidSolve(solve)) throw new Exception("Invalid generation: " + solve);
         }
-
     }
 
     private boolean isValidSolve(Array solve) {
