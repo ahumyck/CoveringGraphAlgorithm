@@ -50,30 +50,8 @@ public class Genetic {
             generation = selection(generation, true, 20);
 //            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
-            //todo: permyashkin code remove nahui esli che to ne robit
-            GalaxyDTOBuilderByCustomArray builderByCustomArray = new GalaxyDTOBuilderByCustomArray();
-            List<MutableGalaxy> generationAsGalaxy = new ArrayList<>();
-            for (Array solution:
-                 generation) {
-                generationAsGalaxy.add(new MutableGalaxy(builderByCustomArray.build(solution,graph),true));
-            }
-            GalaxyPool pool = new GalaxyPool(graph,GalaxyPool.EMPTY);
-            pool.addGalaxies(generationAsGalaxy);
-            Mutator mutator = new CombinationMutator();
-            for(int i = 0 ; i < 10 ; i++){
-                pool.mutate(mutator);
-            }
-
-            List<Galaxy> updatedGeneration = pool.getGalaxies()
-                    .stream()
-                    .map(MutableGalaxy::getGalaxy)
-                    .collect(Collectors.toList());
-
-            ArrayDTOBuilderByGalaxy builderByGalaxy = new ArrayDTOBuilderByGalaxy();
-            for(int i = 0 ; i < updatedGeneration.size(); i++){
-                generation.set(i,builderByGalaxy.build(updatedGeneration.get(i), graph));
-            }
-
+            //todo: not thread safety
+            mutate(generation, graph);
 
         }
         for (Array solve :
@@ -84,6 +62,35 @@ public class Genetic {
 
     }
 
+
+
+    private List<Array> mutate(List<Array> generation, Graph graph){
+        GalaxyDTOBuilderByCustomArray builderByCustomArray = new GalaxyDTOBuilderByCustomArray();
+        List<MutableGalaxy> generationAsGalaxy = new ArrayList<>();
+        for (Array solution:
+                generation) {
+            generationAsGalaxy.add(new MutableGalaxy(builderByCustomArray.build(solution,graph),true));
+        }
+
+        GalaxyPool pool = new GalaxyPool(graph,GalaxyPool.EMPTY);
+        pool.addGalaxies(generationAsGalaxy);
+        Mutator mutator = new CombinationMutator();
+        for(int i = 0 ; i < 10 ; i++){
+            pool.mutate(mutator);
+        }
+
+        List<Galaxy> updatedGeneration = pool.getGalaxies()
+                .stream()
+                .map(MutableGalaxy::getGalaxy)
+                .collect(Collectors.toList());
+
+        ArrayDTOBuilderByGalaxy builderByGalaxy = new ArrayDTOBuilderByGalaxy();
+        for(int i = 0 ; i < updatedGeneration.size(); i++){
+            generation.set(i,builderByGalaxy.build(updatedGeneration.get(i), graph));
+        }
+
+        return generation;
+    }
 
     private Map<Integer, ArrayList<Integer>> convertToAnswer(Array solve) {
         Map<Integer, ArrayList<Integer>> result = new HashMap<>();

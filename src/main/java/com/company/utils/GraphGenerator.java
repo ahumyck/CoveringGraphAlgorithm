@@ -14,7 +14,7 @@ import java.util.Random;
 
 public class GraphGenerator {
     private static final Random WEIGHT_RANDOM = new Random();
-    private static String TEMPLATE_FILEPATH = "C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\";
+    public static String TEMPLATE_FILEPATH = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\";
     private static String TEMPLATE_FILENAME = "test_graph_{0}.txt";
 
     public static void createTestResourses() {
@@ -23,7 +23,7 @@ public class GraphGenerator {
             String resultFilepath = TEMPLATE_FILEPATH + resultFilename;
             writeToFile(
                     resultFilepath,
-                    generate(300, 1000, 2000, 10, 50)
+                    generate(25, 1000, 10000, 10, 50)
             );
             System.out.println("Generate Graph and write to file with name=[" + resultFilename + "].");
 
