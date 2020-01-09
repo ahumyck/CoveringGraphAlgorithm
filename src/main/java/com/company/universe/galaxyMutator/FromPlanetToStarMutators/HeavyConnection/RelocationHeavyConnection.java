@@ -8,7 +8,6 @@ import com.company.universe.Galaxy;
 import com.company.universe.StarSystem;
 import com.company.universe.galaxyMutator.FromPlanetToStarMutators.relocation.Relocation;
 import com.google.common.collect.Lists;
-import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -68,38 +67,33 @@ public class RelocationHeavyConnection implements Relocation {
             }
         }
         
-        Coefficient star = min(possibleStarList).get();
-        Coefficient planet = min(possiblePlanetList).get();
+        Coefficient star = StreamMin(possibleStarList).get();
+        Coefficient planet = StreamMin(possiblePlanetList).get();
+        Coefficient min = star.getWeight() < planet.getWeight() ? star : planet;
 
-        if(star.getWeight() < planet.getWeight()){
-            System.out.println("case a");
-            return makeChange(originalGalaxy, cloneGalaxy, star, possibleStar, star.getSatellite(), graph);
-        }
-        else{
-            System.out.println("case b");
-            return makeChange(originalGalaxy, cloneGalaxy, planet, planet.getSatellite(), possibleStar,graph);
-        }
+        return makeChange(originalGalaxy, cloneGalaxy, min, possibleStar, min.getSatellite(), graph);
     }
     
-    private Optional<Coefficient> min(List<Coefficient> coefficients){
+    private Optional<Coefficient> StreamMin(List<Coefficient> coefficients){
         return coefficients.stream().min(Comparator.comparingLong(Coefficient::getWeight));
     }
 
-    private Galaxy makeChange(Galaxy originalGalaxy, Galaxy cloneGalaxy,Coefficient information, int possibleStar,int possiblePlanet,Graph graph){
+    private Galaxy makeChange(Galaxy originalGalaxy, Galaxy cloneGalaxy,Coefficient min, int possibleStar,int possiblePlanet,Graph graph){
         StarSystem possibleStarSystem = findSystemByPlanet(cloneGalaxy,possibleStar).get();
         StarSystem possiblePlanetSystem = findSystemByPlanet(cloneGalaxy,possiblePlanet).get();
         if(possibleStarSystem.getPlanets().size() > 1 || possiblePlanetSystem.getPlanets().size() > 1){
-            System.out.println("possibleStar " + possibleStar + ", possiblePlanet " + possiblePlanet);
-            long additive = graph.getVertices().get(information.getStar()).getWeight() *
-                    graph.getEdgeMatrix().getCell(information.getStar(),information.getSatellite());
-            System.out.println(information + " vs " + heaviest);
-            System.out.println(information.getWeight() + " vs " + (heaviest.getWeight() + additive));
-            if(information.getWeight() < (heaviest.getWeight() + additive)) {
-                System.out.println("im here");
-                possiblePlanetSystem.remove(possiblePlanet,0);
-                possibleStarSystem.remove(possibleStar,0);
-                cloneGalaxy.getSystems().add(new StarSystem(possibleStar,Lists.newArrayList(possiblePlanet),information.getWeight()));
-                return cloneGalaxy.calculateWeight(graph).orderByWeight();
+            int pSpPWeight = graph.getVertices().get(possibleStar).getWeight() * graph.getEdgeMatrix().getCell(possibleStar,possiblePlanet);
+            int pPPsWeight = graph.getVertices().get(possiblePlanet).getWeight() * graph.getEdgeMatrix().getCell(possiblePlanet,possibleStar);
+
+            if(pSpPWeight < pPPsWeight){
+                return makeChanges(cloneGalaxy,possibleStarSystem,possiblePlanetSystem,min,possibleStar,possiblePlanet,pSpPWeight,graph)
+                        .calculateWeight(graph)
+                        .orderByWeight();
+            }
+            else{
+                return makeChanges(cloneGalaxy,possiblePlanetSystem,possibleStarSystem,min,possiblePlanet,possibleStar,pPPsWeight,graph)
+                        .calculateWeight(graph)
+                        .orderByWeight();
             }
         }
         return originalGalaxy;
@@ -110,6 +104,21 @@ public class RelocationHeavyConnection implements Relocation {
                 .stream()
                 .filter(system -> system.getPlanets().contains(planet))
                 .findFirst();
+    }
+
+    private Galaxy makeChanges(Galaxy galaxy, StarSystem starSystem, StarSystem planetSystem, Coefficient min, int star, int planet, int weight, Graph graph){
+        long additive = graph.getVertices().get(min.getStar()).getWeight() *
+                graph.getEdgeMatrix().getCell(min.getStar(),min.getSatellite());
+
+        if(weight < heaviest.getWeight() + additive){
+            starSystem.remove(star,0);
+            planetSystem.remove(planet,0);
+            galaxy.getSystems().add(
+                    new StarSystem(star,Lists.newArrayList(planet), weight)
+            );
+            return galaxy;
+        }
+        return galaxy;
     }
 
 }
