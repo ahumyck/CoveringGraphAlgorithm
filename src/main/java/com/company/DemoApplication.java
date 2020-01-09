@@ -41,13 +41,13 @@ public class DemoApplication {
 //        for (int i = 0; i < 8; i++) {
 //            graphs.add(GraphGenerator.generate(200, 5000, 10000, 2, 100));
 //        }
-        for (int i = 0; i < 1; i++) {
+        for (int i = 0; i < 24; i++) {
 //            graphs.add(GraphParser
 //                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
-//            graphs.add(GraphGenerator.generate(500, 9550, 10000, 2, 100));
+            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 100));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
-            graphs.add(GraphGenerator.gnerate1(500));
+//            graphs.add(GraphGenerator.gnerate1(50));
         }
 //        for (int i = 0; i < 4; i++) {
 //            graphs.add(GraphGenerator.generate(200, 2, 100, 2, 100));
