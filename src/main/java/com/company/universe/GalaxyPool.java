@@ -23,6 +23,10 @@ public class GalaxyPool {
         this.galaxies.addAll(GalaxyPoolGenerator.getGalaxies(graph, howMany));
     }
 
+    public void addGalaxies(List<MutableGalaxy> galaxies) {
+        this.galaxies.addAll(galaxies);
+    }
+
     public void addGalaxy(Galaxy galaxy) { this.galaxies.add(new MutableGalaxy(galaxy,true)); orderByWeight(); }
 
     public GalaxyPool orderByWeight(){
@@ -50,6 +54,10 @@ public class GalaxyPool {
                 }
             }
         }
+    }
+
+    public List<MutableGalaxy> getGalaxies() {
+        return galaxies;
     }
 
     @Override

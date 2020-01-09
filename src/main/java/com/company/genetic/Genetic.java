@@ -3,9 +3,17 @@ package com.company.genetic;
 import com.company.GreedyAlgorithmTest;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
-import com.company.services.coefficientsBuilder.LinearCoefficientsBuilder;
+import com.company.services.builders.arrayBuilder.ArrayDTOBuilderByGalaxy;
+import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
+import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByCustomArray;
+import com.company.universe.Galaxy;
+import com.company.universe.GalaxyPool;
+import com.company.universe.MutableGalaxy;
+import com.company.universe.galaxyMutator.CombinationMutator;
+import com.company.universe.galaxyMutator.Mutator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Genetic {
 
@@ -41,6 +49,32 @@ public class Genetic {
 //            startTime = System.currentTimeMillis();
             generation = selection(generation, true, 20);
 //            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
+
+            //todo: permyashkin code remove nahui esli che to ne robit
+            GalaxyDTOBuilderByCustomArray builderByCustomArray = new GalaxyDTOBuilderByCustomArray();
+            List<MutableGalaxy> generationAsGalaxy = new ArrayList<>();
+            for (Array solution:
+                 generation) {
+                generationAsGalaxy.add(new MutableGalaxy(builderByCustomArray.build(solution,graph),true));
+            }
+            GalaxyPool pool = new GalaxyPool(graph,GalaxyPool.EMPTY);
+            pool.addGalaxies(generationAsGalaxy);
+            Mutator mutator = new CombinationMutator();
+            for(int i = 0 ; i < 10 ; i++){
+                pool.mutate(mutator);
+            }
+
+            List<Galaxy> updatedGeneration = pool.getGalaxies()
+                    .stream()
+                    .map(MutableGalaxy::getGalaxy)
+                    .collect(Collectors.toList());
+
+            ArrayDTOBuilderByGalaxy builderByGalaxy = new ArrayDTOBuilderByGalaxy();
+            for(int i = 0 ; i < updatedGeneration.size(); i++){
+                generation.set(i,builderByGalaxy.build(updatedGeneration.get(i), graph));
+            }
+
+
         }
         for (Array solve :
              minSolves) {
@@ -143,7 +177,7 @@ public class Genetic {
             result = init(Graph);
             return selection(result, false, 20);
         }
-        long average = 0;
+        long average;
         HashSet<Array> generationSet = new HashSet<>(generation);
         generation = new ArrayList<>(generationSet);
         int[] calculatedResults = new int[generation.size()];
@@ -190,7 +224,7 @@ public class Genetic {
 
     private List<Array> cross(Array child1, Array child2) {
         List<Array> result = new ArrayList<>();
-        Array toAdd = null;
+        Array toAdd;
 //        long startTime = System.currentTimeMillis();
         toAdd = union(child1, child2);
 //        System.out.println("Union: " + Arrays.toString(toAdd));
@@ -203,7 +237,7 @@ public class Genetic {
         if (toAdd != null) {
             result.add(toAdd);
 //            startTime = System.currentTimeMillis();
-            toAdd = outterjoin(child1, child2);
+            toAdd = outerJoin(child1, child2);
 //            System.out.println("Outterjoin time: " + (System.currentTimeMillis() - startTime));
             if (toAdd != null) result.add(toAdd);
         }
@@ -239,9 +273,9 @@ public class Genetic {
         if (starCount == 0) return null;
         if (stars.size() > parent1.length / 2) return null;
 //        System.out.println("Stars count: " + stars.size() + " size: " + parent1.length /2);
-        if (stars.size() > parent1.length / 2) {
-            System.out.println("If condition(union): parent1=" + parent1 + " child2=" + child2);
-        }
+//        if (stars.size() > parent1.length / 2) {
+//            System.out.println("If condition(union): parent1=" + parent1 + " child2=" + child2);
+//        }
 //        for (int i = 0; i < result.length; i++) {
 //            if (result.getArray()[i] != STAR_VALUE) {
 //                if (parent1[i] == child2[i]) {
@@ -293,7 +327,7 @@ public class Genetic {
         return fillSatellite(result);
     }
 
-    private Array outterjoin(Array child1, Array child2) {
+    private Array outerJoin(Array child1, Array child2) {
         Array result = new Array(child1.length);
         Set<Integer> stars = new HashSet<>();
         for (int i = 0; i < child1.length; i++) {
@@ -312,9 +346,9 @@ public class Genetic {
         if (stars.size() > child1.length / 2 || stars.size() == 0) {
             return null;
         }
-        if (stars.size() > child1.length / 2) {
-            System.out.println("If condition(outterjoin): child1=" + Arrays.toString(child1.getArray()) + " child2=" + Arrays.toString(child2.getArray()));
-        }
+//        if (stars.size() > child1.length / 2) {
+//            System.out.println("If condition(outterjoin): child1=" + Arrays.toString(child1.getArray()) + " child2=" + Arrays.toString(child2.getArray()));
+//        }
 //        for (int i = 0; i < result.length; i++) {
 //            if (result[i] != STAR_VALUE) {
 //                if (stars.contains(child1[i])) {
@@ -329,7 +363,7 @@ public class Genetic {
         return fillSatellite(result);
     }
 
-    public List<Array> init(Graph graph) {
+    private List<Array> init(Graph graph) {
         List<Array> initial = new ArrayList<>();
         for (int i = 0; i <= graph.size() * 5; i++) {
             int starCount = random.nextInt(graph.size() / 2 - 1) + 1;

@@ -1,9 +1,9 @@
 package com.company.universe;
 
 import com.company.entities.Graph;
-import com.company.utils.Algorithms;
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -12,17 +12,16 @@ public class StarSystem implements Cloneable{
     private List<Integer> planets;
     private long weight;
 
+    public StarSystem(int star){
+        this.star = star;
+        this.planets = new ArrayList<>();
+        this.weight = 0;
+    }
+
     public StarSystem(int star, List<Integer> planets, long weight) {
         this.star = star;
         this.planets = planets.stream().sorted().collect(Collectors.toList());
         this.weight = weight;
-    }
-
-    public boolean intercept(StarSystem system){
-        return (star == system.getStar())
-                || (Algorithms.contains(planets, system.getStar()) != -1)
-                || (Algorithms.contains(system.getPlanets(), star) != -1)
-                || (Algorithms.intercept(planets,system.getPlanets()));
     }
 
     public void add(int planet, long additionalWeight){

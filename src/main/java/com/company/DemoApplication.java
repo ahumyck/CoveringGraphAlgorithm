@@ -4,7 +4,7 @@ import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
 import com.company.parsers.GraphParser;
-import com.company.services.coefficientsBuilder.LinearCoefficientsBuilder;
+import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.utils.GraphGenerator;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -20,9 +20,9 @@ import java.util.stream.Stream;
 
 @SpringBootApplication
 public class DemoApplication {
-    public static void main1(String[] args) {
-        GraphGenerator.createTestResourses();
-    }
+//    public static void main1(String[] args) {
+//        GraphGenerator.createTestResourses();
+//    }
     public static void main(String[] args) throws FileNotFoundException {
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
@@ -44,7 +44,7 @@ public class DemoApplication {
         for (int i = 0; i < 8; i++) {
 //            graphs.add(GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\test_graph_0.txt"));
-            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 100));
+            graphs.add(GraphGenerator.generate(25, 9550, 10000, 2, 100));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
 //            graphs.add(GraphGenerator.gnerate1(100));
@@ -78,7 +78,7 @@ public class DemoApplication {
             System.out.println("Genetic solve: " + min);
             System.out.println("Greedy solve: " + solve);
 
-//            System.out.println("Greedy result " + i + ": " + greedyMin);
+            System.out.println("Greedy result " + ": " + (int)greedyMin);
             if (geneticMin == greedyMin) {
                 System.out.println("Size: " + graph.size() + " Genetic equal Greedy " + greedyMin);
                 equal.incrementAndGet();
