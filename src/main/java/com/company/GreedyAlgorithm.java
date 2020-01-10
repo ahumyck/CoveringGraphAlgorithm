@@ -38,13 +38,10 @@ public class GreedyAlgorithm
 
     public Map<Integer, ArrayList<Integer>> solve(List<Coefficient> coefficients, int graphSize)
     {
-        if(maximumStars > graphSize/2) throw new RuntimeException("maximum star can not be more than half of graph size");
-
         Map<Integer, ArrayList<Integer>> hashMap = initializeHashMap(coefficients);
 
         for (int i = 1; i < coefficients.size(); i++)
         {
-
             Coefficient coefficient = coefficients.get(i);
             int potentialStar = coefficient.getStar();
             int potentialSatellite = coefficient.getSatellite();

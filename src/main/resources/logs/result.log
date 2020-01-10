@@ -1,2 +1,8 @@
-19:54:27.305 [main] INFO  com.company.DemoApplication - Example log from DemoApplication
-19:54:36.812 [main] INFO  com.company.DemoApplication - Example log from DemoApplication
+Genetic: 14 Greedy: 2 Equal: 0
+Genetic wins: 1.210309835869634
+Greedy wins: 1.105497823901598
+
+Genetic: 4 Greedy: 0 Equal: 0
+Genetic wins: 1.1492653262506158
+Greedy wins: NaN
+

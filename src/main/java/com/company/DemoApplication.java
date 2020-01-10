@@ -32,13 +32,13 @@ public class DemoApplication {
         GraphGenerator.createTestResources(16);
     }
 
-    public static void main2(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException {
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
 //        System.out.println("from file: " + graphSized8);
         List<Graph> graphs = new ArrayList<>();
         System.out.println("Start generate ...");
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 4; i++) {
 //            graphs.add(GraphParser
 //                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
             graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 200));
@@ -89,21 +89,17 @@ public class DemoApplication {
         };
         System.out.println("parallel");
         graphs.parallelStream().forEach(consumer);
-        System.out.println("\nGenetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
-        System.out.println("Genetic wins: " + geneticSum.get() / genetic.get());
-        System.out.println("Greedy wins: " + greedySum.get() / greedy.get());
+        logger.info("Genetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
+        logger.info("Genetic wins: " + geneticSum.get() / genetic.get());
+        logger.info("Greedy wins: " + greedySum.get() / greedy.get() + '\n');
     }
 
     public static void main3(String[] args){
         Graph graph = GraphGenerator.generate(18, 10, 20, 10, 100);
         ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
         GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
-        Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.setMaximumStars(9).solve(coefficients, graph.size());
+        Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.setMaximumStars(8).solve(coefficients, graph.size());
         Galaxy solution = new GalaxyDTOBuilderByMap().build(solve, graph);
         System.out.println(solution);
-    }
-
-    public static void main(String[] args){
-        logger.info("Example log from {}", DemoApplication.class.getSimpleName());
     }
 }
