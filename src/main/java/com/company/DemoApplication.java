@@ -1,5 +1,7 @@
 package com.company;
 
+import ch.qos.logback.core.FileAppender;
+import ch.qos.logback.core.rolling.RollingFileAppender;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
@@ -8,6 +10,8 @@ import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuild
 import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByMap;
 import com.company.utils.GraphGenerator;
 import com.google.common.util.concurrent.AtomicDouble;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileNotFoundException;
@@ -20,11 +24,15 @@ import java.util.function.Consumer;
 
 @SpringBootApplication
 public class DemoApplication {
+
+    private static final  Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+
+
     public static void main1(String[] args) {
         GraphGenerator.createTestResources(16);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main2(String[] args) throws FileNotFoundException {
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
 //        System.out.println("from file: " + graphSized8);
@@ -93,5 +101,9 @@ public class DemoApplication {
         Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.setMaximumStars(9).solve(coefficients, graph.size());
         Galaxy solution = new GalaxyDTOBuilderByMap().build(solve, graph);
         System.out.println(solution);
+    }
+
+    public static void main(String[] args){
+        logger.info("Example log from {}", DemoApplication.class.getSimpleName());
     }
 }
