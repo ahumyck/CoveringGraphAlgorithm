@@ -13,6 +13,7 @@ import com.company.genetic.universe.galaxyMutator.CombinationMutator;
 import com.company.genetic.universe.galaxyMutator.Mutator;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class Genetic {
 

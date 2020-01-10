@@ -24,9 +24,8 @@ public class GraphGenerator {
             writeToFile(
                     resultFilepath,
                     generate(200, 1900, 2000, 20, 50)
-//                    generateSpecialCaseGraph(50)
-                    generate(25, 1000, 10000, 10, 50)
             );
+//                    generateSpecialCaseGraph(50)
             System.out.println("Generate Graph and write to file with name=[" + resultFilename + "].");
 
         }
