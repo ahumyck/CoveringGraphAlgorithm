@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
+import java.util.stream.Stream;
 
 
 @SpringBootApplication
@@ -45,7 +46,7 @@ public class DemoApplication {
             graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 100));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
-//            graphs.add(GraphGenerator.gnerate1(50));
+//            graphs.add(GraphGenerator.gnerate1(100));
         }
 //        for (int i = 0; i < 4; i++) {
 //            graphs.add(GraphGenerator.generate(200, 2, 100, 2, 100));

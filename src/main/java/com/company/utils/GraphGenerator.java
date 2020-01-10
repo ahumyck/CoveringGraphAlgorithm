@@ -23,6 +23,7 @@ public class GraphGenerator {
             String resultFilepath = TEMPLATE_FILEPATH + resultFilename;
             writeToFile(
                     resultFilepath,
+                    generate(200, 1900, 2000, 20, 50)
 //                    generateSpecialCaseGraph(50)
                     generate(25, 1000, 10000, 10, 50)
             );
