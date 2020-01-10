@@ -17,8 +17,8 @@ import java.util.stream.Collectors;
 
 public class Genetic {
 
-    private int INVALID_VALUE = -2;
-    private int STAR_VALUE = -1;
+    private static final int INVALID_VALUE = -2;
+    private  static final int STAR_VALUE = -1;
     private Random random = new Random();
     private Graph Graph;
     private long Average = Integer.MAX_VALUE;
@@ -27,20 +27,74 @@ public class Genetic {
     private List<Integer> listCounter = new ArrayList<>();
     private Array GREEDY_SOLVE;
 
-    public Map<Integer, ArrayList<Integer>> solve(Graph graph) {
-        Graph = graph;
-        long average = Integer.MAX_VALUE;
-        ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-//        Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, graph.size());
-//        GREEDY_SOLVE = convertToSolve(solve, graph.size());
-        List<Array> generation = init(graph);
-//        generation.add(GREEDY_SOLVE);
+
+    private boolean isIncludeGreedy;
+    private int totalStuffingSize;
+    private int solvesStuffingSize;
+    private int selectionSize;
+    private boolean isMutation;
+    private int reinitCount;
+
+    public Genetic(Graph graph) {
+        this.totalStuffingSize = 20;
+        this.solvesStuffingSize = 4;
+        this.selectionSize = 10;
+        this.isMutation = true;
+        this.reinitCount = 1;
+        this.isIncludeGreedy = false;
+        this.Graph = graph;
+
+    }
+
+    public static Genetic initialize(Graph graph){
+        return new Genetic(graph);
+    }
+
+    public Genetic isIncludeGreedy(boolean isIncludeGreedy){
+        this.isIncludeGreedy = isIncludeGreedy;
+        return this;
+    }
+
+    public Genetic totalStuffingSize(int totalStuffingSize) {
+        this.totalStuffingSize = totalStuffingSize;
+        return this;
+    }
+
+    public Genetic solvesStuffingSize(int solvesStuffingSize) {
+        this.solvesStuffingSize = solvesStuffingSize;
+        return this;
+    }
+
+    public Genetic selectionSize(int selectionSize) {
+        this.selectionSize = selectionSize;
+        return this;
+    }
+
+    public Genetic reinitCount(int reinitCount) {
+        this.reinitCount = reinitCount;
+        return this;
+    }
+
+    public Genetic isMutation(boolean isMutation) {
+        this.isMutation = isMutation;
+        return this;
+    }
+
+
+    public Map<Integer, ArrayList<Integer>> solve() {
+        List<Array> generation = init(Graph);
+        if(isIncludeGreedy) {
+            ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(Graph).orderByWeight().getCoefficients();
+            Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, Graph.size());
+            GREEDY_SOLVE = convertToSolve(solve, Graph.size());
+            generation.add(GREEDY_SOLVE);
+        }
 //        generation = getChildGeneration(generation);
-        generation = selection(generation, false, 20);
-        while (minSolves.size() < 1) {
+        generation = selection(generation, false, selectionSize);
+        while (minSolves.size() < reinitCount) {
 //            long startTime = System.currentTimeMillis();
 
-            stuffing(generation, 20);
+            stuffing(generation, totalStuffingSize);
 //            System.out.println("Stuffing time: " + (System.currentTimeMillis() - startTime));
 
 //            startTime = System.currentTimeMillis();
@@ -48,14 +102,16 @@ public class Genetic {
 //            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
 
 //            startTime = System.currentTimeMillis();
-            generation = selection(generation, true, 10);
+            generation = selection(generation, true, selectionSize);
 //            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
             long startTime = System.currentTimeMillis();
-            mutate(generation, graph);
+            if (isMutation)
+                mutate(generation, Graph);
             System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
         }
+
 //        for (Array solve :
 //             minSolves) {
 //            System.out.println("Min solve: " + GreedyAlgorithmTest.calculate(convertToAnswer(solve), Graph));
@@ -65,19 +121,18 @@ public class Genetic {
     }
 
 
-
-    private List<Array> mutate(List<Array> generation, Graph graph){
+    private List<Array> mutate(List<Array> generation, Graph graph) {
         GalaxyDTOBuilderByCustomArray builderByCustomArray = new GalaxyDTOBuilderByCustomArray();
         List<MutableGalaxy> generationAsGalaxy = new ArrayList<>();
-        for (Array solution:
+        for (Array solution :
                 generation) {
-            generationAsGalaxy.add(new MutableGalaxy(builderByCustomArray.build(solution,graph),true));
+            generationAsGalaxy.add(new MutableGalaxy(builderByCustomArray.build(solution, graph), true));
         }
 
-        GalaxyPool pool = new GalaxyPool(graph,GalaxyPool.EMPTY);
+        GalaxyPool pool = new GalaxyPool(graph, GalaxyPool.EMPTY);
         pool.addGalaxies(generationAsGalaxy);
         Mutator mutator = new CombinationMutator();
-        for(int i = 0 ; i < 10 ; i++){
+        for (int i = 0; i < 10; i++) {
             pool.mutate(mutator);
         }
 
@@ -87,8 +142,8 @@ public class Genetic {
                 .collect(Collectors.toList());
 
         ArrayDTOBuilderByGalaxy builderByGalaxy = new ArrayDTOBuilderByGalaxy();
-        for(int i = 0 ; i < updatedGeneration.size(); i++){
-            generation.set(i,builderByGalaxy.build(updatedGeneration.get(i), graph));
+        for (int i = 0; i < updatedGeneration.size(); i++) {
+            generation.set(i, builderByGalaxy.build(updatedGeneration.get(i), graph));
         }
 
         return generation;
@@ -140,9 +195,9 @@ public class Genetic {
         }
         starCount /= 2;
         while (starCount >= 2 && size >= 0) {
-            generation.addAll(selection(stuffingHelper(starCount), false, 4));
+            generation.addAll(selection(stuffingHelper(starCount), false, solvesStuffingSize));
             starCount /= 2;
-            size -= 4;
+            size -= solvesStuffingSize;
         }
         return generation;
     }

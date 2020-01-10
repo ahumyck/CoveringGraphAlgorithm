@@ -68,7 +68,7 @@ public class DemoApplication {
         Consumer<Graph> consumer = graph -> {
 //            int i = atomicInteger.incrementAndGet();
 //            System.out.println("Start test ...");
-            Map<Integer, ArrayList<Integer>> min = new Genetic().solve(graph);
+            Map<Integer, ArrayList<Integer>> min = new Genetic(graph).solve();
             double geneticMin = GreedyAlgorithmTest.calculate(min, graph);
 
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
@@ -77,7 +77,7 @@ public class DemoApplication {
             System.out.println("Genetic solve: " + min);
             System.out.println("Greedy solve: " + solve);
 
-            System.out.println("Greedy result " + ": " + (int)greedyMin);
+            System.out.println("Greedy result " + ": " + (int) greedyMin);
             if (geneticMin == greedyMin) {
                 System.out.println("Size: " + graph.size() + " Genetic equal Greedy " + greedyMin);
                 equal.incrementAndGet();
@@ -100,57 +100,5 @@ public class DemoApplication {
         System.out.println("\nGenetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
         System.out.println("Genetic wins: " + geneticSum.get() / genetic.get());
         System.out.println("Greedy wins: " + greedySum.get() / greedy.get());
-
-
-//        for (int i = 0; i < 10; i++) {
-//            System.out.println("Test " + i + " start:");
-//            Graph graph = GraphGenerator.generate(500, 5000, 10000, 2, 100);
-////        System.out.println(graph);
-//            long startTime = System.currentTimeMillis();
-//            Map<Integer, ArrayList<Integer>> min = Genetic.solve(graph);
-////            System.out.println("Genetic time: " + (System.currentTimeMillis() - startTime));
-//            int geneticMin = GreedyAlgorithmTest.calculate(min, graph);
-//            System.out.println("Genetic result: " + geneticMin);
-//            System.out.println("Genetic solve: " + min);
-//            startTime = System.currentTimeMillis();
-//            ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-//            Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, graph.size());
-////            System.out.println("Greedy time: " + (System.currentTimeMillis() - startTime));
-//            int greedyMin = GreedyAlgorithmTest.calculate(solve, graph);
-//            System.out.println("Greedy result: " + greedyMin);
-//            System.out.println("Greedy solve: " + solve);
-//            if (geneticMin < greedyMin)
-//                System.out.println("Genetic win");
-//            else System.out.println("Greedy win");
-//            System.out.println("Test end.");
-//            System.out.println();
     }
-//        SpringApplication.run(DemoApplication.class, args);
-//        Graph graphSized8 = GraphParser
-//                .parseFile("C:\\Users\\ILYA\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\test_graph.txt");
-//        System.out.println("from file: " + graphSized8);
-//        Graph graphSized64 = GraphGenerator.generate(100, 10000,50);
-//        GraphGenerator.writeToFile(graphSized64);
-//        int n = graphSized64.size(); // 8*7
-//        ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graphSized64).orderByWeight().getCoefficients();
-////        System.out.println("Graph: " + graphSized64);
-////        long l = System.currentTimeMillis();
-////        System.out.println(System.currentTimeMillis() - l);
-////        System.out.println("Coefficients:" + coefficients);
-//        long startTime1 = System.currentTimeMillis();
-//        Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, n);
-//        long endTime1 = System.currentTimeMillis();
-//        long startTime2 = System.currentTimeMillis();
-//        Map<Coefficient, ArrayList<Coefficient>> mySolve = GreedyTest.solve(coefficients, 5000, n);
-//        long endTime2 = System.currentTimeMillis();
-//        System.out.println("my");
-//        mySolve.forEach((key, value) ->
-//        {
-//            System.out.print(key.getStar() + "=[");
-//            value.forEach(x -> System.out.print(x.getSatellite() + ","));
-//            System.out.print("]");
-//            System.out.println();
-//        });
-//        System.out.println("result: " + GreedyTest.calculate(mySolve));
-//        System.out.println("my");
 }
