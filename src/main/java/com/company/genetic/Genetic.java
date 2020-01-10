@@ -111,7 +111,7 @@ public class Genetic {
         List<Array> generation = init();
         if(isIncludeGreedy) {
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-            Map<Integer, ArrayList<Integer>> solve = new GreedyAlgorithm().solve(coefficients, graph.size());
+            Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithm.solve(coefficients, graph.size());
             GREEDY_SOLVE = convertToSolve(solve, graph.size());
             generation.add(GREEDY_SOLVE);
         }

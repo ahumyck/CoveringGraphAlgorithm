@@ -11,14 +11,13 @@ import java.util.*;
 public class GreedyAlgorithm
 {
 
-    private int maximumStars = Integer.MAX_VALUE;
+    private static int maximumStars = Integer.MAX_VALUE;
 
-    public GreedyAlgorithm setMaximumStars(int howMany){
+    public static void setMaximumStars(int howMany){
         maximumStars = howMany;
-        return this;
     }
 
-    public int calculate(Map<Integer, ArrayList<Integer>> map, Graph graph)
+    public static int calculate(Map<Integer, ArrayList<Integer>> map, Graph graph)
     {
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
         List<Vertex> vertices = graph.getVertices();
@@ -36,7 +35,7 @@ public class GreedyAlgorithm
     }
 
 
-    public Map<Integer, ArrayList<Integer>> solve(List<Coefficient> coefficients, int graphSize)
+    public static Map<Integer, ArrayList<Integer>> solve(List<Coefficient> coefficients, int graphSize)
     {
         Map<Integer, ArrayList<Integer>> hashMap = initializeHashMap(coefficients);
 
@@ -53,7 +52,7 @@ public class GreedyAlgorithm
         return hashMap;
     }
 
-    private boolean isValueContainsInMap(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
+    private static boolean isValueContainsInMap(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
     {
         for (Integer star :
                 hashMap.keySet())
@@ -67,12 +66,12 @@ public class GreedyAlgorithm
         return false;
     }
 
-    private boolean isValueContainsInMapOrKeySet(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
+    private static boolean isValueContainsInMapOrKeySet(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
     {
         return hashMap.containsKey(valueToCheck) || isValueContainsInMap(hashMap, valueToCheck);
     }
 
-    private Map<Integer, ArrayList<Integer>> initializeHashMap(List<Coefficient> coefficients)
+    private static Map<Integer, ArrayList<Integer>> initializeHashMap(List<Coefficient> coefficients)
     {
         Map<Integer, ArrayList<Integer>> hashMap = new HashMap<>();
         ArrayList<Integer> firstSatellite = new ArrayList<>();
@@ -82,7 +81,7 @@ public class GreedyAlgorithm
         return hashMap;
     }
 
-    private void addPotentialSatelliteToExistingStarOrCreateNewStarWithNewSatelliteOrDoNothingDependsOnPotentialStarAndPotentialSatellite(
+    private static void addPotentialSatelliteToExistingStarOrCreateNewStarWithNewSatelliteOrDoNothingDependsOnPotentialStarAndPotentialSatellite(
             Map<Integer, ArrayList<Integer>> hashMap, int potentialStar, int potentialSatellite
     )
     {
@@ -105,7 +104,7 @@ public class GreedyAlgorithm
         }
     }
 
-    private boolean stopRule(Map<Integer, ArrayList<Integer>> map, int n)
+    private static boolean stopRule(Map<Integer, ArrayList<Integer>> map, int n)
     {
         int counter = 0;
         for (Integer star :

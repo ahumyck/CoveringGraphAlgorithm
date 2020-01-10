@@ -60,13 +60,13 @@ public class DemoApplication {
 //                    .selectionSize(6)
 //                    .solvesStuffingSize(2)
 //                    .totalStuffingSize(6)
+//                    .roundCount(200)
                     .solve();
-            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
-            double geneticMin = greedyAlgorithm.calculate(min, graph);
+            double geneticMin = GreedyAlgorithm.calculate(min, graph);
 
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-            Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.solve(coefficients, graph.size());
-            double greedyMin = greedyAlgorithm.calculate(solve, graph);
+            Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithm.solve(coefficients, graph.size());
+            double greedyMin = GreedyAlgorithm.calculate(solve, graph);
             System.out.println("Genetic solve: " + min);
             System.out.println("Greedy solve: " + solve);
 
@@ -97,8 +97,8 @@ public class DemoApplication {
     public static void main3(String[] args){
         Graph graph = GraphGenerator.generate(18, 10, 20, 10, 100);
         ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-        GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
-        Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.setMaximumStars(8).solve(coefficients, graph.size());
+        GreedyAlgorithm.setMaximumStars(8);
+        Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithm.solve(coefficients, graph.size());
         Galaxy solution = new GalaxyDTOBuilderByMap().build(solve, graph);
         System.out.println(solution);
     }
