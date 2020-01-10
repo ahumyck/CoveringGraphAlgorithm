@@ -20,55 +20,38 @@ import java.util.stream.Stream;
 @SpringBootApplication
 public class DemoApplication {
     public static void main1(String[] args) {
-        GraphGenerator.createTestResources();
+        GraphGenerator.createTestResources(16);
     }
+
     public static void main(String[] args) throws FileNotFoundException {
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
 //        System.out.println("from file: " + graphSized8);
         List<Graph> graphs = new ArrayList<>();
         System.out.println("Start generate ...");
-//        for (int i = 0; i < 4; i++) {
-//            graphs.add(GraphGenerator.generate(50, 5000, 10000, 2, 100));
-//        }
-//        for (int i = 0; i < 4; i++) {
-//            graphs.add(GraphGenerator.generate(50, 2, 100, 2, 100));
-//        }
-//        for (int i = 0; i < 4; i++) {
-//            graphs.add(GraphGenerator.generate(100, 5000, 10000, 2, 100));
-//        }
-//        for (int i = 0; i < 8; i++) {
-//            graphs.add(GraphGenerator.generate(200, 5000, 10000, 2, 100));
-//        }
-        for (int i = 0; i < 24; i++) {
+        for (int i = 0; i < 16; i++) {
 //            graphs.add(GraphParser
 //                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
-            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 100));
+            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 200));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
 //            graphs.add(GraphGenerator.gnerate1(100));
         }
-//        for (int i = 0; i < 4; i++) {
-//            graphs.add(GraphGenerator.generate(200, 2, 100, 2, 100));
-//        }
-//        for (int i = 0; i < 4; i++) {
-//            graphs.add(GraphGenerator.generate(500, 5000, 10000, 2, 100));
-//        }
-//        for (int i = 0; i < 4; i++) {
-//            graphs.add(GraphGenerator.generate(500, 2, 100, 2, 100));
-//        }
         System.out.println("Generating finish.");
+
 
         AtomicInteger genetic = new AtomicInteger();
         AtomicDouble geneticSum = new AtomicDouble();
         AtomicInteger greedy = new AtomicInteger();
         AtomicDouble greedySum = new AtomicDouble();
         AtomicInteger equal = new AtomicInteger();
-//        final double[] equalSum = new double[1];
         Consumer<Graph> consumer = graph -> {
-//            int i = atomicInteger.incrementAndGet();
-//            System.out.println("Start test ...");
-            Map<Integer, ArrayList<Integer>> min = new Genetic(graph).solve();
+            Map<Integer, ArrayList<Integer>> min = new Genetic(graph)
+//                    .isMutation(false)
+//                    .selectionSize(6)
+//                    .solvesStuffingSize(2)
+//                    .totalStuffingSize(6)
+                    .solve();
             double geneticMin = GreedyAlgorithmTest.calculate(min, graph);
 
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
@@ -94,7 +77,6 @@ public class DemoApplication {
             }
 
         };
-//        graphs.stream().forEach(consumer);
         System.out.println("parallel");
         graphs.parallelStream().forEach(consumer);
         System.out.println("\nGenetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);

@@ -17,13 +17,13 @@ public class GraphGenerator {
     public static String TEMPLATE_FILEPATH = "C:\\Users\\Илья\\Desktop\\nauchka_sb\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\";
     private static String TEMPLATE_FILENAME = "test_graph_{0}.txt";
 
-    public static void createTestResources() {
-        for (int i = 0; i < 24; i++) {
+    public static void createTestResources(int filesCount) {
+        for (int i = 0; i < filesCount; i++) {
             String resultFilename = MessageFormat.format(TEMPLATE_FILENAME, i);
             String resultFilepath = TEMPLATE_FILEPATH + resultFilename;
             writeToFile(
                     resultFilepath,
-                    generate(200, 1900, 2000, 20, 50)
+                    generate(200, 1900, 2000, 2, 100)
             );
 //                    generateSpecialCaseGraph(50)
             System.out.println("Generate Graph and write to file with name=[" + resultFilename + "].");
