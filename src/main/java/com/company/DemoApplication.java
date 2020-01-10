@@ -41,10 +41,10 @@ public class DemoApplication {
 //        for (int i = 0; i < 8; i++) {
 //            graphs.add(GraphGenerator.generate(200, 5000, 10000, 2, 100));
 //        }
-        for (int i = 0; i < 8; i++) {
-//            graphs.add(GraphParser
-//                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\test_graph_0.txt"));
-            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 100));
+        for (int i = 0; i < 16; i++) {
+            graphs.add(GraphParser
+                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\test_graph_"+ i + ".txt"));
+//            graphs.add(GraphGenerator.generate(200, 9550, 10000, 2, 100));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
 //            graphs.add(GraphGenerator.gnerate1(100));

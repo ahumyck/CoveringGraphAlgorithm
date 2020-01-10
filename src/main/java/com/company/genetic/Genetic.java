@@ -8,7 +8,6 @@ import com.company.services.coefficientsBuilder.LinearCoefficientsBuilder;
 import java.util.*;
 
 public class Genetic {
-
     private int INVALID_VALUE = -2;
     private int STAR_VALUE = -1;
     private Random random = new Random();
@@ -16,6 +15,7 @@ public class Genetic {
     private long Average = Integer.MAX_VALUE;
     private List<Array> minSolves = new ArrayList<>();
     private int counter = 0;
+    private List<Integer> listCounter = new ArrayList<>();
     private Array GREEDY_SOLVE;
 
     public Map<Integer, ArrayList<Integer>> solve(Graph graph) {
@@ -31,7 +31,7 @@ public class Genetic {
         while (minSolves.size() < 1) {
 //            long startTime = System.currentTimeMillis();
 
-            stuffing(generation, 14);
+            stuffing(generation, 20);
 //            System.out.println("Stuffing time: " + (System.currentTimeMillis() - startTime));
 
 //            startTime = System.currentTimeMillis();
@@ -39,13 +39,14 @@ public class Genetic {
 //            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
 
 //            startTime = System.currentTimeMillis();
-            generation = selection(generation, true, 20);
+            generation = selection(generation, true, 10);
 //            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
         }
         for (Array solve :
              minSolves) {
             System.out.println("Min solve: " + GreedyAlgorithmTest.calculate(convertToAnswer(solve), Graph));
         }
+        System.out.println("Counters:" + listCounter);
         return convertToAnswer(getMin(minSolves));
 
     }
@@ -97,9 +98,9 @@ public class Genetic {
         }
         starCount /= 2;
         while (starCount >= 2 && size >= 0) {
-            generation.addAll(selection(stuffingHelper(starCount), false, 2));
+            generation.addAll(selection(stuffingHelper(starCount), false, 4));
             starCount /= 2;
-            size -= 2;
+            size -= 4;
         }
         return generation;
     }
@@ -165,19 +166,21 @@ public class Genetic {
             }
         }
         if (!flag) return result;
-        System.out.print(counter);
-        System.out.print(" Min: " + temp[0]);
-        System.out.println(" Average: " + average);
+//        System.out.print(counter);
+//        System.out.print(" Min: " + temp[0]);
+//        System.out.println(" Average: " + average);
         average = temp[0];
 
         if (Average > average) {
+            listCounter.add(counter);
+//            System.out.println("Counter: " + counter + " min:" + temp[0]);
             counter = 0;
             Average = average;
             return result;
         } else {
             counter++;
             Average = average;
-            if (counter > 100) {
+            if (counter > 200) {
                 Average = Integer.MAX_VALUE;
                 counter = 0;
                 minSolves.add(getMin(result));
@@ -238,29 +241,9 @@ public class Genetic {
         }
         if (starCount == 0) return null;
         if (stars.size() > parent1.length / 2) return null;
-//        System.out.println("Stars count: " + stars.size() + " size: " + parent1.length /2);
         if (stars.size() > parent1.length / 2) {
             System.out.println("If condition(union): parent1=" + parent1 + " child2=" + child2);
         }
-//        for (int i = 0; i < result.length; i++) {
-//            if (result.getArray()[i] != STAR_VALUE) {
-//                if (parent1[i] == child2[i]) {
-//                    result[i] = parent1[i];
-//                    stars.remove(result[i]);
-//                } else {
-//                    if (stars.contains(parent1[i])) {
-//                        result[i] = parent1[i];
-//                        stars.remove(parent1[i]);
-//                    } else if (stars.contains(child2[i])) {
-//                        result[i] = child2[i];
-//                        stars.remove(child2[i]);
-//                    } else {
-//                        result[i] = random.nextBoolean() ? parent1[i] : child2[i]; //добавить выбор наименьшего пути по ребрам
-//                    }
-//                }
-//                result.getArray()[i] = INVALID_VALUE;
-//            }
-//        }
         return fillSatellite(result);
     }
 
@@ -275,21 +258,9 @@ public class Genetic {
 
         }
         if (stars.size() == 0) return null;
-//        System.out.println("Stars count: " + stars.size() + " size: " + child1.length /2);
         if (stars.size() > child1.length / 2) {
             System.out.println("If condition(intersection): child1=" + child1 + " child2=" + child2);
         }
-//        for (int i = 0; i < result.length; i++) {
-//            if (result.getArray()[i] != STAR_VALUE) {
-//                if (stars.contains(child1.getArray()[i])) {
-//                    result.getArray()[i] = child1.getArray()[i];
-//                } else if (stars.contains(child2.getArray()[i])) {
-//                    result.getArray()[i] = child2.getArray()[i];
-//                } else {
-//
-//                }
-//            }
-//        }
         return fillSatellite(result);
     }
 
@@ -315,17 +286,6 @@ public class Genetic {
         if (stars.size() > child1.length / 2) {
             System.out.println("If condition(outterjoin): child1=" + Arrays.toString(child1.getArray()) + " child2=" + Arrays.toString(child2.getArray()));
         }
-//        for (int i = 0; i < result.length; i++) {
-//            if (result[i] != STAR_VALUE) {
-//                if (stars.contains(child1[i])) {
-//                    result[i] = child1[i];
-//                } else if (stars.contains(child2[i])) {
-//                    result[i] = child2[i];
-//                } else {
-//                    result[i] = INVALID_VALUE;
-//                }
-//            }
-//        }
         return fillSatellite(result);
     }
 
