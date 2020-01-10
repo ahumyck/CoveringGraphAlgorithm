@@ -1,6 +1,6 @@
 package com.company.genetic;
 
-import com.company.GreedyAlgorithmTest;
+import com.company.GreedyAlgorithm;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.services.builders.arrayBuilder.ArrayDTOBuilderByGalaxy;
@@ -96,7 +96,7 @@ public class Genetic {
     @Override
     public String toString() {
         return "Genetic{" +
-                ", isIncludeGreedy=" + isIncludeGreedy +
+                "isIncludeGreedy=" + isIncludeGreedy +
                 ", totalStuffingSize=" + totalStuffingSize +
                 ", solvesStuffingSize=" + solvesStuffingSize +
                 ", selectionSize=" + selectionSize +
@@ -111,7 +111,7 @@ public class Genetic {
         List<Array> generation = init();
         if(isIncludeGreedy) {
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-            Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, graph.size());
+            Map<Integer, ArrayList<Integer>> solve = new GreedyAlgorithm().solve(coefficients, graph.size());
             GREEDY_SOLVE = convertToSolve(solve, graph.size());
             generation.add(GREEDY_SOLVE);
         }
@@ -303,7 +303,7 @@ public class Genetic {
         } else {
             counter++;
             Average = average;
-            if (counter > 200) {
+            if (counter > roundCount) {
                 Average = Integer.MAX_VALUE;
                 counter = 0;
                 minSolves.add(getMin(result));

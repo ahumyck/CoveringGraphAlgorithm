@@ -4,13 +4,21 @@ import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
+import com.google.common.collect.Lists;
 
 import java.util.*;
 
-public class GreedyAlgorithmTest
+public class GreedyAlgorithm
 {
 
-    public static int calculate(Map<Integer, ArrayList<Integer>> map, Graph graph)
+    private int maximumStars = Integer.MAX_VALUE;
+
+    public GreedyAlgorithm setMaximumStars(int howMany){
+        maximumStars = howMany;
+        return this;
+    }
+
+    public int calculate(Map<Integer, ArrayList<Integer>> map, Graph graph)
     {
         EdgeMatrix edgeMatrix = graph.getEdgeMatrix();
         List<Vertex> vertices = graph.getVertices();
@@ -28,8 +36,10 @@ public class GreedyAlgorithmTest
     }
 
 
-    public static Map<Integer, ArrayList<Integer>> solve(List<Coefficient> coefficients, int n)
+    public Map<Integer, ArrayList<Integer>> solve(List<Coefficient> coefficients, int graphSize)
     {
+        if(maximumStars > graphSize/2) throw new RuntimeException("maximum star can not be more than half of graph size");
+
         Map<Integer, ArrayList<Integer>> hashMap = initializeHashMap(coefficients);
 
         for (int i = 1; i < coefficients.size(); i++)
@@ -39,14 +49,14 @@ public class GreedyAlgorithmTest
             int potentialStar = coefficient.getStar();
             int potentialSatellite = coefficient.getSatellite();
 
-            if (stopRule(hashMap, n)) break;
+            if (stopRule(hashMap, graphSize)) break;
             addPotentialSatelliteToExistingStarOrCreateNewStarWithNewSatelliteOrDoNothingDependsOnPotentialStarAndPotentialSatellite(
                     hashMap, potentialStar, potentialSatellite);
         }
         return hashMap;
     }
 
-    private static boolean isValueContainsInMap(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
+    private boolean isValueContainsInMap(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
     {
         for (Integer star :
                 hashMap.keySet())
@@ -60,12 +70,12 @@ public class GreedyAlgorithmTest
         return false;
     }
 
-    private static boolean isValueContainsInMapOrKeySet(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
+    private boolean isValueContainsInMapOrKeySet(Map<Integer, ArrayList<Integer>> hashMap, int valueToCheck)
     {
         return hashMap.containsKey(valueToCheck) || isValueContainsInMap(hashMap, valueToCheck);
     }
 
-    static Map<Integer, ArrayList<Integer>> initializeHashMap(List<Coefficient> coefficients)
+    private Map<Integer, ArrayList<Integer>> initializeHashMap(List<Coefficient> coefficients)
     {
         Map<Integer, ArrayList<Integer>> hashMap = new HashMap<>();
         ArrayList<Integer> firstSatellite = new ArrayList<>();
@@ -75,7 +85,7 @@ public class GreedyAlgorithmTest
         return hashMap;
     }
 
-    static void addPotentialSatelliteToExistingStarOrCreateNewStarWithNewSatelliteOrDoNothingDependsOnPotentialStarAndPotentialSatellite(
+    private void addPotentialSatelliteToExistingStarOrCreateNewStarWithNewSatelliteOrDoNothingDependsOnPotentialStarAndPotentialSatellite(
             Map<Integer, ArrayList<Integer>> hashMap, int potentialStar, int potentialSatellite
     )
     {
@@ -85,20 +95,20 @@ public class GreedyAlgorithmTest
             {
                 if (!isValueContainsInMapOrKeySet(hashMap, potentialSatellite))
                 {
-                    hashMap.put(potentialStar, new ArrayList<>());
-                    hashMap.get(potentialStar).add(potentialSatellite);
+                    if(hashMap.keySet().size() < maximumStars)
+                        hashMap.put(potentialStar, Lists.newArrayList(potentialSatellite));
                 }
             }
         } else
         {
             if (!isValueContainsInMapOrKeySet(hashMap, potentialSatellite))
             {
-                hashMap.get(potentialStar).add(potentialSatellite);
+                    hashMap.get(potentialStar).add(potentialSatellite);
             }
         }
     }
 
-    private static boolean stopRule(Map<Integer, ArrayList<Integer>> map, int n)
+    private boolean stopRule(Map<Integer, ArrayList<Integer>> map, int n)
     {
         int counter = 0;
         for (Integer star :

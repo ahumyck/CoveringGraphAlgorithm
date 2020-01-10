@@ -3,7 +3,9 @@ package com.company;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
+import com.company.genetic.universe.Galaxy;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
+import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByMap;
 import com.company.utils.GraphGenerator;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,7 +16,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Consumer;
-import java.util.stream.Stream;
 
 
 @SpringBootApplication
@@ -52,11 +53,12 @@ public class DemoApplication {
 //                    .solvesStuffingSize(2)
 //                    .totalStuffingSize(6)
                     .solve();
-            double geneticMin = GreedyAlgorithmTest.calculate(min, graph);
+            GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
+            double geneticMin = greedyAlgorithm.calculate(min, graph);
 
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
-            Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithmTest.solve(coefficients, graph.size());
-            double greedyMin = GreedyAlgorithmTest.calculate(solve, graph);
+            Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.solve(coefficients, graph.size());
+            double greedyMin = greedyAlgorithm.calculate(solve, graph);
             System.out.println("Genetic solve: " + min);
             System.out.println("Greedy solve: " + solve);
 
@@ -82,5 +84,14 @@ public class DemoApplication {
         System.out.println("\nGenetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
         System.out.println("Genetic wins: " + geneticSum.get() / genetic.get());
         System.out.println("Greedy wins: " + greedySum.get() / greedy.get());
+    }
+
+    public static void main3(String[] args){
+        Graph graph = GraphGenerator.generate(18, 10, 20, 10, 100);
+        ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
+        GreedyAlgorithm greedyAlgorithm = new GreedyAlgorithm();
+        Map<Integer, ArrayList<Integer>> solve = greedyAlgorithm.setMaximumStars(9).solve(coefficients, graph.size());
+        Galaxy solution = new GalaxyDTOBuilderByMap().build(solve, graph);
+        System.out.println(solution);
     }
 }
