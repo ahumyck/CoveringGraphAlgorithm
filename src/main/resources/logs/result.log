@@ -1,12 +1,23 @@
-Genetic: 14 Greedy: 2 Equal: 0
-Genetic wins: 1.210309835869634
-Greedy wins: 1.105497823901598
+Starting DemoApplication on HomeComputer with PID 3860 (started by Илья in C:\Users\Илья\Desktop\nauchka_sb\CoveringGraphAlgorithm)
+No active profile set, falling back to default profiles: default
+Devtools property defaults active! Set 'spring.devtools.add-properties' to 'false' to disable
+For additional web related logging consider setting the 'logging.level.web' property to 'DEBUG'
+Tomcat initialized with port(s): 8080 (http)
+Initializing ProtocolHandler ["http-nio-8080"]
+Starting service [Tomcat]
+Starting Servlet engine: [Apache Tomcat/9.0.27]
+Initializing Spring embedded WebApplicationContext
+Root WebApplicationContext: initialization completed in 1506 ms
+Initializing ExecutorService 'applicationTaskExecutor'
 
-Genetic: 4 Greedy: 0 Equal: 0
-Genetic wins: 1.1492653262506158
-Greedy wins: NaN
 
-Genetic: 4 Greedy: 0 Equal: 0
-Genetic wins: 1.1235746079272537
-Greedy wins: NaN
+Using generated security password: 10d077bb-79ba-429e-9535-37e5123b44b3
 
+Creating filter chain: any request, [org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@abebb, org.springframework.security.web.context.SecurityContextPersistenceFilter@13984a5, org.springframework.security.web.header.HeaderWriterFilter@1d85259, org.springframework.web.filter.CorsFilter@fbda2d, org.springframework.security.web.authentication.logout.LogoutFilter@b5002b, org.springframework.security.web.authentication.www.BasicAuthenticationFilter@1f573c5, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@1bf494c, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@1c67a3b, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@123e022, org.springframework.security.web.session.SessionManagementFilter@119af71, org.springframework.security.web.access.ExceptionTranslationFilter@1b56f1c, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@243e47]
+LiveReload server is running on port 35729
+Starting ProtocolHandler ["http-nio-8080"]
+Tomcat started on port(s): 8080 (http) with context path ''
+Started DemoApplication in 2.676 seconds (JVM running for 3.89)
+Initializing Spring DispatcherServlet 'dispatcherServlet'
+Initializing Servlet 'dispatcherServlet'
+Completed initialization in 7 ms

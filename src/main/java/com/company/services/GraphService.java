@@ -21,6 +21,7 @@ public class GraphService
     }
 
     public Optional<Graph> takeInitialGraph(){
-        return Optional.of(initialGraph);
+        if(initialGraph != null) return Optional.of(initialGraph);
+        else return Optional.empty();
     }
 }

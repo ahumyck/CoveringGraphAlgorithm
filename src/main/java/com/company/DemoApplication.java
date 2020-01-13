@@ -10,6 +10,7 @@ import com.company.utils.GraphGenerator;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 import java.io.FileNotFoundException;
@@ -23,14 +24,19 @@ import java.util.function.Consumer;
 @SpringBootApplication
 public class DemoApplication {
 
-    private static final  Logger logger = LoggerFactory.getLogger(DemoApplication.class);
+//    private static final  Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
+    //todo: configure logback.xml file because result.log is getting trashed
+    //todo: temporary solution is to comment code above
+    public static void main(String[] args) {
+        SpringApplication.run(DemoApplication.class, args);
+    }
 
     public static void main1(String[] args) {
         GraphGenerator.createTestResources(16);
     }
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main100(String[] args) throws FileNotFoundException {
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
 //        System.out.println("from file: " + graphSized8);
@@ -87,9 +93,9 @@ public class DemoApplication {
         };
         System.out.println("parallel");
         graphs.parallelStream().forEach(consumer);
-        logger.info("Genetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
-        logger.info("Genetic wins: " + geneticSum.get() / genetic.get());
-        logger.info("Greedy wins: " + greedySum.get() / greedy.get() + '\n');
+//        logger.info("Genetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
+//        logger.info("Genetic wins: " + geneticSum.get() / genetic.get());
+//        logger.info("Greedy wins: " + greedySum.get() / greedy.get() + '\n');
     }
 
     public static void main3(String[] args){
