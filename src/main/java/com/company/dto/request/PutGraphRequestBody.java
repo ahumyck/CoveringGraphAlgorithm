@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class InitialGraphRequestBody {
+public class PutGraphRequestBody {
     private int size;
     private int[] nodeWeights;
     private int[][] matrix;

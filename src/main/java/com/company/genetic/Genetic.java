@@ -5,7 +5,7 @@ import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.services.builders.arrayBuilder.ArrayDTOBuilderByGalaxy;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
-import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByCustomArray;
+import com.company.services.builders.galaxyBuilders.GalaxyBuilderByCustomArray;
 import com.company.genetic.universe.Galaxy;
 import com.company.genetic.universe.GalaxyPool;
 import com.company.genetic.universe.MutableGalaxy;
@@ -148,7 +148,7 @@ public class Genetic {
 
 
     private List<Array> mutate(List<Array> generation) {
-        GalaxyDTOBuilderByCustomArray builderByCustomArray = new GalaxyDTOBuilderByCustomArray();
+        GalaxyBuilderByCustomArray builderByCustomArray = new GalaxyBuilderByCustomArray();
         List<MutableGalaxy> generationAsGalaxy = new ArrayList<>();
         for (Array solution :
                 generation) {

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-public class GalaxyDTOBuilderByCustomArray implements  GalaxyDTOBuilder<Array, Graph> {
+public class GalaxyBuilderByCustomArray implements GalaxyBuilder<Array, Graph> {
     @Override
     public Galaxy build(Array input, Graph graph){
         List<StarSystem> systems = new ArrayList<>();

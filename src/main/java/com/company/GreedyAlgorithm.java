@@ -4,6 +4,7 @@ import com.company.entities.Coefficient;
 import com.company.entities.EdgeMatrix;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
+import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.google.common.collect.Lists;
 
 import java.util.*;
@@ -12,6 +13,10 @@ public class GreedyAlgorithm
 {
 
     private static int maximumStars = Integer.MAX_VALUE;
+
+    public static void setDefault(){
+        maximumStars = Integer.MAX_VALUE;
+    }
 
     public static void setMaximumStars(int howMany){
         maximumStars = howMany;
@@ -32,6 +37,11 @@ public class GreedyAlgorithm
             }
         }
         return counter;
+    }
+
+    public static Map<Integer,ArrayList<Integer>> solve(Graph graph){
+        ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
+        return solve(coefficients,graph.size());
     }
 
 

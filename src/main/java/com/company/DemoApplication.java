@@ -1,13 +1,11 @@
 package com.company;
 
-import ch.qos.logback.core.FileAppender;
-import ch.qos.logback.core.rolling.RollingFileAppender;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
 import com.company.genetic.universe.Galaxy;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
-import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByMap;
+import com.company.services.builders.galaxyBuilders.GalaxyBuilderByMap;
 import com.company.utils.GraphGenerator;
 import com.google.common.util.concurrent.AtomicDouble;
 import org.slf4j.Logger;
@@ -99,7 +97,7 @@ public class DemoApplication {
         ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
         GreedyAlgorithm.setMaximumStars(8);
         Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithm.solve(coefficients, graph.size());
-        Galaxy solution = new GalaxyDTOBuilderByMap().build(solve, graph);
+        Galaxy solution = new GalaxyBuilderByMap().build(solve, graph);
         System.out.println(solution);
     }
 }

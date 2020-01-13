@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class GalaxyDTOBuilderByMap implements GalaxyDTOBuilder<Map<Integer, ArrayList<Integer>>,Graph> {
+public class GalaxyBuilderByMap implements GalaxyBuilder<Map<Integer, ArrayList<Integer>>,Graph> {
     @Override
     public Galaxy build(Map<Integer, ArrayList<Integer>> input, Graph graph) {
         List<StarSystem> systems = new ArrayList<>();
