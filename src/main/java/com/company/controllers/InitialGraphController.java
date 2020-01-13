@@ -10,6 +10,17 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
+/**
+ * Контроллер отвечающий за обработку графа, присланного в виде файла
+ * после обработки отсылает данные на фронт, чтобы англуяр отрисовать граф
+ * пример файла, который приходит
+ * @see InitialGraphRequestBody
+ * example /resources/matrixData/graph.json
+ *
+
+ */
 @RestController
 @RequestMapping(ApiPaths.INITIAL_GRAPH_PATH)
 public class InitialGraphController {
