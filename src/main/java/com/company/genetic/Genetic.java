@@ -3,6 +3,7 @@ package com.company.genetic;
 import com.company.GreedyAlgorithm;
 import com.company.entities.Coefficient;
 import com.company.entities.Graph;
+import com.company.genetic.settings.Settings;
 import com.company.services.builders.arrayBuilder.ArrayDTOBuilderByGalaxy;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.services.builders.galaxyBuilders.GalaxyBuilderByCustomArray;
@@ -38,15 +39,27 @@ public class Genetic {
     private int roundCount;
 
     public Genetic(Graph graph) {
+        this.graph = graph;
         this.totalStuffingSize = 20;
         this.solvesStuffingSize = 4;
         this.selectionSize = 10;
         this.isMutation = true;
         this.reinitCount = 1;
         this.isIncludeGreedy = false;
-        this.graph = graph;
         this.isCheckValidSolves = false;
         this.roundCount = 100;
+    }
+
+    public Genetic(Graph graph, Settings settings){
+        this.graph = graph;
+        this.totalStuffingSize = settings.getTotalStuffingSize();
+        this.solvesStuffingSize = settings.getSolvesStuffingSize();
+        this.selectionSize = settings.getSelectionSize();
+        this.isMutation =  settings.isMutation();
+        this.reinitCount = settings.getReinitCount();
+        this.isIncludeGreedy = settings.isIncludeGreedy();
+        this.isCheckValidSolves = settings.isCheckValidSolves();
+        this.roundCount = settings.getRoundCount();
     }
 
     public Genetic roundCount(int roundCount){
@@ -107,7 +120,6 @@ public class Genetic {
     }
 
     public Map<Integer, ArrayList<Integer>> solve() {
-        System.out.println(this);
         List<Array> generation = init();
         if(isIncludeGreedy) {
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
@@ -263,7 +275,7 @@ public class Genetic {
     private List<Array> selection(List<Array> generation, boolean flag, int selectionSize) {
         List<Array> result = new ArrayList<>();
         if (generation.size() == 0) {
-            System.out.println("Empty size of generation: " + generation.size());
+//            System.out.println("Empty size of generation: " + generation.size());
             result = init();
             return selection(result, false, 20);
         }
@@ -364,9 +376,9 @@ public class Genetic {
         }
         if (starCount == 0) return null;
         if (stars.size() > parent1.length / 2) return null;
-        if (stars.size() > parent1.length / 2) {
-            System.out.println("If condition(union): parent1=" + parent1 + " child2=" + child2);
-        }
+//        if (stars.size() > parent1.length / 2) {
+//            System.out.println("If condition(union): parent1=" + parent1 + " child2=" + child2);
+//        }
         return fillSatellite(result);
     }
 
@@ -381,9 +393,9 @@ public class Genetic {
 
         }
         if (stars.size() == 0) return null;
-        if (stars.size() > child1.length / 2) {
-            System.out.println("If condition(intersection): child1=" + child1 + " child2=" + child2);
-        }
+//        if (stars.size() > child1.length / 2) {
+//            System.out.println("If condition(intersection): child1=" + child1 + " child2=" + child2);
+//        }
         return fillSatellite(result);
     }
 
@@ -406,9 +418,9 @@ public class Genetic {
         if (stars.size() > child1.length / 2 || stars.size() == 0) {
             return null;
         }
-        if (stars.size() > child1.length / 2) {
-            System.out.println("If condition(outterjoin): child1=" + Arrays.toString(child1.getArray()) + " child2=" + Arrays.toString(child2.getArray()));
-        }
+//        if (stars.size() > child1.length / 2) {
+//            System.out.println("If condition(outterjoin): child1=" + Arrays.toString(child1.getArray()) + " child2=" + Arrays.toString(child2.getArray()));
+//        }
         return fillSatellite(result);
     }
 

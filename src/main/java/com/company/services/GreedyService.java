@@ -1,7 +1,8 @@
 package com.company.services;
 
 import com.company.GreedyAlgorithm;
-import com.company.dto.GraphDTO;
+import com.company.dto.dtoEntites.GraphDTO;
+import com.company.dto.dtoEntites.GraphDataDTO;
 import com.company.dto.request.ExecuteRequestBody;
 import com.company.entities.Graph;
 import com.company.services.builders.graphBuilders.GraphDTOByMapBuilder;
@@ -22,7 +23,7 @@ public class GreedyService {
         this.graphService = graphService;
     }
 
-    public Optional<GraphDTO> solveGreedy(ExecuteRequestBody body) {
+    public Optional<GraphDataDTO> solveGreedy(ExecuteRequestBody body) {
         Optional<Graph> optionalGraph = graphService.takeInitialGraph();
         if(optionalGraph.isPresent()){
             Graph graph = optionalGraph.get();
@@ -36,7 +37,9 @@ public class GreedyService {
             else{
                 answer = GreedyAlgorithm.solve(graph);
             }
-            return Optional.of(new GraphDTOByMapBuilder().build(answer));
+            GraphDTO build = new GraphDTOByMapBuilder().build(answer);
+            int cost = GreedyAlgorithm.calculate(answer, graph);
+            return Optional.of(new GraphDataDTO(build,cost));
 
         }
         return Optional.empty();

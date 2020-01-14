@@ -1,4 +1,4 @@
-package com.company.dto;
+package com.company.dto.dtoEntites;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -7,9 +7,9 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class EdgeDTO
+public class NodeDTO
 {
-    private String source;
-    private String target;
+    private String id;
+    private String name;
     private String color;
 }

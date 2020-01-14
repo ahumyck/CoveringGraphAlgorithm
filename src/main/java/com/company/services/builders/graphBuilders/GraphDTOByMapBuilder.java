@@ -1,6 +1,8 @@
 package com.company.services.builders.graphBuilders;
 
-import com.company.dto.*;
+import com.company.dto.dtoEntites.*;
+import com.company.dto.dtoEntites.EdgeDTO;
+import com.company.dto.dtoEntites.NodeDTO;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +12,7 @@ public class GraphDTOByMapBuilder implements GraphDTOBuilder<Map<Integer, ArrayL
 
     private static final String satelliteColor = "#00FF00";
     private static final String starColor = "#FF0000";
-    private static final String edgeColor = "#000000";
+    private static final String edgeColor = "#888888";
 
     @Override
     public GraphDTO build(Map<Integer, ArrayList<Integer>> input) {

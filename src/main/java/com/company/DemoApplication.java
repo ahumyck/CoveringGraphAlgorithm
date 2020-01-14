@@ -4,6 +4,7 @@ import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
 import com.company.genetic.universe.Galaxy;
+import com.company.parsers.GraphParser;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.services.builders.galaxyBuilders.GalaxyBuilderByMap;
 import com.company.utils.GraphGenerator;
@@ -26,17 +27,14 @@ public class DemoApplication {
 
 //    private static final  Logger logger = LoggerFactory.getLogger(DemoApplication.class);
 
-    //todo: configure logback.xml file because result.log is getting trashed
-    //todo: temporary solution is to comment code above
     public static void main(String[] args) {
         SpringApplication.run(DemoApplication.class, args);
     }
+//    public static void main(String[] args) {
+//        GraphGenerator.createTestResources(16);
+//    }
 
-    public static void main1(String[] args) {
-        GraphGenerator.createTestResources(16);
-    }
-
-    public static void main100(String[] args) throws FileNotFoundException {
+    public static void main100(String[] args){
 //        Graph graph = GraphParser
 //                .parseFile("C:\\Users\\10ila\\nauchka\\CoveringGraphAlgorithm\\src\\main\\resources\\matrixData\\16x16graph.txt");
 //        System.out.println("from file: " + graphSized8);
@@ -98,8 +96,8 @@ public class DemoApplication {
 //        logger.info("Greedy wins: " + greedySum.get() / greedy.get() + '\n');
     }
 
-    public static void main3(String[] args){
-        Graph graph = GraphGenerator.generate(18, 10, 20, 10, 100);
+    public static void main2(String[] args) throws FileNotFoundException {
+        Graph graph = GraphParser.parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + 0 + ".txt");
         ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
         GreedyAlgorithm.setMaximumStars(8);
         Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithm.solve(coefficients, graph.size());

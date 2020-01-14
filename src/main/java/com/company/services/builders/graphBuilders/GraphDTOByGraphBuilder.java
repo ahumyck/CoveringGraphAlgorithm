@@ -1,14 +1,16 @@
 package com.company.services.builders.graphBuilders;
 
-import com.company.dto.*;
+import com.company.dto.dtoEntites.*;
+import com.company.dto.dtoEntites.EdgeDTO;
+import com.company.dto.dtoEntites.NodeDTO;
 import com.company.entities.Graph;
 import com.company.entities.Vertex;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.LinkedList;
 import java.util.List;
 
-@Component
+@Service
 public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 {
 
@@ -21,7 +23,7 @@ public class GraphDTOByGraphBuilder implements GraphDTOBuilder<Graph>
 
     private List<EdgeDataDTO> buildEdgeDTOList(Graph graph)
     {
-        final String edgeColor = "#000000";
+        final String edgeColor = "#888888";
         List<EdgeDataDTO> edgeDataDTOList = new LinkedList<>();
         for (int j = 0; j < graph.getEdgeMatrix().getSize(); j++)
         {
