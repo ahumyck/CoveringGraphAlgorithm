@@ -19,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.concurrent.atomic.AtomicLong;
 import java.util.function.Consumer;
 
 
@@ -38,10 +39,12 @@ public class DemoApplication {
 //        System.out.println("from file: " + graphSized8);
         List<Graph> graphs = new ArrayList<>();
         System.out.println("Start generate ...");
-        for (int i = 0; i < 4; i++) {
+        int vert_count = 100;
+        int tests = 5;
+        for (int i = 0; i < tests; i++) {
 //            graphs.add(GraphParser
 //                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
-            graphs.add(GraphGenerator.generate(100, 9550, 10000, 2, 200));
+            graphs.add(GraphGenerator.generate(vert_count, 100, 1000, 2, 200));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
 //            graphs.add(GraphGenerator.gnerate1(100));
@@ -49,23 +52,31 @@ public class DemoApplication {
         System.out.println("Generating finish.");
 
 
+        AtomicLong atomicLongGreedy = new AtomicLong();
+        AtomicLong atomicLongGenetic = new AtomicLong();
         AtomicInteger genetic = new AtomicInteger();
         AtomicDouble geneticSum = new AtomicDouble();
         AtomicInteger greedy = new AtomicInteger();
         AtomicDouble greedySum = new AtomicDouble();
         AtomicInteger equal = new AtomicInteger();
         Consumer<Graph> consumer = graph -> {
-            Map<Integer, ArrayList<Integer>> min = new Genetic(graph)
+            Genetic gen = new Genetic(graph);
 //                    .isMutation(false)
 //                    .selectionSize(6)
 //                    .solvesStuffingSize(2)
 //                    .totalStuffingSize(6)
-//                    .roundCount(200)
-                    .solve();
+//                    .roundCount(200);
+            long start = System.currentTimeMillis();
+            Map<Integer, ArrayList<Integer>> min = gen.solve();
+            long end = System.currentTimeMillis();
+            atomicLongGenetic.addAndGet(end - start);
             double geneticMin = GreedyAlgorithm.calculate(min, graph);
 
+            start = System.currentTimeMillis();
             ArrayList<Coefficient> coefficients = new LinearCoefficientsBuilder().build(graph).orderByWeight().getCoefficients();
             Map<Integer, ArrayList<Integer>> solve = GreedyAlgorithm.solve(coefficients, graph.size());
+            end = System.currentTimeMillis();
+            atomicLongGreedy.addAndGet(end - start);
             double greedyMin = GreedyAlgorithm.calculate(solve, graph);
             System.out.println("Genetic solve: " + min);
             System.out.println("Greedy solve: " + solve);
@@ -85,13 +96,16 @@ public class DemoApplication {
                 greedy.incrementAndGet();
                 greedySum.addAndGet(k);
             }
-
         };
         System.out.println("parallel");
-        graphs.parallelStream().forEach(consumer);
+        graphs.forEach(consumer);
+        logger.info("Graph size: " + vert_count);
+        logger.info("greedy average: " + (double)atomicLongGreedy.get()/tests);
+        logger.info("genetic average: " + (double)atomicLongGenetic.get()/tests);
         logger.info("Genetic: " + genetic + " Greedy: " + greedy + " Equal: " + equal);
         logger.info("Genetic wins: " + geneticSum.get() / genetic.get());
         logger.info("Greedy wins: " + greedySum.get() / greedy.get() + '\n');
+        logger.info("\n");
     }
 
     public static void main3(String[] args){
