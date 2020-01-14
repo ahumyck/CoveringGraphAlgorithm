@@ -41,7 +41,7 @@ public class DemoApplication {
         List<Graph> graphs = new ArrayList<>();
         System.out.println("Start generate ...");
         int vert_count = 100;
-        int tests = 5;
+        int tests = 16;
         for (int i = 0; i < tests; i++) {
             graphs.add(GraphParser
                 .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
