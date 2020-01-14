@@ -6,6 +6,7 @@ import com.company.entities.Coefficient;
 import com.company.entities.Graph;
 import com.company.genetic.Genetic;
 import com.company.genetic.universe.Galaxy;
+import com.company.parsers.GraphParser;
 import com.company.services.builders.coefficientsBuilder.LinearCoefficientsBuilder;
 import com.company.services.builders.galaxyBuilders.GalaxyDTOBuilderByMap;
 import com.company.utils.GraphGenerator;
@@ -42,9 +43,9 @@ public class DemoApplication {
         int vert_count = 100;
         int tests = 5;
         for (int i = 0; i < tests; i++) {
-//            graphs.add(GraphParser
-//                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
-            graphs.add(GraphGenerator.generate(vert_count, 100, 1000, 2, 200));
+            graphs.add(GraphParser
+                .parseFile(GraphGenerator.TEMPLATE_FILEPATH + "test_graph_" + i + ".txt"));
+//            graphs.add(GraphGenerator.generate(vert_count, 100, 1000, 2, 200));
 //            graphs.add(GraphGenerator.generate(100, 2, 100));
 
 //            graphs.add(GraphGenerator.gnerate1(100));

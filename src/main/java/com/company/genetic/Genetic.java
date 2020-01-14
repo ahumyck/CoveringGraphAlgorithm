@@ -296,7 +296,7 @@ public class Genetic {
 
         if (Average > average) {
             listCounter.add(counter);
-//            System.out.println("Counter: " + counter + " min:" + temp[0]);
+            System.out.println("Counter: " + counter + " min:" + temp[0]);
             counter = 0;
             Average = average;
             return result;
