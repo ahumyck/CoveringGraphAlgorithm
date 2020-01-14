@@ -129,24 +129,24 @@ public class Genetic {
         }
 //        generation = getChildGeneration(generation);
         generation = selection(generation, false, selectionSize);
-        while (minSolves.size() < reinitCount) {
-//            long startTime = System.currentTimeMillis();
+        while (minSolves.size() < reinitCount){
+            long startTime = System.currentTimeMillis();
 
             stuffing(generation, totalStuffingSize);
-//            System.out.println("Stuffing time: " + (System.currentTimeMillis() - startTime));
+            System.out.println("Stuffing time: " + (System.currentTimeMillis() - startTime));
 
-//            startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
             generation = getChildGeneration(generation);
-//            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
+            System.out.println("ChildGeneration time: " + (System.currentTimeMillis() - startTime));
 
-//            startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
             generation = selection(generation, true, selectionSize);
-//            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
+            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
-//            long startTime = System.currentTimeMillis();
+            startTime = System.currentTimeMillis();
             if (isMutation)
                 mutate(generation);
-//            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
+            System.out.println("Selection time: " + (System.currentTimeMillis() - startTime));
 
         }
 
@@ -308,7 +308,7 @@ public class Genetic {
 
         if (Average > average) {
             listCounter.add(counter);
-//            System.out.println("Counter: " + counter + " min:" + temp[0]);
+            System.out.println("Counter: " + counter + " min:" + temp[0]);
             counter = 0;
             Average = average;
             return result;
