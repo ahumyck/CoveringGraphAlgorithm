@@ -9,15 +9,10 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class Coefficient {
     int star, satellite;
-    int weight;
-
-
-    public String string() {
-        return "" + weight;
-    }
+    long weight;
 
     @Override
     public String toString(){
-        return "[from: " + star + " ,to: " + satellite + ",weight: " + weight + "]";
+        return "from: " + star + " to: " + satellite + " weight: " + weight;
     }
 }

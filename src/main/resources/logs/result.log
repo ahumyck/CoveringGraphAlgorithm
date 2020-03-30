@@ -1,0 +1,45 @@
+Graph size: 25
+greedy average: 0.6
+genetic average: 1286.6
+Genetic: 10 Greedy: 0 Equal: 0
+Genetic wins: 1.3411822359692165
+Greedy wins: NaN
+
+
+
+Graph size: 50
+greedy average: 1.8
+genetic average: 4966.7
+Genetic: 10 Greedy: 0 Equal: 0
+Genetic wins: 1.3366890631981945
+Greedy wins: NaN
+
+
+
+Graph size: 75
+greedy average: 3.4
+genetic average: 12929.4
+Genetic: 10 Greedy: 0 Equal: 0
+Genetic wins: 1.2816528288572813
+Greedy wins: NaN
+
+
+
+Graph size: 100
+greedy average: 6.8
+genetic average: 27356.4
+Genetic: 5 Greedy: 0 Equal: 0
+Genetic wins: 1.2258252574091955
+Greedy wins: NaN
+
+
+
+Graph size: 100
+greedy average: 5.8
+genetic average: 22303.6
+Genetic: 4 Greedy: 1 Equal: 0
+Genetic wins: 1.2001893215565682
+Greedy wins: 1.0005383549248021
+
+
+

@@ -3,14 +3,10 @@ package com.company.utils;
 public class ApiPaths
 {
     public static final String
-            BRUTE_FORCE_PATH = "/brute-force",
             INITIAL_GRAPH_PATH = "/initial-graph",
-            EXECUTE_PATH = "/execute",
-            ADDITIVE_PATH = "/additive",
-            NUMBER_PATH = "/{number}",
-            END_PATH = "/end",
-            SOLUTION_PATH = "/solution",
-            POST_FILE = "/post-file";
+            POST_FILE_PATH = "/post-file",
+            GREEDY_ALGORITHM_PATH = "/greedy",
+            GENETIC_PATH = "/genetic";
 
 
 }
